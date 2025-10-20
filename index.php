@@ -1,3 +1,4 @@
+<?php include 'koneksi.php'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -106,36 +107,84 @@
             </div>
         </section>
 
-        <!-- Services Section (Dynamic from Admin) -->
+        <!-- Services Section (Dynamic from Database) -->
         <section id="services" class="services-section">
             <div class="container">
                 <h2 class="section-title">Layanan Kami</h2>
                 <p class="section-subtitle">Berbagai pilihan layanan untuk memenuhi kebutuhan Anda</p>
                 <div class="services-grid" id="servicesGrid">
-                    <!-- Services will be loaded dynamically -->
+                    <?php
+                    $result = $conn->query("SELECT * FROM layanan");
+                    while ($row = $result->fetch_assoc()) {
+                        echo "
+                        <div class='service-card'>
+                            <img src='uploads/{$row['foto']}' alt='{$row['nama_layanan']}' class='service-image'>
+                            <h3 class='service-title'>{$row['nama_layanan']}</h3>
+                            <p class='service-description'>{$row['deskripsi']}</p>
+                            <p class='service-price'>Mulai dari Rp " . number_format($row['harga_mulai'], 0, ',', '.') . "</p>
+                        </div>
+                        ";
+                    }
+                    ?>
                 </div>
             </div>
         </section>
 
-        <!-- Pricing Section (Dynamic from Admin) -->
+        <!-- Pricing Section (Dynamic from Database) -->
         <section id="pricing" class="pricing-section">
             <div class="container">
                 <h2 class="section-title">Daftar Harga</h2>
                 <p class="section-subtitle">Harga terjangkau dengan kualitas terbaik</p>
                 <div class="pricing-table" id="pricingTable">
-                    <!-- Pricing will be loaded dynamically -->
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>Jenis Layanan</th>
+                                <th>Kategori</th>
+                                <th>Harga</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $result = $conn->query("SELECT * FROM harga ORDER BY jenis_layanan, kategori");
+                            while ($row = $result->fetch_assoc()) {
+                                echo "
+                                <tr>
+                                    <td>{$row['jenis_layanan']}</td>
+                                    <td>{$row['kategori']}</td>
+                                    <td>Rp " . number_format($row['harga'], 0, ',', '.') . "</td>
+                                </tr>
+                                ";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
                 <p class="pricing-note">*Harga dapat berubah sewaktu-waktu. Hubungi kami untuk informasi lebih lanjut.</p>
             </div>
         </section>
 
-        <!-- Gallery Section (Dynamic from Admin) -->
+        <!-- Gallery Section (Dynamic from Database) -->
         <section id="gallery" class="gallery-section">
             <div class="container">
                 <h2 class="section-title">Galeri</h2>
                 <p class="section-subtitle">Lihat hasil kerja profesional kami</p>
                 <div class="gallery-grid" id="galleryGrid">
-                    <!-- Gallery will be loaded dynamically -->
+                    <?php
+                    $result = $conn->query("SELECT * FROM galeri");
+                    $gallery_items = [];
+                    while ($row = $result->fetch_assoc()) {
+                        $gallery_items[] = $row;
+                        echo "
+                        <div class='gallery-item' onclick='openGalleryModal(\"{$row['foto']}\", \"{$row['judul']}\")'>
+                            <img src='uploads/{$row['foto']}' alt='{$row['judul']}' class='gallery-image'>
+                            <div class='gallery-overlay'>
+                                <p class='gallery-title'>{$row['judul']}</p>
+                            </div>
+                        </div>
+                        ";
+                    }
+                    ?>
                 </div>
             </div>
         </section>
@@ -221,18 +270,101 @@
             </div>
         </section>
 
-        <!-- Contact Section (Dynamic from Admin) -->
+        <!-- Contact Section (Dynamic from Database) -->
         <section id="contact" class="contact-section">
             <div class="container">
                 <h2 class="section-title">Hubungi Kami</h2>
                 <p class="section-subtitle">Kami siap melayani Anda</p>
                 <div class="contact-content">
                     <div class="contact-info" id="contactInfo">
-                        <!-- Contact info will be loaded dynamically -->
+                        <?php
+                        // Ambil data profil dari database (jika ada tabel profil)
+                        // Jika belum ada, tampilkan data default
+                        $profil = $conn->query("SELECT * FROM profil LIMIT 1");
+                        if ($profil && $profil->num_rows > 0) {
+                            $data = $profil->fetch_assoc();
+                            echo "
+                            <div class='contact-item'>
+                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
+                                    <path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/>
+                                    <circle cx='12' cy='10' r='3'/>
+                                </svg>
+                                <div>
+                                    <h4>Alamat</h4>
+                                    <p>{$data['alamat']}</p>
+                                </div>
+                            </div>
+                            <div class='contact-item'>
+                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
+                                    <path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/>
+                                </svg>
+                                <div>
+                                    <h4>WhatsApp</h4>
+                                    <p>{$data['whatsapp']}</p>
+                                </div>
+                            </div>
+                            <div class='contact-item'>
+                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
+                                    <circle cx='12' cy='12' r='10'/>
+                                    <polyline points='12 6 12 12 16 14'/>
+                                </svg>
+                                <div>
+                                    <h4>Jam Operasional</h4>
+                                    <p>Senin - Sabtu: {$data['jam_senin']}</p>
+                                    <p>Minggu: {$data['jam_minggu']}</p>
+                                </div>
+                            </div>
+                            ";
+                        } else {
+                            echo "
+                            <div class='contact-item'>
+                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
+                                    <path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/>
+                                    <circle cx='12' cy='10' r='3'/>
+                                </svg>
+                                <div>
+                                    <h4>Alamat</h4>
+                                    <p>Kota Kendari, Sulawesi Tenggara</p>
+                                </div>
+                            </div>
+                            <div class='contact-item'>
+                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
+                                    <path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/>
+                                </svg>
+                                <div>
+                                    <h4>WhatsApp</h4>
+                                    <p>+62 8181 871 0655</p>
+                                </div>
+                            </div>
+                            <div class='contact-item'>
+                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
+                                    <circle cx='12' cy='12' r='10'/>
+                                    <polyline points='12 6 12 12 16 14'/>
+                                </svg>
+                                <div>
+                                    <h4>Jam Operasional</h4>
+                                    <p>Senin - Sabtu: 08.00 - 20.00</p>
+                                    <p>Minggu: 09.00 - 18.00</p>
+                                </div>
+                            </div>
+                            ";
+                        }
+                        ?>
                     </div>
 
                     <div class="contact-map" id="contactButtons">
-                        <!-- Contact buttons will be loaded dynamically -->
+                        <a href="https://wa.me/6281818710655" target="_blank" class="contact-button whatsapp-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                            Chat WhatsApp
+                        </a>
+                        <a href="tel:+6281818710655" class="contact-button phone-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            Telepon Sekarang
+                        </a>
                     </div>
                 </div>
             </div>
@@ -243,7 +375,7 @@
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-section">
-                        <img src="https://customer-assets.emergentagent.com/job_fresh-laundry-web/artifacts/xy40j238_Gambar%20WhatsApp%202025-10-13%20pukul%2012.01.59_44eb05d1.jpg" 
+                        <img src="hero.jpg" 
                              alt="deLondree Logo" 
                              class="footer-logo">
                         <p class="footer-text">Layanan laundry profesional untuk pakaian bersih dan rapi.</p>
@@ -271,7 +403,7 @@
                 <div class="footer-bottom">
                     <p>&copy; 2025 deLondree. All rights reserved.</p>
                     <!-- Admin Login Link (Hidden) -->
-                    <a href="login.html" class="admin-link" style="opacity: 0.3; font-size: 0.75rem; margin-top: 0.5rem; display: inline-block; color: inherit; text-decoration: none;">Admin</a>
+                    <a href="login.php" class="admin-link" style="opacity: 0.3; font-size: 0.75rem; margin-top: 0.5rem; display: inline-block; color: inherit; text-decoration: none;">Admin</a>
                 </div>
             </div>
         </footer>
