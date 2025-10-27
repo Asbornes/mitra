@@ -1,35 +1,86 @@
 <?php
+session_start();
+if (!isset($_SESSION['adminLoggedIn'])) {
+    header('Location: ../login.php');
+    exit;
+}
 include '../koneksi.php';
+include '../image_helper.php';
 
 $id = $_POST['id'] ?? '';
-$judul = mysqli_real_escape_string($conn, $_POST['judul']);
+$judul = $_POST['judul'] ?? '';
 $foto = '';
 
+// Handle file upload dengan smart resize
 if (!empty($_FILES['foto']['name'])) {
+    // Validasi file
+    $validation = validateImageUpload($_FILES['foto'], 5242880); // 5MB
+    
+    if (!$validation['success']) {
+        die($validation['message']);
+    }
+    
     $targetDir = "../uploads/";
-    if (!file_exists($targetDir)) mkdir($targetDir);
-    $fileName = time() . "_" . basename($_FILES["foto"]["name"]);
+    if (!file_exists($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+    
+    $ext = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
+    $fileName = time() . "_galeri_" . uniqid() . "." . $ext;
+    $tempFile = $_FILES["foto"]["tmp_name"];
     $targetFile = $targetDir . $fileName;
-    $ext = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-
-    if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
-        if (move_uploaded_file($_FILES["foto"]["tmp_name"], $targetFile)) {
-            $foto = $fileName;
+    
+    // SMART RESIZE: 600x600px dengan mode 'cover'
+    // Gambar akan di-resize dengan crop minimal
+    // Prioritas: resize dulu, baru crop sedikit jika perlu
+    if (smartResizeImage($tempFile, $targetFile, 600, 600, 90, 'cover')) {
+        $foto = $fileName;
+        
+        // Hapus foto lama jika update
+        if ($id != '') {
+            $getOld = $conn->prepare("SELECT foto FROM galeri WHERE id = ?");
+            $getOld->bind_param("i", $id);
+            $getOld->execute();
+            $result = $getOld->get_result();
+            if ($row = $result->fetch_assoc()) {
+                $oldFile = $targetDir . $row['foto'];
+                if (file_exists($oldFile) && $row['foto'] != '') {
+                    unlink($oldFile);
+                }
+            }
+            $getOld->close();
         }
+    } else {
+        die("Gagal memproses gambar.");
     }
 }
 
+// Simpan ke database
 if ($id == '') {
-    $sql = "INSERT INTO galeri (judul, foto) VALUES ('$judul', '$foto')";
+    // INSERT
+    if ($foto == '') {
+        die("Foto harus diupload!");
+    }
+    
+    $stmt = $conn->prepare("INSERT INTO galeri (judul, foto) VALUES (?, ?)");
+    $stmt->bind_param("ss", $judul, $foto);
 } else {
-    $sql = "UPDATE galeri SET judul='$judul'";
-    if ($foto != '') $sql .= ", foto='$foto'";
-    $sql .= " WHERE id=$id";
+    // UPDATE
+    if ($foto != '') {
+        $stmt = $conn->prepare("UPDATE galeri SET judul=?, foto=? WHERE id=?");
+        $stmt->bind_param("ssi", $judul, $foto, $id);
+    } else {
+        $stmt = $conn->prepare("UPDATE galeri SET judul=? WHERE id=?");
+        $stmt->bind_param("si", $judul, $id);
+    }
 }
 
-if ($conn->query($sql)) {
-    echo "Data galeri berhasil disimpan.";
+if ($stmt->execute()) {
+    echo "Data galeri berhasil disimpan. Gambar sudah disesuaikan ukurannya.";
 } else {
-    echo "Gagal menyimpan data: " . $conn->error;
+    echo "Gagal menyimpan data: " . $stmt->error;
 }
+
+$stmt->close();
+$conn->close();
 ?>

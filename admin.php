@@ -1,4 +1,11 @@
-<?php include 'koneksi.php'; ?>
+<?php 
+session_start();
+if (!isset($_SESSION['adminLoggedIn'])) {
+    header('Location: login.php');
+    exit;
+}
+include 'koneksi.php'; 
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -10,8 +17,41 @@
 <body>
   <div class="admin-container">
 
-    <!-- Sidebar -->
-    <?php include 'sidebar.php'; ?>
+    <!-- Sidebar (digabung dari sidebar.php) -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="hero.jpg"
+                 alt="Logo" class="sidebar-logo">
+            <h3>Admin Panel</h3>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active">
+                Dashboard
+            </a>
+            <a href="#layanan" class="nav-item">
+                Layanan
+            </a>
+            <a href="#harga" class="nav-item">
+                Harga
+            </a>
+            <a href="#galeri" class="nav-item">
+                Galeri
+            </a>
+            <a href="#profil" class="nav-item">
+                Profil Laundry
+            </a>
+            <a href="#password" class="nav-item">
+                Ganti Password
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button onclick="adminUI.logout()" class="btn-logout">
+                Logout
+            </button>
+        </div>
+    </aside>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -65,7 +105,7 @@
       <section id="section-layanan" class="content-section">
         <div class="section-header">
           <h3>Manajemen Layanan</h3>
-          <button class="btn-primary" onclick="openLayananModal()">Tambah Layanan</button>
+          <button class="btn-primary" onclick="adminUI.openLayananModal()">Tambah Layanan</button>
         </div>
 
         <div class="table-container">
@@ -87,8 +127,8 @@
                   <td>Rp " . number_format($row['harga_mulai']) . "</td>
                   <td><img src='uploads/{$row['foto']}' width='60'></td>
                   <td>
-                    <button class='btn-secondary' onclick='editLayanan({$row['id']})'>Edit</button>
-                    <button class='btn-danger' onclick='confirmDelete(\"layanan\", {$row['id']})'>Hapus</button>
+                    <button class='btn-secondary' onclick='adminUI.editLayanan({$row['id']})'>Edit</button>
+                    <button class='btn-danger' onclick='adminUI.confirmDelete(\"layanan\", {$row['id']})'>Hapus</button>
                   </td>
                 </tr>";
                 $no++;
@@ -103,7 +143,7 @@
       <section id="section-harga" class="content-section">
         <div class="section-header">
           <h3>Manajemen Harga</h3>
-          <button class="btn-primary" onclick="openHargaModal()">Tambah Paket Harga</button>
+          <button class="btn-primary" onclick="adminUI.openHargaModal()">Tambah Paket Harga</button>
         </div>
 
         <div class="table-container">
@@ -124,13 +164,13 @@
                   <td>{$row['kategori']}</td>
                   <td>Rp " . number_format($row['harga']) . "</td>
                   <td>
-                    <button class='btn-secondary' onclick='openHargaModal(true, {
+                    <button class='btn-secondary' onclick='adminUI.openHargaModal(true, {
                       id: {$row['id']},
                       jenis_layanan: \"{$row['jenis_layanan']}\",
                       kategori: \"{$row['kategori']}\",
                       harga: {$row['harga']}
                     })'>Edit</button>
-                    <button class='btn-danger' onclick='confirmDelete(\"harga\", {$row['id']})'>Hapus</button>
+                    <button class='btn-danger' onclick='adminUI.confirmDelete(\"harga\", {$row['id']})'>Hapus</button>
                   </td>
                 </tr>";
                 $no++;
@@ -145,7 +185,7 @@
       <section id="section-galeri" class="content-section">
         <div class="section-header">
           <h3>Manajemen Galeri</h3>
-          <button class="btn-primary" onclick="openGaleriModal()">Upload Foto</button>
+          <button class="btn-primary" onclick="adminUI.openGaleriModal()">Upload Foto</button>
         </div>
 
         <div class="gallery-grid">
@@ -157,11 +197,11 @@
               <img src='uploads/{$row['foto']}' alt='{$row['judul']}'>
               <p>{$row['judul']}</p>
               <div style='padding:0 1rem 1rem;'>
-                <button class='btn-secondary' onclick='openGaleriModal(true, {
+                <button class='btn-secondary' onclick='adminUI.openGaleriModal(true, {
                   id: {$row['id']},
                   judul: \"{$row['judul']}\"
                 })'>Edit</button>
-                <button class='btn-danger' onclick='confirmDelete(\"galeri\", {$row['id']})'>Hapus</button>
+                <button class='btn-danger' onclick='adminUI.confirmDelete(\"galeri\", {$row['id']})'>Hapus</button>
               </div>
             </div>
             ";
@@ -174,12 +214,28 @@
       <section id="section-profil" class="content-section">
         <div class="section-header"><h3>Profil Laundry</h3></div>
         <form action="php/profil_simpan.php" method="POST">
-          <label>Nama Laundry</label><input type="text" name="nama_laundry" required>
-          <label>Alamat Lengkap</label><textarea name="alamat" rows="3" required></textarea>
-          <label>Nomor WhatsApp</label><input type="text" name="whatsapp" required>
-          <label>Email</label><input type="email" name="email">
-          <label>Jam Buka (Senin–Sabtu)</label><input type="text" name="jam_senin" required>
-          <label>Jam Buka (Minggu)</label><input type="text" name="jam_minggu" required>
+          <?php
+          $profil = $conn->query("SELECT * FROM profil LIMIT 1");
+          $data = $profil->num_rows > 0 ? $profil->fetch_assoc() : [];
+          ?>
+          <label>Nama Laundry</label>
+          <input type="text" name="nama_laundry" value="<?= $data['nama_laundry'] ?? '' ?>" required>
+          
+          <label>Alamat Lengkap</label>
+          <textarea name="alamat" rows="3" required><?= $data['alamat'] ?? '' ?></textarea>
+          
+          <label>Nomor WhatsApp</label>
+          <input type="text" name="whatsapp" value="<?= $data['whatsapp'] ?? '' ?>" required>
+          
+          <label>Email</label>
+          <input type="email" name="email" value="<?= $data['email'] ?? '' ?>">
+          
+          <label>Jam Buka (Senin–Sabtu)</label>
+          <input type="text" name="jam_senin" value="<?= $data['jam_senin'] ?? '' ?>" required>
+          
+          <label>Jam Buka (Minggu)</label>
+          <input type="text" name="jam_minggu" value="<?= $data['jam_minggu'] ?? '' ?>" required>
+          
           <button type="submit" class="btn-primary">Simpan</button>
         </form>
       </section>
@@ -190,6 +246,7 @@
         <form action="php/ganti_password.php" method="POST" style="max-width:500px;">
           <label>Password Lama</label><input type="password" name="old_password" required>
           <label>Password Baru</label><input type="password" name="new_password" required>
+          <label>Konfirmasi Password Baru</label><input type="password" name="confirm_password" required>
           <button type="submit" class="btn-primary">Ganti Password</button>
         </form>
       </section>
@@ -208,7 +265,7 @@
         <label>Foto</label><input type="file" name="foto" id="foto">
         <div class="modal-actions">
           <button type="submit" class="btn-primary">Simpan</button>
-          <button type="button" class="btn-secondary" onclick="closeModal()">Batal</button>
+          <button type="button" class="btn-secondary" onclick="adminUI.closeModal()">Batal</button>
         </div>
       </form>
     </div>
@@ -225,7 +282,7 @@
         <label>Harga (Rp)</label><input type="number" name="harga" id="harga" required>
         <div class="modal-actions">
           <button type="submit" class="btn-primary">Simpan</button>
-          <button type="button" class="btn-secondary" onclick="closeModal()">Batal</button>
+          <button type="button" class="btn-secondary" onclick="adminUI.closeModal()">Batal</button>
         </div>
       </form>
     </div>
@@ -241,7 +298,7 @@
         <label>Foto</label><input type="file" name="foto" id="foto_galeri">
         <div class="modal-actions">
           <button type="submit" class="btn-primary">Simpan</button>
-          <button type="button" class="btn-secondary" onclick="closeModal()">Batal</button>
+          <button type="button" class="btn-secondary" onclick="adminUI.closeModal()">Batal</button>
         </div>
       </form>
     </div>
@@ -253,101 +310,11 @@
       <h3>Yakin ingin menghapus data ini?</h3>
       <div class="modal-actions">
         <button id="btnConfirmDelete" class="btn-danger">Hapus</button>
-        <button class="btn-secondary" onclick="closeModal()">Batal</button>
+        <button class="btn-secondary" onclick="adminUI.closeModal()">Batal</button>
       </div>
     </div>
   </div>
 
-  <script>
-  // Navigasi antar section
-  function showSection(sectionId) {
-    document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-    const target = document.getElementById('section-' + sectionId);
-    if (target) target.classList.add('active');
-    document.getElementById('pageTitle').textContent = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-    document.querySelectorAll('.nav-item').forEach(link => link.classList.remove('active'));
-    const activeLink = document.querySelector(`.nav-item[href="#${sectionId}"]`);
-    if (activeLink) activeLink.classList.add('active');
-  }
-  document.addEventListener('DOMContentLoaded', () => {
-    const initial = window.location.hash.replace('#', '') || 'dashboard';
-    showSection(initial);
-    document.querySelectorAll('.nav-item').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const sectionId = link.getAttribute('href').replace('#', '');
-        showSection(sectionId);
-        history.pushState(null, '', '#' + sectionId);
-      });
-    });
-  });
-
-  function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
-
-  // === CRUD LAYANAN ===
-  function openLayananModal() {
-    document.getElementById('modalLayananTitle').textContent = 'Tambah Layanan';
-    document.getElementById('formLayanan').reset();
-    document.getElementById('modalLayanan').classList.add('active');
-  }
-  function editLayanan(id) {
-    fetch(`php/layanan_get.php?id=${id}`).then(r => r.json()).then(d => {
-      document.getElementById('modalLayananTitle').textContent = 'Edit Layanan';
-      document.getElementById('layanan_id').value = d.id;
-      document.getElementById('nama_layanan').value = d.nama_layanan;
-      document.getElementById('deskripsi').value = d.deskripsi;
-      document.getElementById('harga_mulai').value = d.harga_mulai;
-      document.getElementById('modalLayanan').classList.add('active');
-    });
-  }
-  document.getElementById('formLayanan').addEventListener('submit', e => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    fetch('php/layanan_simpan.php', { method: 'POST', body: fd })
-      .then(r => r.text()).then(msg => { alert(msg); closeModal(); location.reload(); });
-  });
-
-  // === CRUD HARGA ===
-  function openHargaModal(edit = false, d = {}) {
-    document.getElementById('modalHargaTitle').textContent = edit ? 'Edit Paket Harga' : 'Tambah Paket Harga';
-    document.getElementById('harga_id').value = d.id || '';
-    document.getElementById('jenis_layanan').value = d.jenis_layanan || '';
-    document.getElementById('kategori').value = d.kategori || '';
-    document.getElementById('harga').value = d.harga || '';
-    document.getElementById('modalHarga').classList.add('active');
-  }
-  document.getElementById('formHarga').addEventListener('submit', async e => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const res = await fetch('php/harga_simpan.php', { method: 'POST', body: fd });
-    const txt = await res.text();
-    alert(txt); closeModal(); location.hash = '#harga'; location.reload();
-  });
-
-  // === CRUD GALERI ===
-  function openGaleriModal(edit = false, d = {}) {
-    document.getElementById('modalGaleriTitle').textContent = edit ? 'Edit Foto Galeri' : 'Upload Foto Baru';
-    document.getElementById('galeri_id').value = d.id || '';
-    document.getElementById('judul').value = d.judul || '';
-    document.getElementById('modalGaleri').classList.add('active');
-  }
-  document.getElementById('formGaleri').addEventListener('submit', async e => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const res = await fetch('php/galeri_simpan.php', { method: 'POST', body: fd });
-    const txt = await res.text();
-    alert(txt); closeModal(); location.hash = '#galeri'; location.reload();
-  });
-
-  // === KONFIRMASI HAPUS ===
-  let deleteTarget = { type: '', id: '' };
-  function confirmDelete(type, id) { deleteTarget = { type, id }; document.getElementById('modalConfirm').classList.add('active'); }
-  document.getElementById('btnConfirmDelete').addEventListener('click', () => {
-    fetch(`php/${deleteTarget.type}_hapus.php?id=${deleteTarget.id}`)
-      .then(r => r.text()).then(() => { closeModal(); location.reload(); });
-  });
-
-  function logout() { if (confirm('Yakin ingin logout?')) location.href = 'logout.php'; }
-  </script>
+  <script src="admin.js"></script>
 </body>
 </html>

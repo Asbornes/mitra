@@ -1,30 +1,51 @@
 <?php
 session_start();
+include 'koneksi.php';
 
-// Jika sudah login, langsung arahkan ke dashboard
+// Jika sudah login, redirect ke dashboard
 if (isset($_SESSION['adminLoggedIn']) && $_SESSION['adminLoggedIn'] === true) {
     header('Location: admin.php');
     exit;
 }
 
-// Username & password default
-$default_username = 'admin';
-$default_password = 'admin123';
 $login_error = '';
 
-// Jika form dikirim
+// Proses login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = htmlspecialchars($_POST['username'] ?? '');
-    $password = htmlspecialchars($_POST['password'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    if ($username === $default_username && $password === $default_password) {
-        $_SESSION['adminLoggedIn'] = true;
-        header('Location: admin.php');
-        exit;
+    // Query dengan prepared statement untuk keamanan
+    $stmt = $conn->prepare("SELECT * FROM admin WHERE username = ? LIMIT 1");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $admin = $result->fetch_assoc();
+        
+        // Verifikasi password (MD5 sesuai dengan sistem yang ada)
+        if (md5($password) === $admin['password']) {
+            // Set session
+            $_SESSION['adminLoggedIn'] = true;
+            $_SESSION['admin_id'] = $admin['id'];
+            $_SESSION['admin_username'] = $admin['username'];
+            
+            $stmt->close();
+            $conn->close();
+            
+            header('Location: admin.php');
+            exit;
+        } else {
+            $login_error = 'Username atau password salah!';
+        }
     } else {
         $login_error = 'Username atau password salah!';
     }
+    
+    $stmt->close();
 }
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -51,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="username">Username</label>
                     <div class="input-container">
-                        <input type="text" id="username" name="username" placeholder="Masukkan username" required>
+                        <input type="text" id="username" name="username" placeholder="Masukkan username" required autocomplete="username">
                         <span class="input-icon">👤</span>
                     </div>
                 </div>
@@ -59,13 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="password">Password</label>
                     <div class="input-container">
-                        <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+                        <input type="password" id="password" name="password" placeholder="Masukkan password" required autocomplete="current-password">
                         <span class="input-icon">🔒</span>
                     </div>
                 </div>
 
                 <?php if (!empty($login_error)): ?>
-                    <div class="alert alert-error"><?= $login_error ?></div>
+                    <div class="alert alert-error"><?= htmlspecialchars($login_error) ?></div>
                 <?php endif; ?>
 
                 <button type="submit" class="btn-primary">
@@ -75,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
 
             <div class="login-footer">
-                <small>Default: admin / admin123</small>
+                <small>© 2025 deLondree - Secure Admin Panel</small>
             </div>
         </div>
     </div>

@@ -1,5 +1,18 @@
 <?php
+session_start();
+if (!isset($_SESSION['adminLoggedIn'])) {
+    header('Location: ../login.php');
+    exit;
+}
 include '../koneksi.php';
+?>
+<?php
+session_start();
+include '../koneksi.php';
+
+if (!isset($_SESSION['adminLoggedIn'])) {
+    die('Akses ditolak');
+}
 
 $id = $_POST['id'] ?? '';
 $jenis = mysqli_real_escape_string($conn, $_POST['jenis_layanan']);
@@ -7,14 +20,20 @@ $kategori = mysqli_real_escape_string($conn, $_POST['kategori']);
 $harga = intval($_POST['harga']);
 
 if ($id == '') {
-    $sql = "INSERT INTO harga (jenis_layanan, kategori, harga) VALUES ('$jenis', '$kategori', $harga)";
+    // INSERT dengan prepared statement
+    $stmt = $conn->prepare("INSERT INTO harga (jenis_layanan, kategori, harga) VALUES (?, ?, ?)");
+    $stmt->bind_param("ssi", $jenis, $kategori, $harga);
 } else {
-    $sql = "UPDATE harga SET jenis_layanan='$jenis', kategori='$kategori', harga=$harga WHERE id=$id";
+    // UPDATE dengan prepared statement
+    $stmt = $conn->prepare("UPDATE harga SET jenis_layanan=?, kategori=?, harga=? WHERE id=?");
+    $stmt->bind_param("ssii", $jenis, $kategori, $harga, $id);
 }
 
-if ($conn->query($sql)) {
+if ($stmt->execute()) {
     echo "Data harga berhasil disimpan.";
 } else {
-    echo "Gagal menyimpan data: " . $conn->error;
+    echo "Gagal menyimpan data: " . $stmt->error;
 }
+
+$stmt->close();
 ?>

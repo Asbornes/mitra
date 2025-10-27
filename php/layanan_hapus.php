@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION['adminLoggedIn'])) {
+    header('Location: ../login.php');
+    exit;
+}
+include '../koneksi.php';
+?>
+<?php
 include '../koneksi.php';
 
 // Pastikan ID ada dan berupa angka

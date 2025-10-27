@@ -753,3 +753,293 @@ section {
         height: 40px;
     }
 }
+
+/* ============================================
+   FIX IMAGE OVERFLOW - Tambahkan/Replace di style.css
+   ============================================ */
+
+/* SERVICE CARD - Fix overflow */
+.service-card {
+    position: relative;
+    overflow: hidden; /* ← PENTING! Prevent overflow */
+    padding: 0; /* Remove padding untuk gambar full */
+    background: var(--white);
+    border: 2px solid var(--gray-200);
+    border-radius: 20px;
+    text-align: center;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    border-color: var(--turquoise);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(20, 184, 166, 0.15);
+}
+
+/* Service Image - Di dalam card */
+.service-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    display: block; /* ← Remove spacing */
+    border-radius: 18px 18px 0 0; /* Sesuaikan dengan card radius */
+}
+.service-card {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    background: var(--white);
+    border: 2px solid var(--gray-200);
+    border-radius: 20px;
+    text-align: center;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    border-color: var(--turquoise);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(20, 184, 166, 0.15);
+}
+
+/* Service Image - NO ZOOM on hover */
+.service-image,
+.service-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain; /* ← CONTAIN: tidak crop, tidak zoom */
+    object-position: center;
+    display: block;
+    margin: 0;
+    border-radius: 18px 18px 0 0;
+    background: #f9fafb; /* Background untuk padding area */
+    transition: none; /* ← NO transition/zoom */
+}
+
+/* REMOVE hover zoom effect */
+.service-card:hover .service-image,
+.service-card:hover img {
+    transform: none; /* ← NO zoom/scale */
+}
+
+/* Service Content */
+.service-title {
+    padding: 0 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.service-description {
+    padding: 0 2rem;
+    margin-bottom: 1rem;
+    color: var(--gray-600);
+    line-height: 1.6;
+}
+
+.service-price {
+    padding: 0 2rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--primary-blue);
+}
+
+/* === GALLERY === */
+.gallery-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #f9fafb;
+}
+
+/* Gallery Image - NO ZOOM on hover */
+.gallery-image,
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover untuk gallery agar full */
+    object-position: center;
+    display: block;
+    transition: opacity 0.3s ease; /* Hanya opacity, bukan scale */
+}
+
+/* Hover effect: opacity saja, bukan zoom */
+.gallery-item:hover .gallery-image,
+.gallery-item:hover img {
+    opacity: 0.9; /* Slight fade */
+    transform: none; /* ← NO zoom */
+}
+
+/* Gallery Overlay */
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    padding: 1.5rem 1rem 1rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-title {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0;
+    text-align: center;
+}
+
+/* === GALLERY MODAL === */
+.gallery-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.gallery-modal-content {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain; /* ← CONTAIN: tidak crop gambar di modal */
+    border-radius: 8px;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+}
+
+.gallery-modal-caption {
+    text-align: center;
+    color: white;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.gallery-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    background: none;
+    border: none;
+    z-index: 10000;
+}
+
+.gallery-modal-close:hover,
+.gallery-modal-close:focus {
+    color: #bbb;
+}
+
+/* Navigation buttons */
+.gallery-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s;
+    z-index: 10000;
+}
+
+.gallery-nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.gallery-prev {
+    left: 20px;
+}
+
+.gallery-next {
+    right: 20px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .service-image,
+    .service-card img {
+        height: 220px;
+    }
+    
+    .service-title,
+    .service-description,
+    .service-price {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    .gallery-modal-content {
+        max-width: 95%;
+        max-height: 80vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-image,
+    .service-card img {
+        height: 200px;
+    }
+    
+    .service-title,
+    .service-description,
+    .service-price {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .service-title {
+        font-size: 1.25rem;
+    }
+    
+    .gallery-modal-close {
+        top: 10px;
+        right: 15px;
+        font-size: 30px;
+    }
+    
+    .gallery-nav-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 1.5rem;
+    }
+}
+
+/* === ADMIN PANEL === */
+.data-table img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain; /* ← CONTAIN di admin table */
+    object-position: center;
+    border-radius: 8px;
+    display: block;
+    background: #f9fafb;
+}
+
+.gallery-grid .gallery-item img {
+    object-fit: cover; /* Cover untuk admin gallery */
+}
