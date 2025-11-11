@@ -5,22 +5,38 @@ if (!isset($_SESSION['adminLoggedIn'])) {
     exit;
 }
 include '../koneksi.php';
-?>
-<?php
-include '../koneksi.php';
 
-// Pastikan ID ada dan berupa angka
+// Pastikan ID dikirim dan valid
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = intval($_GET['id']);
 
-    // Hapus data dengan prepared statement (lebih aman)
+    // Ambil nama file dulu untuk hapus dari folder uploads
+    $getFoto = $conn->prepare("SELECT foto FROM layanan WHERE id = ?");
+    $getFoto->bind_param("i", $id);
+    $getFoto->execute();
+    $result = $getFoto->get_result();
+    if ($row = $result->fetch_assoc()) {
+        $filePath = "../uploads/" . $row['foto'];
+        if (file_exists($filePath) && $row['foto'] != '') {
+            unlink($filePath); // hapus file fisik
+        }
+    }
+    $getFoto->close();
+
+    // Hapus data dari database
     $stmt = $conn->prepare("DELETE FROM layanan WHERE id = ?");
     $stmt->bind_param("i", $id);
-    $stmt->execute();
+    
+    if ($stmt->execute()) {
+        echo "Data layanan berhasil dihapus.";
+    } else {
+        echo "Gagal menghapus data: " . $stmt->error;
+    }
+    
     $stmt->close();
+} else {
+    echo "ID tidak valid!";
 }
 
-// Setelah hapus, arahkan kembali ke halaman admin bagian layanan
-header("Location: ../admin.php#layanan");
-exit;
+$conn->close();
 ?>

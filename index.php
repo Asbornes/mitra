@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>deLondree - Layanan Laundry Profesional</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
     <div class="laundry-website">
@@ -13,41 +18,56 @@
         <header class="header">
             <div class="header-container">
                 <div class="logo-section">
-                    <img src="hero.jpg" 
-                         alt="deLondree Logo" 
-                         class="logo">
+                    <img src="hero.jpg" alt="deLondree Logo" class="logo">
+                    <span class="logo-text">deLondree</span>
                 </div>
                 
                 <nav class="desktop-nav">
                     <a href="#home" class="nav-link">Beranda</a>
                     <a href="#about" class="nav-link">Tentang Kami</a>
                     <a href="#services" class="nav-link">Layanan</a>
-                    <a href="#pricing" class="nav-link">Harga</a>
+                    <a href="#process" class="nav-link">Cara Kerja</a>
                     <a href="#gallery" class="nav-link">Galeri</a>
                     <a href="#contact" class="nav-link">Kontak</a>
+                    <a href="booking.php" class="nav-link booking-cta">
+                        <i class="fas fa-broom"></i> 
+                        <span>Laundry Sekarang</span>
+                    </a>
                 </nav>
 
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
+                <div class="header-actions">
+                    <a href="booking.php" class="booking-btn-mobile">
+                        <i class="fas fa-broom"></i>
+                    </a>
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- Mobile Menu -->
             <div class="mobile-menu" id="mobileMenu">
-                <a href="#home" class="mobile-nav-link" onclick="closeMobileMenu()">Beranda</a>
-                <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()">Tentang Kami</a>
-                <a href="#services" class="mobile-nav-link" onclick="closeMobileMenu()">Layanan</a>
-                <a href="#pricing" class="mobile-nav-link" onclick="closeMobileMenu()">Harga</a>
-                <a href="#gallery" class="mobile-nav-link" onclick="closeMobileMenu()">Galeri</a>
-                <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">Kontak</a>
+                <a href="#home" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-home"></i> Beranda
+                </a>
+                <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-info-circle"></i> Tentang Kami
+                </a>
+                <a href="#services" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-concierge-bell"></i> Layanan
+                </a>
+                <a href="#process" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-play-circle"></i> Cara Kerja
+                </a>
+                <a href="#gallery" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-images"></i> Galeri
+                </a>
+                <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-phone"></i> Kontak
+                </a>
+                <a href="booking.php" class="mobile-nav-link booking-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-broom"></i> Laundry Sekarang
+                </a>
             </div>
         </header>
 
@@ -57,49 +77,90 @@
             <div class="hero-content">
                 <h1 class="hero-title">Layanan Laundry Profesional</h1>
                 <p class="hero-subtitle">Bersih, Rapi, dan Wangi - Kepercayaan Anda adalah Prioritas Kami</p>
-                <a href="#contact" class="cta-button">Hubungi Kami Sekarang</a>
+                <div class="hero-actions">
+                    <a href="booking.php" class="cta-button primary">
+                        <i class="fas fa-calendar-plus"></i> Pesan Sekarang
+                    </a>
+                    <a href="#services" class="cta-button secondary">
+                        <i class="fas fa-concierge-bell"></i> Lihat Layanan
+                    </a>
+                </div>
+                <div class="hero-features">
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Kualitas Terjamin</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <span>Layanan Cepat</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-truck"></i>
+                        <span>Antar Jemput Gratis</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- About Section -->
         <section id="about" class="about-section">
             <div class="container">
-                <h2 class="section-title">Tentang deLondree</h2>
+                <div class="section-header">
+                    <h2 class="section-title">Tentang <span class="highlight">deLondree</span></h2>
+                    <p class="section-subtitle">Solusi laundry profesional untuk kebutuhan harian Anda</p>
+                </div>
                 <div class="about-content">
+                    <div class="about-image">
+                        <div class="image-frame">
+                            <img src="uploads/about-us.jpg" alt="Tentang deLondree Laundry" class="about-img">
+                            <div class="image-overlay">
+                                <div class="overlay-content">
+                                    <i class="fas fa-award"></i>
+                                    <h4>Laundry Specialist</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="about-text">
+                        <h3>deLondree - Laundry & Dry Cleaning Specialist</h3>
                         <p class="about-paragraph">
-                            deLondree adalah layanan laundry profesional yang berkomitmen memberikan hasil terbaik untuk pakaian Anda. 
-                            Dengan peralatan modern dan tenaga ahli berpengalaman, kami memastikan setiap pakaian ditangani dengan hati-hati.
+                            deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, 
+                            kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, 
+                            kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.
                         </p>
                         <p class="about-paragraph">
-                            Kami memahami bahwa pakaian bersih dan rapi adalah kebutuhan penting dalam kehidupan sehari-hari. 
-                            Oleh karena itu, kami hadir untuk memberikan solusi laundry yang cepat, berkualitas, dan terpercaya.
+                            Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan 
+                            untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani 
+                            dengan penuh perhatian oleh tim profesional yang terlatih.
                         </p>
-                        <div class="features-grid">
-                            <div class="feature-item">
-                                <svg class="feature-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                </svg>
-                                <h3>Kualitas Terjamin</h3>
-                                <p>Menggunakan detergen berkualitas tinggi</p>
+                        <div class="about-features">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h4>Peralatan Modern</h4>
+                                <p>Menggunakan mesin laundry terbaru dan teknologi canggih</p>
                             </div>
-                            <div class="feature-item">
-                                <svg class="feature-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <polyline points="12 6 12 12 16 14"/>
-                                </svg>
-                                <h3>Layanan Cepat</h3>
-                                <p>Proses laundry yang efisien</p>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h4>Ramah Lingkungan</h4>
+                                <p>Detergen biodegradable yang aman untuk kulit dan lingkungan</p>
                             </div>
-                            <div class="feature-item">
-                                <svg class="feature-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="1" y="3" width="15" height="13"/>
-                                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
-                                    <circle cx="5.5" cy="18.5" r="2.5"/>
-                                    <circle cx="18.5" cy="18.5" r="2.5"/>
-                                </svg>
-                                <h3>Antar Jemput</h3>
-                                <p>Gratis dalam jangkauan area</p>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <h4>Tim Profesional</h4>
+                                <p>Staff berpengalaman dan terlatih dalam menangani berbagai jenis pakaian</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-truck-fast"></i>
+                                </div>
+                                <h4>Layanan Cepat</h4>
+                                <p>Proses cepat dengan hasil maksimal dan pengantaran tepat waktu</p>
                             </div>
                         </div>
                     </div>
@@ -107,284 +168,313 @@
             </div>
         </section>
 
-        <!-- Services Section (Dynamic from Database) -->
+        <!-- Services Section -->
         <section id="services" class="services-section">
             <div class="container">
-                <h2 class="section-title">Layanan Kami</h2>
-                <p class="section-subtitle">Berbagai pilihan layanan untuk memenuhi kebutuhan Anda</p>
+                <div class="section-header">
+                    <h2 class="section-title">Layanan <span class="highlight">Kami</span></h2>
+                    <p class="section-subtitle">Pilih layanan yang sesuai dengan kebutuhan Anda</p>
+                </div>
                 <div class="services-grid" id="servicesGrid">
                     <?php
                     $result = $conn->query("SELECT * FROM layanan");
                     while ($row = $result->fetch_assoc()) {
-                        // Cek apakah ada foto
-                        $fotoPath = !empty($row['foto']) ? 'uploads/' . htmlspecialchars($row['foto']) : 'placeholder.jpg';
+                        $fotoPath = !empty($row['foto']) ? 'uploads/' . htmlspecialchars($row['foto']) : 'assets/placeholder.jpg';
                         $namaLayanan = htmlspecialchars($row['nama_layanan']);
                         $deskripsi = htmlspecialchars($row['deskripsi']);
                         $harga = number_format($row['harga_mulai'], 0, ',', '.');
                         
                         echo "
-                        <div class='service-card'>
-                            <img src='{$fotoPath}' 
-                                alt='{$namaLayanan}' 
-                                class='service-image'
-                                loading='lazy'>
-                            <h3 class='service-title'>{$namaLayanan}</h3>
-                            <p class='service-description'>{$deskripsi}</p>
-                            <p class='service-price'>Mulai dari Rp {$harga}</p>
+                        <div class='service-card' onclick='openServiceDetail({$row['id']})'>
+                            <div class='service-image-container'>
+                                <img src='{$fotoPath}' 
+                                     alt='{$namaLayanan}' 
+                                     class='service-image'
+                                     loading='lazy'>
+                                <div class='service-overlay'>
+                                    <div class='service-action'>
+                                        <i class='fas fa-eye'></i>
+                                        <span>Lihat Detail</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='service-content'>
+                                <h3 class='service-title'>{$namaLayanan}</h3>
+                                <p class='service-description'>{$deskripsi}</p>
+                                <div class='service-footer'>
+                                    <p class='service-price'>Mulai dari <span>Rp {$harga}</span></p>
+                                    <button class='service-btn' onclick='event.stopPropagation(); openServiceDetail({$row['id']})'>
+                                        <i class='fas fa-arrow-right'></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         ";
                     }
                     ?>
                 </div>
-            </div>
-        </section>
-
-        <!-- Pricing Section (Dynamic from Database) -->
-        <section id="pricing" class="pricing-section">
-            <div class="container">
-                <h2 class="section-title">Daftar Harga</h2>
-                <p class="section-subtitle">Harga terjangkau dengan kualitas terbaik</p>
-
-                <div class="pricing-table" id="pricingTable">
-                    <?php
-                    $result = $conn->query("SELECT * FROM harga ORDER BY jenis_layanan, kategori");
-                    $current_service = '';
-
-                    while ($row = $result->fetch_assoc()) {
-                        // Kalau jenis layanan berubah, tutup card lama dan buka card baru
-                        if ($current_service != $row['jenis_layanan']) {
-                            if ($current_service != '') echo "</div></div>"; // Tutup card sebelumnya
-
-                            // Buka card baru
-                            echo "<div class='pricing-card'>
-                                    <h3 class='pricing-title'>{$row['jenis_layanan']}</h3>
-                                    <div class='pricing-details'>";
-                            $current_service = $row['jenis_layanan'];
-                        }
-
-                        // Tambahkan item harga
-                        echo "<div class='price-item'>
-                                <span class='price-label'>{$row['kategori']}</span>
-                                <span class='price-value'>Rp " . number_format($row['harga'], 0, ',', '.') . "</span>
-                            </div>";
-                    }
-
-                    // Tutup card terakhir
-                    if ($current_service != '') echo "</div></div>";
-                    ?>
+                
+                <?php if ($result->num_rows === 0): ?>
+                <div class="empty-state">
+                    <i class="fas fa-concierge-bell"></i>
+                    <h3>Belum Ada Layanan Tersedia</h3>
+                    <p>Admin dapat menambahkan layanan melalui panel admin</p>
                 </div>
-
-                <p class="pricing-note">*Harga dapat berubah sewaktu-waktu. Hubungi kami untuk informasi lebih lanjut.</p>
+                <?php endif; ?>
             </div>
         </section>
 
+        <!-- Service Detail Modal -->
+        <div id="serviceDetailModal" class="modal">
+            <div class="modal-content large">
+                <span class="modal-close" onclick="closeServiceDetail()">
+                    <i class="fas fa-times"></i>
+                </span>
+                <div id="serviceDetailContent">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
 
-        <!-- Gallery Section (Dynamic from Database) -->
+        <!-- How It Works Section -->
+        <section id="process" class="process-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Cara <span class="highlight">Memesan</span></h2>
+                    <p class="section-subtitle">Hanya 4 langkah mudah untuk mendapatkan pakaian bersih dan rapi</p>
+                </div>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-visual">
+                            <div class="step-number">01</div>
+                            <div class="step-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="step-connector"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Pesan Online</h3>
+                            <p>Isi form pemesanan online dengan detail alamat dan jadwal penjemputan. Pilih layanan yang diinginkan.</p>
+                            <ul class="step-features">
+                                <li><i class="fas fa-check"></i> Isi form mudah</li>
+                                <li><i class="fas fa-check"></i> Pilih jadwal fleksibel</li>
+                                <li><i class="fas fa-check"></i> Pilih layanan favorit</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-visual">
+                            <div class="step-number">02</div>
+                            <div class="step-icon">
+                                <i class="fas fa-truck-pickup"></i>
+                            </div>
+                            <div class="step-connector"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Penjemputan</h3>
+                            <p>Kurir kami akan menjemput pakaian kotor di alamat yang telah ditentukan sesuai jadwal.</p>
+                            <ul class="step-features">
+                                <li><i class="fas fa-check"></i> Antar jemput gratis</li>
+                                <li><i class="fas fa-check"></i> Jadwal tepat waktu</li>
+                                <li><i class="fas fa-check"></i> Kurir profesional</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-visual">
+                            <div class="step-number">03</div>
+                            <div class="step-icon">
+                                <i class="fas fa-soap"></i>
+                            </div>
+                            <div class="step-connector"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Proses Laundry</h3>
+                            <p>Pakaian diproses dengan standar kebersihan tinggi menggunakan peralatan modern dan detergen berkualitas.</p>
+                            <ul class="step-features">
+                                <li><i class="fas fa-check"></i> Proses hygienis</li>
+                                <li><i class="fas fa-check"></i> Detergen premium</li>
+                                <li><i class="fas fa-check"></i> Quality control</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-visual">
+                            <div class="step-number">04</div>
+                            <div class="step-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Pengantaran & Pembayaran</h3>
+                            <p>Pakaian bersih dan rapi diantar kembali. Bayar dengan mudah via COD atau transfer bank.</p>
+                            <ul class="step-features">
+                                <li><i class="fas fa-check"></i> Pengantaran tepat waktu</li>
+                                <li><i class="fas fa-check"></i> Pakaian wangi & rapi</li>
+                                <li><i class="fas fa-check"></i> Pembayaran fleksibel</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-cta">
+                    <div class="cta-content">
+                        <h3>Siap Mencoba Layanan Kami?</h3>
+                        <p>Bergabung dengan ratusan pelanggan yang telah mempercayakan pakaian mereka pada deLondree</p>
+                        <div class="cta-actions">
+                            <a href="booking.php" class="cta-button primary large">
+                                <i class="fas fa-calendar-plus"></i> Pesan Laundry Sekarang
+                            </a>
+                            <a href="https://wa.me/6281818710655" class="cta-button secondary" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Tanya via WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
         <section id="gallery" class="gallery-section">
             <div class="container">
-                <h2 class="section-title">Galeri</h2>
-                <p class="section-subtitle">Lihat hasil kerja profesional kami</p>
+                <div class="section-header">
+                    <h2 class="section-title">Galeri <span class="highlight">Kami</span></h2>
+                    <p class="section-subtitle">Lihat hasil kerja profesional dan fasilitas modern kami</p>
+                </div>
                 <div class="gallery-grid" id="galleryGrid">
                     <?php
-                    $result = $conn->query("SELECT * FROM galeri");
+                    $result = $conn->query("SELECT * FROM galeri ORDER BY created_at DESC LIMIT 8");
                     $gallery_items = [];
                     while ($row = $result->fetch_assoc()) {
                         $gallery_items[] = $row;
                         echo "
                         <div class='gallery-item' onclick='openGalleryModal(\"{$row['foto']}\", \"{$row['judul']}\")'>
-                            <img src='uploads/{$row['foto']}' alt='{$row['judul']}' class='gallery-image'>
-                            <div class='gallery-overlay'>
-                                <p class='gallery-title'>{$row['judul']}</p>
+                            <div class='gallery-image-container'>
+                                <img src='uploads/{$row['foto']}' alt='{$row['judul']}' class='gallery-image'>
+                                <div class='gallery-overlay'>
+                                    <div class='gallery-content'>
+                                        <i class='fas fa-search-plus'></i>
+                                        <p class='gallery-title'>{$row['judul']}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         ";
                     }
                     ?>
                 </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section class="testimonials-section">
-            <div class="container">
-                <h2 class="section-title">Testimoni Pelanggan</h2>
-                <p class="section-subtitle">Apa kata pelanggan kami</p>
-                <div class="testimonials-grid">
-                    <div class="testimonial-card">
-                        <div class="stars">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                        </div>
-                        <p class="testimonial-text">
-                            "Laundry terbaik di Kendari! Hasil cucian selalu bersih dan wangi. Pelayanan ramah dan cepat."
-                        </p>
-                        <p class="testimonial-author">- Ibu Siti</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="stars">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                        </div>
-                        <p class="testimonial-text">
-                            "Sangat puas dengan layanan antar jemputnya. Hemat waktu dan hasilnya memuaskan!"
-                        </p>
-                        <p class="testimonial-author">- Bapak Ahmad</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="stars">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FCD34D" stroke="#FCD34D" stroke-width="2">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                        </div>
-                        <p class="testimonial-text">
-                            "Harga terjangkau, kualitas premium. Saya jadi pelanggan setia deLondree."
-                        </p>
-                        <p class="testimonial-author">- Ibu Rina</p>
-                    </div>
+                
+                <?php if ($result->num_rows === 0): ?>
+                <div class="empty-state">
+                    <i class="fas fa-images"></i>
+                    <h3>Belum Ada Foto di Galeri</h3>
+                    <p>Admin dapat menambahkan foto melalui panel admin</p>
                 </div>
+                <?php endif; ?>
+                
+                <?php if ($result->num_rows > 0): ?>
+                <div class="gallery-cta">
+                    <a href="gallery.php" class="btn-secondary">
+                        <i class="fas fa-images"></i> Lihat Semua Foto
+                    </a>
+                </div>
+                <?php endif; ?>
             </div>
         </section>
 
-        <!-- Contact Section (Dynamic from Database) -->
+        <!-- Gallery Modal -->
+        <div id="galleryModal" class="modal gallery-modal">
+            <span class="gallery-modal-close" onclick="closeGalleryModal()">
+                <i class="fas fa-times"></i>
+            </span>
+            <img class="gallery-modal-content" id="modalImage">
+            <div id="caption" class="gallery-modal-caption"></div>
+            <button class="gallery-nav-btn gallery-prev" onclick="navigateGallery(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="gallery-nav-btn gallery-next" onclick="navigateGallery(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Contact Section -->
         <section id="contact" class="contact-section">
             <div class="container">
-                <h2 class="section-title">Hubungi Kami</h2>
-                <p class="section-subtitle">Kami siap melayani Anda</p>
+                <div class="section-header">
+                    <h2 class="section-title">Hubungi <span class="highlight">Kami</span></h2>
+                    <p class="section-subtitle">Butuh bantuan? Jangan ragu untuk menghubungi tim kami</p>
+                </div>
                 <div class="contact-content">
-                    <div class="contact-info" id="contactInfo">
+                    <div class="contact-info">
                         <?php
-                        // Ambil data profil dari database (jika ada tabel profil)
-                        // Jika belum ada, tampilkan data default
                         $profil = $conn->query("SELECT * FROM profil LIMIT 1");
-                        if ($profil && $profil->num_rows > 0) {
-                            $data = $profil->fetch_assoc();
-                            echo "
-                            <div class='contact-item'>
-                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-                                    <path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/>
-                                    <circle cx='12' cy='10' r='3'/>
-                                </svg>
-                                <div>
-                                    <h4>Alamat</h4>
-                                    <p>{$data['alamat']}</p>
-                                </div>
-                            </div>
-                            <div class='contact-item'>
-                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-                                    <path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/>
-                                </svg>
-                                <div>
-                                    <h4>WhatsApp</h4>
-                                    <p>{$data['whatsapp']}</p>
-                                </div>
-                            </div>
-                            <div class='contact-item'>
-                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-                                    <circle cx='12' cy='12' r='10'/>
-                                    <polyline points='12 6 12 12 16 14'/>
-                                </svg>
-                                <div>
-                                    <h4>Jam Operasional</h4>
-                                    <p>Senin - Sabtu: {$data['jam_senin']}</p>
-                                    <p>Minggu: {$data['jam_minggu']}</p>
-                                </div>
-                            </div>
-                            ";
-                        } else {
-                            echo "
-                            <div class='contact-item'>
-                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-                                    <path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/>
-                                    <circle cx='12' cy='10' r='3'/>
-                                </svg>
-                                <div>
-                                    <h4>Alamat</h4>
-                                    <p>Kota Kendari, Sulawesi Tenggara</p>
-                                </div>
-                            </div>
-                            <div class='contact-item'>
-                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-                                    <path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/>
-                                </svg>
-                                <div>
-                                    <h4>WhatsApp</h4>
-                                    <p>+62 8181 871 0655</p>
-                                </div>
-                            </div>
-                            <div class='contact-item'>
-                                <svg class='contact-icon' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
-                                    <circle cx='12' cy='12' r='10'/>
-                                    <polyline points='12 6 12 12 16 14'/>
-                                </svg>
-                                <div>
-                                    <h4>Jam Operasional</h4>
-                                    <p>Senin - Sabtu: 08.00 - 20.00</p>
-                                    <p>Minggu: 09.00 - 18.00</p>
-                                </div>
-                            </div>
-                            ";
-                        }
+                        $data = $profil->num_rows > 0 ? $profil->fetch_assoc() : [];
                         ?>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Alamat Laundry</h4>
+                                <p class="contact-text"><?= $data['alamat'] ?? 'Jl. Mekar No.54, Kec.Kadia, Kota Kendari, Sulawesi Tenggara' ?></p>
+                                <small>Kami melayani area sekitar Kendari dengan layanan antar jemput</small>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>WhatsApp</h4>
+                                <p class="contact-text"><?= $data['whatsapp'] ?? '+62 8181 871 0655' ?></p>
+                                <small>Hubungi kami via WhatsApp untuk respon cepat</small>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Jam Operasional</h4>
+                                <div class="schedule">
+                                    <div class="schedule-item">
+                                        <strong>Senin - Sabtu : </strong>
+                                        <span class="contact-text"><?= $data['jam_senin'] ?? '08.00 - 20.00 WITA' ?></span>
+                                    </div>
+                                    <div class="schedule-item">
+                                        <strong>Minggu : </strong>
+                                        <span class="contact-text"><?= $data['jam_minggu'] ?? '09.00 - 18.00 WITA' ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-actions">
+                            <a href="https://wa.me/6281818710655" class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>Chat via WhatsApp</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="contact-map" id="contactButtons">
-                        <!-- Tombol WhatsApp -->
-                        <a href="https://wa.me/6281818710655" target="_blank" class="whatsapp-button">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                            </svg>
-                            Chat WhatsApp
-                        </a>
-
-                        <!-- Tombol Google Maps -->
-                        <a href="https://www.google.com/maps?q=deLondree+Laundry+Kendari" target="_blank" class="map-button">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            Lihat di Google Maps
-                        </a>
+                    
+                    <div class="contact-map">
+                        <div class="map-container">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d730.7368494865218!2d122.5033663!3d-3.9825938!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d98f36fd6209aa5%3A0x6acec4dd33a3cf51!2sdeLondree!5e1!3m2!1sid!2sid!4v1762674053340!5m2!1sid!2sid" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -394,49 +484,123 @@
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-section">
-                        <img src="hero.jpg" 
-                             alt="deLondree Logo" 
-                             class="footer-logo">
-                        <p class="footer-text">Layanan laundry profesional untuk pakaian bersih dan rapi.</p>
+                        <div class="footer-logo">
+                            <img src="hero.jpg" alt="deLondree Logo">
+                            <div>
+                                <span class="footer-logo-text">deLondree</span>
+                                <p class="footer-tagline">Laundry Profesional & Terpercaya</p>
+                            </div>
+                        </div>
+                        <p class="footer-text">Layanan laundry profesional untuk pakaian bersih dan rapi dengan kualitas terbaik dan harga terjangkau.</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://wa.me/6281818710655" class="social-link">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
                     </div>
                     
                     <div class="footer-section">
-                        <h4 class="footer-title">Layanan</h4>
+                        <h4 class="footer-title">Layanan Kami</h4>
                         <ul class="footer-links">
-                            <li>Cuci Kering Setrika</li>
-                            <li>Cuci Kering</li>
-                            <li>Bed Cover</li>
-                            <li>Antar Jemput</li>
+                            <?php
+                            $services = $conn->query("SELECT nama_layanan FROM layanan LIMIT 5");
+                            while ($service = $services->fetch_assoc()) {
+                                echo '<li><a href="#services">' . $service['nama_layanan'] . '</a></li>';
+                            }
+                            ?>
+                        </ul>
+                    </div>
+
+                    <div class="footer-section">
+                        <h4 class="footer-title">Tautan Cepat</h4>
+                        <ul class="footer-links">
+                            <li><a href="#home">Beranda</a></li>
+                            <li><a href="#about">Tentang Kami</a></li>
+                            <li><a href="#services">Layanan</a></li>
+                            <li><a href="#process">Cara Kerja</a></li>
+                            <li><a href="#gallery">Galeri</a></li>
+                            <li><a href="#contact">Kontak</a></li>
                         </ul>
                     </div>
 
                     <div class="footer-section">
                         <h4 class="footer-title">Kontak</h4>
-                        <ul class="footer-links">
-                            <li>+62 8181 871 0655</li>
-                            <li>Kota Kendari</li>
-                            <li>Sulawesi Tenggara</li>
+                        <ul class="footer-links contact-links">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><?= $data['alamat'] ?? 'Kota Kendari, Sulawesi Tenggara' ?></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span><?= $data['whatsapp'] ?? '+62 8181 871 0655' ?></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span><?= $data['email'] ?? 'info@delondree.com' ?></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <span><?= $data['jam_senin'] ?? 'Senin - Sabtu: 08.00-20.00' ?></span>
+                            </li>
                         </ul>
                     </div>
                 </div>
+                
                 <div class="footer-bottom">
-                    <p>&copy; 2025 deLondree. All rights reserved.</p>
-                    <!-- Admin Login Link (Hidden) -->
-                    <a href="login.php" class="admin-link" style="opacity: 0.1; font-size: 0.75rem; margin-top: 0.5rem; display: inline-block; color: inherit; text-decoration: none;">Admin</a>
+                    <div class="footer-copyright">
+                        <p>&copy; 2025 deLondree. All rights reserved.</p>
+                    </div>
+                    <!-- <div class="footer-admin">
+                        <a href="login.php" class="admin-link">
+                            <i class="fas fa-cog"></i> Admin Panel
+                        </a>
+                    </div> -->
                 </div>
             </div>
         </footer>
     </div>
 
-    <!-- Gallery Popup Modal -->
-    <div id="galleryModal" class="gallery-modal">
-        <span class="gallery-modal-close" onclick="closeGalleryModal()">&times;</span>
-        <img class="gallery-modal-content" id="modalImage">
-        <div id="caption" class="gallery-modal-caption"></div>
-        <button class="gallery-nav-btn gallery-prev" onclick="navigateGallery(-1)">&#10094;</button>
-        <button class="gallery-nav-btn gallery-next" onclick="navigateGallery(1)">&#10095;</button>
-    </div>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/6281818710655" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span class="float-text">Chat WhatsApp</span>
+    </a>
 
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="main.js"></script>
+    <script>
+        // Initialize Map
+        function initMap() {
+            const map = L.map('map').setView([-3.9984, 122.5129], 13); // Kendari coordinates
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            L.marker([-3.9984, 122.5129]).addTo(map)
+                .bindPopup('<b>deLondree Laundry</b><br>Kota Kendari, Sulawesi Tenggara')
+                .openPopup();
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+        });
+    </script>
 </body>
 </html>
+<?php $conn->close(); ?>

@@ -54,10 +54,11 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - deLondree</title>
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="login-page">
     <button class="back-button" onclick="window.location.href='index.php'">
-        <span class="back-icon">←</span> Kembali ke Beranda
+        <i class="fas fa-arrow-left"></i> Kembali ke Beranda
     </button>
 
     <div class="login-container">
@@ -73,7 +74,7 @@ $conn->close();
                     <label for="username">Username</label>
                     <div class="input-container">
                         <input type="text" id="username" name="username" placeholder="Masukkan username" required autocomplete="username">
-                        <span class="input-icon">👤</span>
+                        <i class="fas fa-user input-icon"></i>
                     </div>
                 </div>
 
@@ -81,17 +82,20 @@ $conn->close();
                     <label for="password">Password</label>
                     <div class="input-container">
                         <input type="password" id="password" name="password" placeholder="Masukkan password" required autocomplete="current-password">
-                        <span class="input-icon">🔒</span>
+                        <i class="fas fa-lock input-icon"></i>
                     </div>
                 </div>
 
                 <?php if (!empty($login_error)): ?>
-                    <div class="alert alert-error"><?= htmlspecialchars($login_error) ?></div>
+                    <div class="alert alert-error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <?= htmlspecialchars($login_error) ?>
+                    </div>
                 <?php endif; ?>
 
                 <button type="submit" class="btn-primary">
                     <span class="btn-text">Login</span>
-                    <span class="btn-icon">→</span>
+                    <i class="fas fa-arrow-right btn-icon"></i>
                 </button>
             </form>
 
@@ -100,5 +104,20 @@ $conn->close();
             </div>
         </div>
     </div>
+
+    <script>
+        // Add focus effects to form inputs
+        document.querySelectorAll('.input-container input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

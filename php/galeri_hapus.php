@@ -5,11 +5,7 @@ if (!isset($_SESSION['adminLoggedIn'])) {
     exit;
 }
 include '../koneksi.php';
-?>
-<?php
-include '../koneksi.php';
 
-// Pastikan ID dikirim dan valid
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = intval($_GET['id']);
 
@@ -20,7 +16,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $result = $getFoto->get_result();
     if ($row = $result->fetch_assoc()) {
         $filePath = "../uploads/" . $row['foto'];
-        if (file_exists($filePath)) {
+        if (file_exists($filePath) && $row['foto'] != '') {
             unlink($filePath); // hapus file fisik
         }
     }
@@ -29,11 +25,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     // Hapus data dari database
     $stmt = $conn->prepare("DELETE FROM galeri WHERE id = ?");
     $stmt->bind_param("i", $id);
-    $stmt->execute();
+    
+    if ($stmt->execute()) {
+        echo "Data galeri berhasil dihapus.";
+    } else {
+        echo "Gagal menghapus data: " . $stmt->error;
+    }
+    
     $stmt->close();
+} else {
+    echo "ID tidak valid!";
 }
 
-// Kembali ke halaman admin bagian galeri
-header("Location: ../admin.php#galeri");
-exit;
+$conn->close();
 ?>

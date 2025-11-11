@@ -8,13 +8,13 @@ include '../koneksi.php';
 include '../image_helper.php';
 
 $id = $_POST['id'] ?? '';
-$nama = $_POST['nama_layanan'] ?? '';
-$desk = $_POST['deskripsi'] ?? '';
-$harga = intval($_POST['harga_mulai']);
+$nama_layanan = mysqli_real_escape_string($conn, $_POST['nama_layanan']);
+$deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
+$harga_mulai = intval($_POST['harga_mulai']);
 $foto = '';
 
 // Handle file upload dengan smart resize
-if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
+if (!empty($_FILES['foto']['name'])) {
     // Validasi file
     $validation = validateImageUpload($_FILES['foto'], 5242880); // 5MB
     
@@ -32,10 +32,8 @@ if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
     $tempFile = $_FILES["foto"]["tmp_name"];
     $targetFile = $targetDir . $fileName;
     
-    // SMART RESIZE: 800x600px dengan mode 'contain'
-    // Gambar akan di-resize proporsional, tidak akan terpotong
-    // Jika rasio berbeda, akan ada padding putih
-    if (smartResizeImage($tempFile, $targetFile, 800, 600, 90, 'contain')) {
+    // SMART RESIZE: 400x300px dengan mode 'cover'
+    if (smartResizeImage($tempFile, $targetFile, 400, 300, 90, 'cover')) {
         $foto = $fileName;
         
         // Hapus foto lama jika update
@@ -60,28 +58,27 @@ if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
 // Simpan ke database
 if ($id == '') {
     // INSERT
-    if ($foto) {
-        $stmt = $conn->prepare("INSERT INTO layanan (nama_layanan, deskripsi, harga_mulai, foto) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssis", $nama, $desk, $harga, $foto);
-    } else {
-        $stmt = $conn->prepare("INSERT INTO layanan (nama_layanan, deskripsi, harga_mulai) VALUES (?, ?, ?)");
-        $stmt->bind_param("ssi", $nama, $desk, $harga);
+    if ($foto == '') {
+        die("Foto harus diupload untuk layanan baru!");
     }
+    
+    $stmt = $conn->prepare("INSERT INTO layanan (nama_layanan, deskripsi, harga_mulai, foto) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssis", $nama_layanan, $deskripsi, $harga_mulai, $foto);
 } else {
     // UPDATE
-    if ($foto) {
+    if ($foto != '') {
         $stmt = $conn->prepare("UPDATE layanan SET nama_layanan=?, deskripsi=?, harga_mulai=?, foto=? WHERE id=?");
-        $stmt->bind_param("ssisi", $nama, $desk, $harga, $foto, $id);
+        $stmt->bind_param("ssisi", $nama_layanan, $deskripsi, $harga_mulai, $foto, $id);
     } else {
         $stmt = $conn->prepare("UPDATE layanan SET nama_layanan=?, deskripsi=?, harga_mulai=? WHERE id=?");
-        $stmt->bind_param("ssii", $nama, $desk, $harga, $id);
+        $stmt->bind_param("ssii", $nama_layanan, $deskripsi, $harga_mulai, $id);
     }
 }
 
 if ($stmt->execute()) {
-    echo "Data layanan berhasil disimpan. Gambar sudah disesuaikan ukurannya (tidak di-crop).";
+    echo "Data layanan berhasil disimpan.";
 } else {
-    echo "Error: " . $stmt->error;
+    echo "Gagal menyimpan data: " . $stmt->error;
 }
 
 $stmt->close();

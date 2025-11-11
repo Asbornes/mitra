@@ -5,14 +5,6 @@ if (!isset($_SESSION['adminLoggedIn'])) {
     exit;
 }
 include '../koneksi.php';
-?>
-<?php
-session_start();
-include '../koneksi.php';
-
-if (!isset($_SESSION['adminLoggedIn'])) {
-    die('Akses ditolak');
-}
 
 $id = $_POST['id'] ?? '';
 $jenis = mysqli_real_escape_string($conn, $_POST['jenis_layanan']);
@@ -36,4 +28,5 @@ if ($stmt->execute()) {
 }
 
 $stmt->close();
+$conn->close();
 ?>

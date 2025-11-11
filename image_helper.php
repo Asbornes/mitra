@@ -149,14 +149,6 @@ function smartResizeImage($source_path, $target_path, $target_width, $target_hei
 }
 
 /**
- * Resize gambar dengan padding (letterbox/pillarbox)
- * Gambar tidak akan di-crop sama sekali
- */
-function resizeImageWithPadding($source_path, $target_path, $target_width, $target_height, $bg_color = [255, 255, 255], $quality = 90) {
-    return smartResizeImage($source_path, $target_path, $target_width, $target_height, $quality, 'contain');
-}
-
-/**
  * Validasi file upload gambar
  */
 function validateImageUpload($file, $max_size = 5242880) {

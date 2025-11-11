@@ -8,10 +8,10 @@ include '../koneksi.php';
 include '../image_helper.php';
 
 $id = $_POST['id'] ?? '';
-$judul = $_POST['judul'] ?? '';
+$judul = mysqli_real_escape_string($conn, $_POST['judul']);
 $foto = '';
 
-// Handle file upload dengan smart resize
+// Handle file upload
 if (!empty($_FILES['foto']['name'])) {
     // Validasi file
     $validation = validateImageUpload($_FILES['foto'], 5242880); // 5MB
@@ -30,10 +30,8 @@ if (!empty($_FILES['foto']['name'])) {
     $tempFile = $_FILES["foto"]["tmp_name"];
     $targetFile = $targetDir . $fileName;
     
-    // SMART RESIZE: 600x600px dengan mode 'cover'
-    // Gambar akan di-resize dengan crop minimal
-    // Prioritas: resize dulu, baru crop sedikit jika perlu
-    if (smartResizeImage($tempFile, $targetFile, 600, 600, 90, 'cover')) {
+    // SMART RESIZE: 600x400px dengan mode 'cover'
+    if (smartResizeImage($tempFile, $targetFile, 600, 400, 90, 'cover')) {
         $foto = $fileName;
         
         // Hapus foto lama jika update
@@ -59,7 +57,7 @@ if (!empty($_FILES['foto']['name'])) {
 if ($id == '') {
     // INSERT
     if ($foto == '') {
-        die("Foto harus diupload!");
+        die("Foto harus diupload untuk galeri baru!");
     }
     
     $stmt = $conn->prepare("INSERT INTO galeri (judul, foto) VALUES (?, ?)");
@@ -76,7 +74,7 @@ if ($id == '') {
 }
 
 if ($stmt->execute()) {
-    echo "Data galeri berhasil disimpan. Gambar sudah disesuaikan ukurannya.";
+    echo "Data galeri berhasil disimpan.";
 } else {
     echo "Gagal menyimpan data: " . $stmt->error;
 }
