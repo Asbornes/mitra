@@ -1,0 +1,230 @@
+body.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3B82F6, #14B8A6);
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    padding: 2rem;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, #3B82F6, #14B8A6);
+}
+
+.login-header img.login-logo {
+    width: 80px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.login-header h1 {
+    margin-bottom: 0.5rem;
+    color: #1F2937;
+    font-weight: 700;
+    font-size: 1.75rem;
+}
+
+.login-header p {
+    color: #6B7280;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.login-form .form-group {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.9rem;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border-radius: 10px;
+    border: 2px solid #E5E7EB;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #f9fafb;
+}
+
+.login-form input:focus {
+    border-color: #3B82F6;
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-container.focused .input-icon {
+    color: #3B82F6;
+}
+
+.input-icon {
+    position: absolute;
+    left: 0.75rem;
+    font-size: 1.1rem;
+    color: #6B7280;
+    transition: color 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #3B82F6, #14B8A6);
+    color: #fff;
+    border: none;
+    padding: 0.85rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-text {
+    font-size: 1rem;
+}
+
+.btn-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s;
+}
+
+.btn-primary:hover .btn-icon {
+    transform: translateX(3px);
+}
+
+.login-footer {
+    margin-top: 1.5rem;
+    color: #6B7280;
+    font-size: 0.85rem;
+    padding: 0.75rem;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+}
+
+/* Tombol kembali */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #111827;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Alert error */
+.alert {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.alert-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+/* Animasi untuk card login */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Responsif untuk perangkat kecil */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .back-button {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+    
+    body.login-page {
+        padding: 1rem;
+    }
+}
