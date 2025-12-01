@@ -64,6 +64,17 @@ include 'koneksi.php';
                 Ganti Password
             </a>
         </nav>
+
+        <div class="sidebar-footer">
+            <div class="admin-user-info">
+                <i class="fas fa-user-circle"></i>
+                <span><?= $_SESSION['admin_username'] ?></span>
+            </div>
+            <button onclick="adminUI.logout()" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
     </aside>
 
     <!-- Main Content -->
@@ -75,10 +86,6 @@ include 'koneksi.php';
             <i class="fas fa-user-circle"></i>
             <span><?= $_SESSION['admin_username'] ?></span>
           </div>
-          <button class="btn-logout-header" onclick="adminUI.logout()">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout
-          </button>
         </div>
       </div>
 
