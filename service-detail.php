@@ -47,7 +47,7 @@ if ($service_id > 0) {
                     </div>
                     
                     <button class="btn-primary book-now-btn large" data-service-name="'.$service['nama_layanan'].'">
-                        <i class="fas fa-calendar-plus"></i> Pesan Layanan Ini
+                        <i class="fas fa-shopping-cart"></i> Pesan Layanan Ini
                     </button>
                 </div>
             </div>
@@ -183,7 +183,7 @@ if ($service_id > 0) {
                         <p>Pesan sekarang dan dapatkan pakaian bersih, rapi, dan wangi dengan mudah!</p>
                         <div class="cta-actions">
                             <button class="btn-primary large book-now-btn" data-service-name="'.$service['nama_layanan'].'">
-                                <i class="fas fa-calendar-plus"></i> Pesan Sekarang
+                                <i class="fas fa-shopping-cart"></i> Pesan Sekarang
                             </button>
                             <a href="https://wa.me/6281818710655" class="btn-secondary" target="_blank">
                                 <i class="fab fa-whatsapp"></i> Tanya via WhatsApp

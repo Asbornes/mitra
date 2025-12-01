@@ -64,17 +64,6 @@ include 'koneksi.php';
                 Ganti Password
             </a>
         </nav>
-
-        <div class="sidebar-footer">
-            <div class="admin-user-info">
-                <i class="fas fa-user-circle"></i>
-                <span><?= $_SESSION['admin_username'] ?></span>
-            </div>
-            <button onclick="adminUI.logout()" class="btn-logout">
-                <i class="fas fa-sign-out-alt"></i>
-                Logout
-            </button>
-        </div>
     </aside>
 
     <!-- Main Content -->
@@ -86,6 +75,10 @@ include 'koneksi.php';
             <i class="fas fa-user-circle"></i>
             <span><?= $_SESSION['admin_username'] ?></span>
           </div>
+          <button class="btn-logout-header" onclick="adminUI.logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </button>
         </div>
       </div>
 
@@ -229,7 +222,6 @@ include 'koneksi.php';
       <!-- LAYANAN -->
       <section id="section-layanan" class="content-section">
         <div class="section-header">
-          <h3>Manajemen Layanan</h3>
           <button class="btn-primary" onclick="adminUI.openLayananModal()">
             <i class="fas fa-plus"></i>
             Tambah Layanan
@@ -280,7 +272,6 @@ include 'koneksi.php';
       <!-- HARGA -->
       <section id="section-harga" class="content-section">
         <div class="section-header">
-          <h3>Manajemen Harga</h3>
           <button class="btn-primary" onclick="adminUI.openHargaModal()">
             <i class="fas fa-plus"></i>
             Tambah Paket Harga
@@ -343,7 +334,6 @@ include 'koneksi.php';
       <!-- DELIVERY RATES -->
       <section id="section-delivery" class="content-section">
         <div class="section-header">
-          <h3>Manajemen Biaya Antar Jemput</h3>
           <button class="btn-primary" onclick="adminUI.openDeliveryModal()">
             <i class="fas fa-plus"></i>
             Tambah Tarif
@@ -399,7 +389,6 @@ include 'koneksi.php';
       <!-- GALERI -->
       <section id="section-galeri" class="content-section">
         <div class="section-header">
-          <h3>Manajemen Galeri</h3>
           <button class="btn-primary" onclick="adminUI.openGaleriModal()">
             <i class="fas fa-plus"></i>
             Upload Foto
@@ -435,7 +424,6 @@ include 'koneksi.php';
       <!-- PESANAN -->
       <section id="section-orders" class="content-section">
         <div class="section-header">
-          <h3>Manajemen Pesanan</h3>
           <div class="section-actions">
             <button class="btn-primary" onclick="adminUI.openOrderModal()">
               <i class="fas fa-plus"></i>
@@ -520,7 +508,6 @@ include 'koneksi.php';
       <!-- LAPORAN KEUANGAN -->
       <section id="section-reports" class="content-section">
           <div class="section-header">
-              <h3>Laporan Keuangan</h3>
               <p class="section-subtitle">Data real-time berdasarkan transaksi yang tercatat dalam sistem</p>
           </div>
 
@@ -627,9 +614,6 @@ include 'koneksi.php';
 
       <!-- PROFIL -->
       <section id="section-profil" class="content-section">
-        <div class="section-header">
-          <h3>Profil Laundry</h3>
-        </div>
         <form action="php/profil_simpan.php" method="POST" class="profile-form">
           <?php
           $profil = $conn->query("SELECT * FROM profil LIMIT 1");
@@ -673,9 +657,6 @@ include 'koneksi.php';
 
       <!-- PASSWORD -->
       <section id="section-password" class="content-section">
-        <div class="section-header">
-          <h3>Ganti Password</h3>
-        </div>
         <form action="php/ganti_password.php" method="POST" class="password-form">
           <div class="form-group">
             <label>Password Lama</label>

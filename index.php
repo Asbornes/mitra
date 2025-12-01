@@ -30,7 +30,7 @@
                     <a href="#gallery" class="nav-link">Galeri</a>
                     <a href="#contact" class="nav-link">Kontak</a>
                     <a href="booking.php" class="nav-link booking-cta">
-                        <i class="fas fa-broom"></i> 
+                        <i class="fas fa-shopping-cart"></i> 
                         <span>Laundry Sekarang</span>
                     </a>
                 </nav>
@@ -66,7 +66,7 @@
                     <i class="fas fa-phone"></i> Kontak
                 </a>
                 <a href="booking.php" class="mobile-nav-link booking-link" onclick="closeMobileMenu()">
-                    <i class="fas fa-broom"></i> Laundry Sekarang
+                    <i class="fas fa-shopping-cart"></i> Laundry Sekarang
                 </a>
             </div>
         </header>
@@ -109,53 +109,62 @@
                     <h2 class="section-title">Tentang <span class="highlight">deLondree</span></h2>
                     <p class="section-subtitle">Solusi laundry profesional untuk kebutuhan harian Anda</p>
                 </div>
-                <div class="about-content">
-                    <div class="about-image">
-                        <div class="image-frame">
-                            <img src="heroine.png" alt="Tentang deLondree Laundry" class="about-img">
+                
+                <div class="about-content-wrapper">
+                    <div class="about-main-content">
+                        <div class="about-image">
+                            <div class="image-frame">
+                                <img src="heroine.png" alt="Tentang deLondree Laundry" class="about-img">
+                            </div>
+                        </div>
+                        
+                        <div class="about-text">
+                            <h3>deLondree - Laundry & Dry Cleaning Specialist</h3>
+                            <p class="about-paragraph">
+                                deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, 
+                                kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, 
+                                kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.
+                            </p>
+                            <p class="about-paragraph">
+                                Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan 
+                                untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani 
+                                dengan penuh perhatian oleh tim profesional yang terlatih.
+                            </p>
                         </div>
                     </div>
-                    <div class="about-text">
-                        <h3>deLondree - Laundry & Dry Cleaning Specialist</h3>
-                        <p class="about-paragraph">
-                            deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, 
-                            kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, 
-                            kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.
-                        </p>
-                        <p class="about-paragraph">
-                            Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan 
-                            untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani 
-                            dengan penuh perhatian oleh tim profesional yang terlatih.
-                        </p>
-                        <div class="about-features">
-                            <div class="feature-card">
-                                <div class="feature-icon">
-                                    <i class="fas fa-tools"></i>
-                                </div>
-                                <h4>Peralatan Modern</h4>
-                                <p>Menggunakan mesin laundry terbaru dan teknologi canggih</p>
+                    
+                    <!-- Fitur Horizontal FULL WIDTH -->
+                    <div class="features-full-width">
+                        <div class="feature-full-item">
+                            <div class="feature-full-icon">
+                                <i class="fas fa-tools"></i>
                             </div>
-                            <div class="feature-card">
-                                <div class="feature-icon">
-                                    <i class="fas fa-leaf"></i>
-                                </div>
-                                <h4>Ramah Lingkungan</h4>
-                                <p>Detergen biodegradable yang aman untuk kulit dan lingkungan</p>
+                            <h4>Peralatan Modern</h4>
+                            <p>Menggunakan mesin laundry terbaru dan teknologi canggih</p>
+                        </div>
+                        
+                        <div class="feature-full-item">
+                            <div class="feature-full-icon">
+                                <i class="fas fa-leaf"></i>
                             </div>
-                            <div class="feature-card">
-                                <div class="feature-icon">
-                                    <i class="fas fa-user-tie"></i>
-                                </div>
-                                <h4>Tim Profesional</h4>
-                                <p>Staff berpengalaman dan terlatih dalam menangani berbagai jenis pakaian</p>
+                            <h4>Ramah Lingkungan</h4>
+                            <p>Detergen biodegradable yang aman untuk kulit dan lingkungan</p>
+                        </div>
+                        
+                        <div class="feature-full-item">
+                            <div class="feature-full-icon">
+                                <i class="fas fa-user-tie"></i>
                             </div>
-                            <div class="feature-card">
-                                <div class="feature-icon">
-                                    <i class="fas fa-truck-fast"></i>
-                                </div>
-                                <h4>Layanan Cepat</h4>
-                                <p>Proses cepat dengan hasil maksimal dan pengantaran tepat waktu</p>
+                            <h4>Tim Profesional</h4>
+                            <p>Staff berpengalaman dan terlatih dalam menangani berbagai jenis pakaian</p>
+                        </div>
+                        
+                        <div class="feature-full-item">
+                            <div class="feature-full-icon">
+                                <i class="fas fa-truck-fast"></i>
                             </div>
+                            <h4>Layanan Cepat</h4>
+                            <p>Proses cepat dengan hasil maksimal dan pengantaran tepat waktu</p>
                         </div>
                     </div>
                 </div>
@@ -182,9 +191,9 @@
                         <div class='service-card' onclick='openServiceDetail({$row['id']})'>
                             <div class='service-image-container'>
                                 <img src='{$fotoPath}' 
-                                     alt='{$namaLayanan}' 
-                                     class='service-image'
-                                     loading='lazy'>
+                                    alt='{$namaLayanan}' 
+                                    class='service-image'
+                                    loading='lazy'>
                                 <div class='service-overlay'>
                                     <div class='service-action'>
                                         <i class='fas fa-eye'></i>
@@ -196,7 +205,10 @@
                                 <h3 class='service-title'>{$namaLayanan}</h3>
                                 <p class='service-description'>{$deskripsi}</p>
                                 <div class='service-footer'>
-                                    <p class='service-price'>Mulai dari <span>Rp {$harga}</span></p>
+                                    <div class='service-price-wrapper'>
+                                        <span class='price-label'>Mulai dari</span>
+                                        <span class='service-price-align'>Rp {$harga}</span>
+                                    </div>
                                     <button class='service-btn' onclick='event.stopPropagation(); openServiceDetail({$row['id']})'>
                                         <i class='fas fa-arrow-right'></i>
                                     </button>
@@ -237,80 +249,84 @@
                     <h2 class="section-title">Cara <span class="highlight">Memesan</span></h2>
                     <p class="section-subtitle">Hanya 4 langkah mudah untuk mendapatkan pakaian bersih dan rapi</p>
                 </div>
-                <div class="process-steps">
-                    <div class="process-step">
-                        <div class="step-visual">
-                            <div class="step-number">01</div>
-                            <div class="step-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div class="step-connector"></div>
+                
+                <!-- Horizontal Process Flow -->
+                <div class="process-flow-horizontal">
+                    <div class="flow-step">
+                        <div class="flow-step-number">1</div>
+                        <div class="flow-step-icon">
+                            <i class="fas fa-mobile-alt"></i>
                         </div>
-                        <div class="step-content">
+                        <div class="flow-step-content">
                             <h3>Pesan Online</h3>
-                            <p>Isi form pemesanan online dengan detail alamat dan jadwal penjemputan. Pilih layanan yang diinginkan.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check"></i> Isi form mudah</li>
-                                <li><i class="fas fa-check"></i> Pilih jadwal fleksibel</li>
-                                <li><i class="fas fa-check"></i> Pilih layanan favorit</li>
-                            </ul>
+                            <p>Isi form pemesanan online dengan detail alamat dan jadwal penjemputan</p>
+                        </div>
+                        <div class="flow-connector">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                     
-                    <div class="process-step">
-                        <div class="step-visual">
-                            <div class="step-number">02</div>
-                            <div class="step-icon">
-                                <i class="fas fa-truck-pickup"></i>
-                            </div>
-                            <div class="step-connector"></div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">2</div>
+                        <div class="flow-step-icon">
+                            <i class="fas fa-truck-pickup"></i>
                         </div>
-                        <div class="step-content">
+                        <div class="flow-step-content">
                             <h3>Penjemputan</h3>
-                            <p>Kurir kami akan menjemput pakaian kotor di alamat yang telah ditentukan sesuai jadwal.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check"></i> Antar jemput gratis</li>
-                                <li><i class="fas fa-check"></i> Jadwal tepat waktu</li>
-                                <li><i class="fas fa-check"></i> Kurir profesional</li>
-                            </ul>
+                            <p>Kurir kami akan menjemput pakaian di alamat yang telah ditentukan</p>
+                        </div>
+                        <div class="flow-connector">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                     
-                    <div class="process-step">
-                        <div class="step-visual">
-                            <div class="step-number">03</div>
-                            <div class="step-icon">
-                                <i class="fas fa-soap"></i>
-                            </div>
-                            <div class="step-connector"></div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">3</div>
+                        <div class="flow-step-icon">
+                            <i class="fas fa-soap"></i>
                         </div>
-                        <div class="step-content">
+                        <div class="flow-step-content">
                             <h3>Proses Laundry</h3>
-                            <p>Pakaian diproses dengan standar kebersihan tinggi menggunakan peralatan modern dan detergen berkualitas.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check"></i> Proses hygienis</li>
-                                <li><i class="fas fa-check"></i> Detergen premium</li>
-                                <li><i class="fas fa-check"></i> Quality control</li>
-                            </ul>
+                            <p>Pakaian diproses dengan standar kebersihan tinggi menggunakan peralatan modern</p>
+                        </div>
+                        <div class="flow-connector">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                     
-                    <div class="process-step">
-                        <div class="step-visual">
-                            <div class="step-number">04</div>
-                            <div class="step-icon">
-                                <i class="fas fa-truck"></i>
-                            </div>
+                    <div class="flow-step">
+                        <div class="flow-step-number">4</div>
+                        <div class="flow-step-icon">
+                            <i class="fas fa-truck"></i>
                         </div>
-                        <div class="step-content">
-                            <h3>Pengantaran & Pembayaran</h3>
-                            <p>Pakaian bersih dan rapi diantar kembali. Bayar dengan mudah via COD atau transfer bank.</p>
-                            <ul class="step-features">
-                                <li><i class="fas fa-check"></i> Pengantaran tepat waktu</li>
-                                <li><i class="fas fa-check"></i> Pakaian wangi & rapi</li>
-                                <li><i class="fas fa-check"></i> Pembayaran fleksibel</li>
-                            </ul>
+                        <div class="flow-step-content">
+                            <h3>Pengantaran</h3>
+                            <p>Pakaian bersih dan rapi diantar kembali dengan pembayaran fleksibel</p>
                         </div>
+                    </div>
+                </div>
+                
+                <!-- Features Grid -->
+                <div class="process-features-grid">
+                    <div class="process-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Isi Form Mudah</h4>
+                        <p>Form sederhana yang dapat diisi dalam 2 menit</p>
+                    </div>
+                    <div class="process-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Antar Jemput Gratis</h4>
+                        <p>Area sekitar Kendari dengan layanan gratis</p>
+                    </div>
+                    <div class="process-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Proses Hygienis</h4>
+                        <p>Detergen premium dan quality control ketat</p>
+                    </div>
+                    <div class="process-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Pembayaran Fleksibel</h4>
+                        <p>COD atau transfer bank sesuai kemudahan Anda</p>
                     </div>
                 </div>
                 
@@ -402,62 +418,65 @@
                     <p class="section-subtitle">Butuh bantuan? Jangan ragu untuk menghubungi tim kami</p>
                 </div>
                 <div class="contact-content">
-                    <div class="contact-info">
-                        <?php
-                        $profil = $conn->query("SELECT * FROM profil LIMIT 1");
-                        $data = $profil->num_rows > 0 ? $profil->fetch_assoc() : [];
-                        ?>
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
+                    <div class="contact-info-grid">
+                        <div class="contact-card-compact">
+                            <div class="contact-card-header">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4>Alamat Laundry</h4>
+                                    <p class="contact-text-compact"><?= $data['alamat'] ?? 'Jl. Mekar No.54, Kec.Kadia, Kota Kendari, Sulawesi Tenggara' ?></p>
+                                </div>
                             </div>
-                            <div class="contact-details">
-                                <h4>Alamat Laundry</h4>
-                                <p class="contact-text"><?= $data['alamat'] ?? 'Jl. Mekar No.54, Kec.Kadia, Kota Kendari, Sulawesi Tenggara' ?></p>
-                                <small>Kami melayani area sekitar Kendari dengan layanan antar jemput</small>
-                            </div>
+                            <small>Kami melayani area sekitar Kendari dengan layanan antar jemput</small>
                         </div>
                         
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fab fa-whatsapp"></i>
+                        <div class="contact-card-compact">
+                            <div class="contact-card-header">
+                                <div class="contact-icon">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <h4>WhatsApp</h4>
+                                    <p class="contact-text-compact"><?= $data['whatsapp'] ?? '+62 8181 871 0655' ?></p>
+                                </div>
                             </div>
-                            <div class="contact-details">
-                                <h4>WhatsApp</h4>
-                                <p class="contact-text"><?= $data['whatsapp'] ?? '+62 8181 871 0655' ?></p>
-                                <small>Hubungi kami via WhatsApp untuk respon cepat</small>
-                            </div>
+                            <small>Hubungi kami via WhatsApp untuk respon cepat</small>
                         </div>
                         
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="contact-details">
-                                <h4>Jam Operasional</h4>
-                                <div class="schedule">
-                                    <div class="schedule-item">
-                                        <strong>Senin - Sabtu : </strong>
-                                        <span class="contact-text"><?= $data['jam_senin'] ?? '08.00 - 20.00 WITA' ?></span>
-                                    </div>
-                                    <div class="schedule-item">
-                                        <strong>Minggu : </strong>
-                                        <span class="contact-text"><?= $data['jam_minggu'] ?? '09.00 - 18.00 WITA' ?></span>
+                        <div class="contact-card-compact">
+                            <div class="contact-card-header">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4>Jam Operasional</h4>
+                                    <div class="schedule-compact">
+                                        <div class="schedule-item-compact">
+                                            <strong>Senin - Sabtu  : </strong>
+                                            <span class="contact-text-compact"><?= $data['jam_senin'] ?? '08.00 - 20.00 WITA' ?></span>
+                                        </div>
+                                        <div class="schedule-item-compact">
+                                            <strong>Minggu:</strong>
+                                            <span class="contact-text-compact"><?= $data['jam_minggu'] ?? '09.00 - 18.00 WITA' ?></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <small>Penjemputan terakhir 2 jam sebelum tutup</small>
                         </div>
                         
-                        <div class="contact-actions">
-                            <a href="https://wa.me/6281818710655" class="whatsapp-btn" target="_blank">
+                        <div class="contact-actions-compact">
+                            <a href="https://wa.me/6281818710655" class="whatsapp-btn-compact" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
                                 <span>Chat via WhatsApp</span>
                             </a>
                         </div>
                     </div>
                     
-                    <div class="contact-map">
-                        <div class="map-container">
+                    <div class="contact-map-balanced">
+                        <div class="map-container-balanced">
                             <iframe 
                                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d730.7368494865218!2d122.5033663!3d-3.9825938!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d98f36fd6209aa5%3A0x6acec4dd33a3cf51!2sdeLondree!5e1!3m2!1sid!2sid!4v1762674053340!5m2!1sid!2sid" 
                                 width="100%" 
