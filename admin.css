@@ -464,6 +464,7 @@ body {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid var(--light-3);
+    
 }
 
 .section-header h3 {
@@ -610,13 +611,34 @@ body {
 }
 
 /* FORM STYLES */
+#section-password.active {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
 .profile-form,
+.profile-form {
+    max-width: 800px;
+}
+
+#section-profile.active {
+    display: flex;
+    flex-direction: column;  
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+
 .password-form {
     background: #fff;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: var(--shadow-sm);
-    max-width: 600px;
+    max-width: 800px;
+    width: 100%;          /* supaya responsif */
 }
 
 .form-group {
@@ -1453,4 +1475,10 @@ body {
 .btn-logout-header:hover {
     background: #dc2626;
     transform: translateY(-1px);
+}
+
+.profile-form {
+    width: 100%;         /* responsif */
+    max-width: 800px;    /* batas lebar */
+    margin: 0 auto;      /* --- INI WAJIB AGAR TENGAH --- */
 }

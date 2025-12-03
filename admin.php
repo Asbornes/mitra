@@ -82,10 +82,6 @@ include 'koneksi.php';
       <div class="topbar">
         <h2 id="pageTitle">Dashboard</h2>
         <div class="topbar-actions">
-          <div class="admin-info">
-            <i class="fas fa-user-circle"></i>
-            <span><?= $_SESSION['admin_username'] ?></span>
-          </div>
         </div>
       </div>
 
@@ -229,6 +225,7 @@ include 'koneksi.php';
       <!-- LAYANAN -->
       <section id="section-layanan" class="content-section">
         <div class="section-header">
+          <h3></h3>
           <button class="btn-primary" onclick="adminUI.openLayananModal()">
             <i class="fas fa-plus"></i>
             Tambah Layanan
@@ -279,6 +276,7 @@ include 'koneksi.php';
       <!-- HARGA -->
       <section id="section-harga" class="content-section">
         <div class="section-header">
+          <h3></h3>
           <button class="btn-primary" onclick="adminUI.openHargaModal()">
             <i class="fas fa-plus"></i>
             Tambah Paket Harga
@@ -341,6 +339,7 @@ include 'koneksi.php';
       <!-- DELIVERY RATES -->
       <section id="section-delivery" class="content-section">
         <div class="section-header">
+          <h3></h3>
           <button class="btn-primary" onclick="adminUI.openDeliveryModal()">
             <i class="fas fa-plus"></i>
             Tambah Tarif
@@ -396,6 +395,7 @@ include 'koneksi.php';
       <!-- GALERI -->
       <section id="section-galeri" class="content-section">
         <div class="section-header">
+          <h3></h3>
           <button class="btn-primary" onclick="adminUI.openGaleriModal()">
             <i class="fas fa-plus"></i>
             Upload Foto
@@ -431,11 +431,8 @@ include 'koneksi.php';
       <!-- PESANAN -->
       <section id="section-orders" class="content-section">
         <div class="section-header">
+          <h3></h3>
           <div class="section-actions">
-            <button class="btn-primary" onclick="adminUI.openOrderModal()">
-              <i class="fas fa-plus"></i>
-              Tambah Pesanan Manual
-            </button>
             <div class="filter-controls">
               <select id="statusFilter" onchange="adminUI.filterOrders()">
                 <option value="">Semua Status</option>
@@ -445,6 +442,10 @@ include 'koneksi.php';
                 <option value="cancelled">Cancelled</option>
               </select>
               <input type="date" id="dateFilter" onchange="adminUI.filterOrders()">
+              <button class="btn-primary" onclick="adminUI.openOrderModal()">
+                <i class="fas fa-plus"></i>
+                Tambah Pesanan Manual
+              </button>
             </div>
           </div>
         </div>
@@ -663,7 +664,7 @@ include 'koneksi.php';
       </section>
 
       <!-- PASSWORD -->
-      <section id="section-password" class="content-section">
+      <section id="section-password" class="content-section active">
         <form action="php/ganti_password.php" method="POST" class="password-form">
           <div class="form-group">
             <label>Password Lama</label>
