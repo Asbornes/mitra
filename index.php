@@ -1,4 +1,10 @@
 <?php include 'koneksi.php'; ?>
+<?php 
+// Di bagian atas index.php setelah include koneksi.php
+// Ambil data profil untuk hero dan features
+$profil_data = $conn->query("SELECT * FROM profil WHERE id = 1");
+$profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -75,8 +81,8 @@
         <section id="home" class="hero-section">
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <h1 class="hero-title">Layanan Laundry Profesional</h1>
-                <p class="hero-subtitle">Bersih, Rapi, dan Wangi - Kepercayaan Anda adalah Prioritas Kami</p>
+                <h1 class="hero-title"><?= htmlspecialchars($profile['hero_title'] ?? 'Layanan Laundry Profesional') ?></h1>
+                <p class="hero-subtitle"><?= htmlspecialchars($profile['hero_subtitle'] ?? 'Bersih, Rapi, dan Wangi - Kepercayaan Anda adalah Prioritas Kami') ?></p>
                 <div class="hero-actions">
                     <a href="booking.php" class="cta-button primary">
                         <i class="fas fa-shopping-cart"></i> Pesan Sekarang
@@ -119,16 +125,22 @@
                         </div>
                         
                         <div class="about-text">
-                            <h3>deLondree - Laundry & Dry Cleaning Specialist</h3>
+                            <?php
+                            // Ambil data profil untuk about section
+                            $profil_about = $conn->query("SELECT about_title, about_paragraph1, about_paragraph2 FROM profil WHERE id = 1");
+                            $about_data = $profil_about->num_rows > 0 ? $profil_about->fetch_assoc() : [];
+                            
+                            $about_title = $about_data['about_title'] ?? 'deLondree - Laundry & Dry Cleaning Specialist';
+                            $about_para1 = $about_data['about_paragraph1'] ?? 'deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.';
+                            $about_para2 = $about_data['about_paragraph2'] ?? 'Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani dengan penuh perhatian oleh tim profesional yang terlatih.';
+                            ?>
+                            
+                            <h3><?= htmlspecialchars($about_title) ?></h3>
                             <p class="about-paragraph">
-                                deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, 
-                                kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, 
-                                kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.
+                                <?= nl2br(htmlspecialchars($about_para1)) ?>
                             </p>
                             <p class="about-paragraph">
-                                Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan 
-                                untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani 
-                                dengan penuh perhatian oleh tim profesional yang terlatih.
+                                <?= nl2br(htmlspecialchars($about_para2)) ?>
                             </p>
                         </div>
                     </div>

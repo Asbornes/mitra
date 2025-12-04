@@ -1482,3 +1482,203 @@ body {
     max-width: 800px;    /* batas lebar */
     margin: 0 auto;      /* --- INI WAJIB AGAR TENGAH --- */
 }
+
+.form-section {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #e9ecef;
+}
+
+.form-section h4 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-section-note {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    border-left: 3px solid #4f46e5;
+}
+
+.form-group small {
+    display: block;
+    color: #6c757d;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 2px solid #e9ecef;
+}
+
+/* Form Section Styling */
+.form-section {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #e9ecef;
+}
+
+.form-section h4 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-section-note {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    border-left: 3px solid #4f46e5;
+}
+
+.form-group small {
+    display: block;
+    color: #6c757d;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.form-group small a {
+    color: #4f46e5;
+    text-decoration: none;
+}
+
+.form-group small a:hover {
+    text-decoration: underline;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 2px solid #e9ecef;
+}
+
+/* Feature Editor Styling */
+.feature-editor {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.feature-editor:hover {
+    border-color: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+}
+
+.feature-editor h5 {
+    color: #4f46e5;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.feature-editor .form-row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.feature-editor .form-group {
+    margin-bottom: 15px;
+}
+
+.feature-editor textarea {
+    min-height: 60px;
+}
+
+/* Icon Preview */
+.icon-preview {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .feature-editor .form-row {
+        flex-direction: column;
+    }
+    
+    .feature-editor .form-group[style*="flex: 0 0 200px"] {
+        flex: 1 !important;
+    }
+}
+
+/* Membuat chart pendapatan menjadi full width */
+.chart-large {
+    grid-column: 1 / -1; /* Mengambil seluruh kolom grid */
+}
+
+/* Pastikan chart memenuhi container */
+.chart-wrapper {
+    width: 100% !important;
+    height: 350px; /* Bisa kamu ubah sesuai kebutuhan */
+    position: relative;
+}
+
+.chart-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.pagination a {
+    display: inline-block;
+    margin: 0 4px;
+    padding: 6px 12px;
+    background: var(--light-3);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.pagination a.active {
+    background: var(--primary);
+    color: white;
+}
+
+.pagination a:hover {
+    background: var(--primary-dark);
+    color: white;
+}

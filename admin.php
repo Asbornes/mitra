@@ -275,65 +275,99 @@ include 'koneksi.php';
 
       <!-- HARGA -->
       <section id="section-harga" class="content-section">
-        <div class="section-header">
-          <h3></h3>
-          <button class="btn-primary" onclick="adminUI.openHargaModal()">
-            <i class="fas fa-plus"></i>
-            Tambah Paket Harga
-          </button>
-        </div>
+          <div class="section-header">
+              <h3></h3>
+              <button class="btn-primary" onclick="adminUI.openHargaModal()">
+                  <i class="fas fa-plus"></i>
+                  Tambah Paket Harga
+              </button>
+          </div>
 
-        <div class="table-container">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Jenis Layanan</th>
-                <th>Kategori</th>
-                <th>Deskripsi</th>
-                <th>Harga</th>
-                <th>Unit</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-              $no = 1;
-              $result = $conn->query("SELECT h.*, l.nama_layanan 
-                                    FROM harga h 
-                                    LEFT JOIN layanan l ON h.service_id = l.id 
-                                    ORDER BY h.jenis_layanan, h.harga");
-              while ($row = $result->fetch_assoc()) {
-                echo "<tr>
-                  <td>{$no}</td>
-                  <td>{$row['jenis_layanan']}</td>
-                  <td>{$row['kategori']}</td>
-                  <td>{$row['description']}</td>
-                  <td>Rp " . number_format($row['harga']) . "</td>
-                  <td>{$row['unit']}</td>
-                  <td>
-                    <button class='btn-secondary' onclick='adminUI.openHargaModal(true, {
-                      id: {$row['id']},
-                      service_id: \"{$row['service_id']}\",
-                      jenis_layanan: \"{$row['jenis_layanan']}\",
-                      kategori: \"{$row['kategori']}\",
-                      description: \"{$row['description']}\",
-                      harga: {$row['harga']},
-                      unit: \"{$row['unit']}\"
-                    })'>
-                      <i class='fas fa-edit'></i> Edit
-                    </button>
-                    <button class='btn-danger' onclick='adminUI.confirmDelete(\"harga\", {$row['id']})'>
-                      <i class='fas fa-trash'></i> Hapus
-                    </button>
-                  </td>
-                </tr>";
-                $no++;
-              }
-              ?>
-            </tbody>
-          </table>
-        </div>
+          <?php
+          // PAGINATION --------------------------
+          $limit = 7;
+          $page = isset($_GET['page_harga']) ? (int)$_GET['page_harga'] : 1;
+          $offset = ($page - 1) * $limit;
+
+          $totalData = $conn->query("SELECT COUNT(*) AS total FROM harga")->fetch_assoc()['total'];
+          $totalPages = ceil($totalData / $limit);
+
+          $result = $conn->query("
+              SELECT h.*, l.nama_layanan 
+              FROM harga h 
+              LEFT JOIN layanan l ON h.service_id = l.id 
+              ORDER BY h.jenis_layanan, h.harga
+              LIMIT $offset, $limit
+          ");
+          ?>
+
+          <div class="table-container">
+              <table class="data-table">
+                  <thead>
+                      <tr>
+                          <th>No</th>
+                          <th>Jenis Layanan</th>
+                          <th>Kategori</th>
+                          <th>Deskripsi</th>
+                          <th>Harga</th>
+                          <th>Unit</th>
+                          <th>Aksi</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <?php
+                      $no = $offset + 1;
+                      while ($row = $result->fetch_assoc()) {
+                          echo "<tr>
+                            <td>{$no}</td>
+                            <td>{$row['jenis_layanan']}</td>
+                            <td>{$row['kategori']}</td>
+                            <td>{$row['description']}</td>
+                            <td>Rp " . number_format($row['harga']) . "</td>
+                            <td>{$row['unit']}</td>
+                            <td>
+                              <button class='btn-secondary' onclick='adminUI.openHargaModal(true, {
+                                id: {$row['id']},
+                                service_id: \"{$row['service_id']}\",
+                                jenis_layanan: \"{$row['jenis_layanan']}\",
+                                kategori: \"{$row['kategori']}\",
+                                description: \"{$row['description']}\",
+                                harga: {$row['harga']},
+                                unit: \"{$row['unit']}\"
+                              })'>
+                                <i class=\"fas fa-edit\"></i> Edit
+                              </button>
+                              <button class='btn-danger' onclick='adminUI.confirmDelete(\"harga\", {$row['id']})'>
+                                <i class=\"fas fa-trash\"></i> Hapus
+                              </button>
+                            </td>
+                          </tr>";
+                          $no++;
+                      }
+                      ?>
+                  </tbody>
+              </table>
+
+              <!-- PAGINATION -->
+              <div class="pagination">
+                  <?php if ($page > 1): ?>
+                      <a href="?page_harga=1#harga"><<</a>
+                      <a href="?page_harga=<?= $page - 1 ?>#harga"><</a>
+                  <?php endif; ?>
+
+                  <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                      <a class="<?= ($i == $page ? 'active' : '') ?>"
+                        href="?page_harga=<?= $i ?>#harga">
+                          <?= $i ?>
+                      </a>
+                  <?php endfor; ?>
+
+                  <?php if ($page < $totalPages): ?>
+                      <a href="?page_harga=<?= $page + 1 ?>#harga">></a>
+                      <a href="?page_harga=<?= $totalPages ?>#harga">>></a>
+                  <?php endif; ?>
+              </div>
+          </div>
       </section>
 
       <!-- DELIVERY RATES -->
@@ -430,88 +464,126 @@ include 'koneksi.php';
 
       <!-- PESANAN -->
       <section id="section-orders" class="content-section">
-        <div class="section-header">
-          <h3></h3>
-          <div class="section-actions">
-            <div class="filter-controls">
-              <select id="statusFilter" onchange="adminUI.filterOrders()">
-                <option value="">Semua Status</option>
-                <option value="pending">Pending</option>
-                <option value="process">Process</option>
-                <option value="completed">Completed</option>
-                <option value="cancelled">Cancelled</option>
-              </select>
-              <input type="date" id="dateFilter" onchange="adminUI.filterOrders()">
-              <button class="btn-primary" onclick="adminUI.openOrderModal()">
-                <i class="fas fa-plus"></i>
-                Tambah Pesanan Manual
-              </button>
-            </div>
+          <div class="section-header">
+              <h3></h3>
+              <div class="section-actions">
+                  <div class="filter-controls">
+                      <select id="statusFilter" onchange="adminUI.filterOrders()">
+                          <option value="">Semua Status</option>
+                          <option value="pending">Pending</option>
+                          <option value="process">Process</option>
+                          <option value="completed">Completed</option>
+                          <option value="cancelled">Cancelled</option>
+                      </select>
+                      <input type="date" id="dateFilter" onchange="adminUI.filterOrders()">
+                      <button class="btn-primary" onclick="adminUI.openOrderModal()">
+                          <i class="fas fa-plus"></i>
+                          Tambah Pesanan Manual
+                      </button>
+                  </div>
+              </div>
           </div>
-        </div>
 
-        <div class="table-container">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>ID Pesanan</th>
-                <th>Pelanggan</th>
-                <th>WhatsApp</th>
-                <th>Layanan</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Tanggal</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="ordersTable">
-              <?php
-              $orders = $conn->query("SELECT * FROM orders ORDER BY created_at DESC");
-              while ($order = $orders->fetch_assoc()) {
-                $statusClass = '';
-                switch($order['status']) {
-                  case 'pending': $statusClass = 'pending'; break;
-                  case 'process': $statusClass = 'process'; break;
-                  case 'completed': $statusClass = 'completed'; break;
-                  case 'cancelled': $statusClass = 'cancelled'; break;
-                }
-                
-                echo "
-                <tr>
-                  <td>{$order['order_id']}</td>
-                  <td>{$order['customer_name']}</td>
-                  <td>{$order['customer_phone']}</td>
-                  <td>{$order['service_name']}</td>
-                  <td>Rp " . number_format($order['total_amount']) . "</td>
-                  <td><span class='status-badge {$statusClass}'>{$order['status']}</span></td>
-                  <td>" . date('d M Y', strtotime($order['created_at'])) . "</td>
-                  <td>
-                    <button class='btn-secondary' onclick='adminUI.updateOrderStatus(\"{$order['order_id']}\", \"process\")'>
-                      <i class='fas fa-play'></i> Proses
-                    </button>
-                    <button class='btn-success' onclick='adminUI.updateOrderStatus(\"{$order['order_id']}\", \"completed\")'>
-                      <i class='fas fa-check'></i> Selesai
-                    </button>
-                    <button class='btn-danger' onclick='adminUI.updateOrderStatus(\"{$order['order_id']}\", \"cancelled\")'>
-                      <i class='fas fa-times'></i> Batal
-                    </button>
-                    <button class='btn-info' onclick='adminUI.viewOrderDetail(\"{$order['order_id']}\")'>
-                      <i class='fas fa-eye'></i> Detail
-                    </button>
-                    <button class='btn-warning' onclick='adminUI.editOrder(\"{$order['order_id']}\")'>
-                      <i class='fas fa-edit'></i> Edit
-                    </button>
-                    <button class='btn-danger' onclick='adminUI.confirmDelete(\"order\", \"{$order['order_id']}\")'>
-                      <i class='fas fa-trash'></i> Hapus
-                    </button>
-                  </td>
-                </tr>";
-              }
-              ?>
-            </tbody>
-          </table>
-        </div>
+          <?php
+          // PAGINATION --------------------------
+          $limitOrders = 7;
+          $pageOrders = isset($_GET['page_orders']) ? (int)$_GET['page_orders'] : 1;
+          $offsetOrders = ($pageOrders - 1) * $limitOrders;
+
+          $totalOrders = $conn->query("SELECT COUNT(*) AS total FROM orders")->fetch_assoc()['total'];
+          $totalOrdersPages = ceil($totalOrders / $limitOrders);
+
+          $orders = $conn->query("
+              SELECT * FROM orders 
+              ORDER BY created_at DESC 
+              LIMIT $offsetOrders, $limitOrders
+          ");
+          ?>
+
+          <div class="table-container">
+              <table class="data-table">
+                  <thead>
+                      <tr>
+                          <th>ID Pesanan</th>
+                          <th>Pelanggan</th>
+                          <th>WhatsApp</th>
+                          <th>Layanan</th>
+                          <th>Total</th>
+                          <th>Status</th>
+                          <th>Tanggal</th>
+                          <th>Aksi</th>
+                      </tr>
+                  </thead>
+                  <tbody id="ordersTable">
+                      <?php
+                      while ($order = $orders->fetch_assoc()) {
+                          $statusClass = match ($order['status']) {
+                              'pending' => 'pending',
+                              'process' => 'process',
+                              'completed' => 'completed',
+                              'cancelled' => 'cancelled',
+                              default => ''
+                          };
+
+                          echo "
+                          <tr>
+                              <td>{$order['order_id']}</td>
+                              <td>{$order['customer_name']}</td>
+                              <td>{$order['customer_phone']}</td>
+                              <td>{$order['service_name']}</td>
+                              <td>Rp " . number_format($order['total_amount']) . "</td>
+                              <td><span class='status-badge {$statusClass}'>{$order['status']}</span></td>
+                              <td>" . date('d M Y', strtotime($order['created_at'])) . "</td>
+                              <td>
+                                  <button class='btn-secondary' onclick='adminUI.updateOrderStatus(\"{$order['order_id']}\", \"process\")'>
+                                      <i class='fas fa-play'></i> Proses
+                                  </button>
+                                  <button class='btn-success' onclick='adminUI.updateOrderStatus(\"{$order['order_id']}\", \"completed\")'>
+                                      <i class='fas fa-check'></i> Selesai
+                                  </button>
+                                  <button class='btn-danger' onclick='adminUI.updateOrderStatus(\"{$order['order_id']}\", \"cancelled\")'>
+                                      <i class='fas fa-times'></i> Batal
+                                  </button>
+                                  <button class='btn-info' onclick='adminUI.viewOrderDetail(\"{$order['order_id']}\")'>
+                                      <i class='fas fa-eye'></i> Detail
+                                  </button>
+                                  <button class='btn-warning' onclick='adminUI.editOrder(\"{$order['order_id']}\")'>
+                                      <i class='fas fa-edit'></i> Edit
+                                  </button>
+                                  <button class='btn-danger' onclick='adminUI.confirmDelete(\"order\", \"{$order['order_id']}\")'>
+                                      <i class='fas fa-trash'></i> Hapus
+                                  </button>
+                              </td>
+                          </tr>";
+                      }
+                      ?>
+                  </tbody>
+              </table>
+
+              <!-- PAGINATION -->
+              <div class="pagination">
+                  <?php if ($pageOrders > 1): ?>
+                      <a href="?page_orders=1#orders"><<</a>
+                      <a href="?page_orders=<?= $pageOrders - 1 ?>#orders"><</a>
+                  <?php endif; ?>
+
+                  <?php for ($i = 1; $i <= $totalOrdersPages; $i++): ?>
+                      <a class="<?= ($i == $pageOrders ? 'active' : '') ?>"
+                        href="?page_orders=<?= $i ?>#orders">
+                          <?= $i ?>
+                      </a>
+                  <?php endfor; ?>
+
+                  <?php if ($pageOrders < $totalOrdersPages): ?>
+                      <a href="?page_orders=<?= $pageOrders + 1 ?>#orders">></a>
+                      <a href="?page_orders=<?= $totalOrdersPages ?>#orders">>></a>
+                  <?php endif; ?>
+              </div>
+
+          </div>
       </section>
+
+
 
       <!-- LAPORAN KEUANGAN -->
       <section id="section-reports" class="content-section">
@@ -559,25 +631,33 @@ include 'koneksi.php';
           </div>
 
           <div class="charts-container">
-              <div class="chart-card">
+
+              <!-- CHART PENDAPATAN TAHUNAN - FULL WIDTH -->
+              <div class="chart-card chart-large">
                   <h4>Pendapatan Tahunan <?= date('Y') ?></h4>
                   <div class="chart-wrapper">
                       <canvas id="monthlyRevenueChart"></canvas>
                   </div>
               </div>
+
+              <!-- CHART PERFORMA LAYANAN -->
               <div class="chart-card">
                   <h4>Performa Layanan</h4>
                   <div class="chart-wrapper">
                       <canvas id="servicePerformanceChart"></canvas>
                   </div>
               </div>
+
+              <!-- CHART METODE PEMBAYARAN -->
               <div class="chart-card">
                   <h4>Metode Pembayaran</h4>
                   <div class="chart-wrapper">
                       <canvas id="paymentMethodChart"></canvas>
                   </div>
               </div>
+
           </div>
+
 
           <div class="recent-orders">
               <h4>Pesanan Terbaru yang Selesai</h4>
@@ -627,39 +707,224 @@ include 'koneksi.php';
           $profil = $conn->query("SELECT * FROM profil LIMIT 1");
           $data = $profil->num_rows > 0 ? $profil->fetch_assoc() : [];
           ?>
-          <div class="form-group">
-            <label>Nama Laundry</label>
-            <input type="text" name="nama_laundry" value="<?= $data['nama_laundry'] ?? '' ?>" required>
+          
+          <!-- HERO SECTION -->
+          <div class="form-section">
+            <h4><i class="fas fa-star"></i> Hero Section (Halaman Utama)</h4>
+            <p class="form-section-note">Ubah judul dan subtitle utama yang muncul pertama kali di halaman beranda</p>
+            
+            <div class="form-group">
+              <label>Judul Utama (Hero Title)</label>
+              <input type="text" 
+                    name="hero_title" 
+                    value="<?= $data['hero_title'] ?? 'Layanan Laundry Profesional' ?>" 
+                    required
+                    placeholder="Contoh: Layanan Laundry Profesional">
+              <small>Judul besar yang muncul di bagian paling atas halaman</small>
+            </div>
+            
+            <div class="form-group">
+              <label>Subtitle (Hero Subtitle)</label>
+              <input type="text" 
+                    name="hero_subtitle" 
+                    value="<?= $data['hero_subtitle'] ?? 'Bersih, Rapi, dan Wangi - Kepercayaan Anda adalah Prioritas Kami' ?>" 
+                    required
+                    placeholder="Contoh: Bersih, Rapi, dan Wangi - Kepercayaan Anda adalah Prioritas Kami">
+              <small>Subtitle/tagline yang muncul di bawah judul utama</small>
+            </div>
+          </div>
+
+          <!-- INFORMASI LAUNDRY -->
+          <div class="form-section">
+            <h4><i class="fas fa-store"></i> Informasi Laundry</h4>
+            
+            <div class="form-group">
+              <label>Nama Laundry</label>
+              <input type="text" name="nama_laundry" value="<?= $data['nama_laundry'] ?? '' ?>" required>
+            </div>
+            
+            <div class="form-group">
+              <label>Alamat Lengkap</label>
+              <textarea name="alamat" rows="3" required><?= $data['alamat'] ?? '' ?></textarea>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nomor WhatsApp</label>
+                <input type="text" name="whatsapp" value="<?= $data['whatsapp'] ?? '' ?>" required>
+              </div>
+              
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value="<?= $data['email'] ?? '' ?>">
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Jam Buka (Senin-Sabtu)</label>
+                <input type="text" name="jam_senin" value="<?= $data['jam_senin'] ?? '' ?>" required>
+              </div>
+              
+              <div class="form-group">
+                <label>Jam Buka (Minggu)</label>
+                <input type="text" name="jam_minggu" value="<?= $data['jam_minggu'] ?? '' ?>" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- TENTANG KAMI -->
+          <div class="form-section">
+            <h4><i class="fas fa-info-circle"></i> Deskripsi "Tentang Kami"</h4>
+            <p class="form-section-note">Ubah konten yang ditampilkan di halaman utama bagian "Tentang deLondree"</p>
+            
+            <div class="form-group">
+              <label>Judul Section</label>
+              <input type="text" 
+                    name="about_title" 
+                    value="<?= $data['about_title'] ?? 'deLondree - Laundry & Dry Cleaning Specialist' ?>" 
+                    required
+                    placeholder="Contoh: deLondree - Laundry & Dry Cleaning Specialist">
+              <small>Judul utama yang akan ditampilkan di bagian "Tentang Kami"</small>
+            </div>
+            
+            <div class="form-group">
+              <label>Paragraf Pertama</label>
+              <textarea name="about_paragraph1" 
+                        rows="4" 
+                        required
+                        placeholder="Tulis deskripsi paragraf pertama tentang laundry Anda..."><?= $data['about_paragraph1'] ?? 'deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.' ?></textarea>
+              <small>Paragraf pertama yang menjelaskan tentang layanan dan pengalaman</small>
+            </div>
+            
+            <div class="form-group">
+              <label>Paragraf Kedua</label>
+              <textarea name="about_paragraph2" 
+                        rows="4" 
+                        required
+                        placeholder="Tulis deskripsi paragraf kedua tentang keunggulan laundry Anda..."><?= $data['about_paragraph2'] ?? 'Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani dengan penuh perhatian oleh tim profesional yang terlatih.' ?></textarea>
+              <small>Paragraf kedua yang menjelaskan tentang peralatan dan tim</small>
+            </div>
+          </div>
+
+          <!-- 4 FITUR UNGGULAN -->
+          <div class="form-section">
+            <h4><i class="fas fa-th-large"></i> 4 Fitur Unggulan (Features)</h4>
+            <p class="form-section-note">4 kartu fitur yang ditampilkan di bawah section "Tentang Kami"</p>
+            
+            <!-- Feature 1 -->
+            <div class="feature-editor">
+              <h5><i class="fas fa-square"></i> Fitur 1</h5>
+              <div class="form-row">
+                <div class="form-group" style="flex: 0 0 200px;">
+                  <label>Icon (FontAwesome)</label>
+                  <input type="text" 
+                        name="feature1_icon" 
+                        value="<?= $data['feature1_icon'] ?? 'fa-tools' ?>" 
+                        placeholder="fa-tools">
+                  <small>Lihat icon di <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com</a></small>
+                </div>
+                <div class="form-group">
+                  <label>Judul Fitur</label>
+                  <input type="text" 
+                        name="feature1_title" 
+                        value="<?= $data['feature1_title'] ?? 'Peralatan Modern' ?>" 
+                        required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Deskripsi</label>
+                <textarea name="feature1_desc" rows="2" required><?= $data['feature1_desc'] ?? 'Menggunakan mesin laundry terbaru dan teknologi canggih' ?></textarea>
+              </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-editor">
+              <h5><i class="fas fa-square"></i> Fitur 2</h5>
+              <div class="form-row">
+                <div class="form-group" style="flex: 0 0 200px;">
+                  <label>Icon (FontAwesome)</label>
+                  <input type="text" 
+                        name="feature2_icon" 
+                        value="<?= $data['feature2_icon'] ?? 'fa-leaf' ?>" 
+                        placeholder="fa-leaf">
+                  <small>Lihat icon di <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com</a></small>
+                </div>
+                <div class="form-group">
+                  <label>Judul Fitur</label>
+                  <input type="text" 
+                        name="feature2_title" 
+                        value="<?= $data['feature2_title'] ?? 'Ramah Lingkungan' ?>" 
+                        required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Deskripsi</label>
+                <textarea name="feature2_desc" rows="2" required><?= $data['feature2_desc'] ?? 'Detergen biodegradable yang aman untuk kulit dan lingkungan' ?></textarea>
+              </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-editor">
+              <h5><i class="fas fa-square"></i> Fitur 3</h5>
+              <div class="form-row">
+                <div class="form-group" style="flex: 0 0 200px;">
+                  <label>Icon (FontAwesome)</label>
+                  <input type="text" 
+                        name="feature3_icon" 
+                        value="<?= $data['feature3_icon'] ?? 'fa-user-tie' ?>" 
+                        placeholder="fa-user-tie">
+                  <small>Lihat icon di <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com</a></small>
+                </div>
+                <div class="form-group">
+                  <label>Judul Fitur</label>
+                  <input type="text" 
+                        name="feature3_title" 
+                        value="<?= $data['feature3_title'] ?? 'Tim Profesional' ?>" 
+                        required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Deskripsi</label>
+                <textarea name="feature3_desc" rows="2" required><?= $data['feature3_desc'] ?? 'Staff berpengalaman dan terlatih dalam menangani berbagai jenis pakaian' ?></textarea>
+              </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-editor">
+              <h5><i class="fas fa-square"></i> Fitur 4</h5>
+              <div class="form-row">
+                <div class="form-group" style="flex: 0 0 200px;">
+                  <label>Icon (FontAwesome)</label>
+                  <input type="text" 
+                        name="feature4_icon" 
+                        value="<?= $data['feature4_icon'] ?? 'fa-truck-fast' ?>" 
+                        placeholder="fa-truck-fast">
+                  <small>Lihat icon di <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com</a></small>
+                </div>
+                <div class="form-group">
+                  <label>Judul Fitur</label>
+                  <input type="text" 
+                        name="feature4_title" 
+                        value="<?= $data['feature4_title'] ?? 'Layanan Cepat' ?>" 
+                        required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Deskripsi</label>
+                <textarea name="feature4_desc" rows="2" required><?= $data['feature4_desc'] ?? 'Proses cepat dengan hasil maksimal dan pengantaran tepat waktu' ?></textarea>
+              </div>
+            </div>
           </div>
           
-          <div class="form-group">
-            <label>Alamat Lengkap</label>
-            <textarea name="alamat" rows="3" required><?= $data['alamat'] ?? '' ?></textarea>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">
+              <i class="fas fa-save"></i> Simpan Semua Perubahan
+            </button>
+            <button type="button" class="btn-secondary" onclick="location.reload()">
+              <i class="fas fa-undo"></i> Reset
+            </button>
           </div>
-          
-          <div class="form-group">
-            <label>Nomor WhatsApp</label>
-            <input type="text" name="whatsapp" value="<?= $data['whatsapp'] ?? '' ?>" required>
-          </div>
-          
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" value="<?= $data['email'] ?? '' ?>">
-          </div>
-          
-          <div class="form-group">
-            <label>Jam Buka (Senin-Sabtu)</label>
-            <input type="text" name="jam_senin" value="<?= $data['jam_senin'] ?? '' ?>" required>
-          </div>
-          
-          <div class="form-group">
-            <label>Jam Buka (Minggu)</label>
-            <input type="text" name="jam_minggu" value="<?= $data['jam_minggu'] ?? '' ?>" required>
-          </div>
-          
-          <button type="submit" class="btn-primary">
-            <i class="fas fa-save"></i> Simpan Perubahan
-          </button>
         </form>
       </section>
 
@@ -942,6 +1207,18 @@ include 'koneksi.php';
   </div>
 
   <script src="admin.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const hash = window.location.hash;
+
+    // Sembunyikan alert laporan jika bukan berada di #finance
+    if (hash !== "#finance" && hash !== "#laporan") {
+        const alerts = document.querySelectorAll(".finance-alert");
+        alerts.forEach(a => a.style.display = "none");
+    }
+});
+</script>
+
 </body>
 </html>
 <?php $conn->close(); ?>
