@@ -253,56 +253,60 @@
                 <!-- Horizontal Process Flow -->
                 <div class="process-flow-horizontal">
                     <div class="flow-step">
-                        <div class="flow-step-number">1</div>
-                        <div class="flow-step-icon">
-                            <i class="fas fa-mobile-alt"></i>
+                        <div class="flow-step-icon-wrapper">
+                            <div class="flow-step-number">1</div>
+                            <div class="flow-step-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
                         </div>
-                        <div class="flow-step-content">
-                            <h3>Pesan Online</h3>
-                            <p>Isi form pemesanan online dengan detail alamat dan jadwal penjemputan</p>
-                        </div>
+
+                        <h3>Pesan Online</h3>
+                        <p>Isi form pemesanan online dengan detail alamat dan jadwal penjemputan</p>
                         <div class="flow-connector">
                             <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                     
                     <div class="flow-step">
-                        <div class="flow-step-number">2</div>
-                        <div class="flow-step-icon">
-                            <i class="fas fa-truck-pickup"></i>
+                        <div class="flow-step-icon-wrapper">
+                            <div class="flow-step-number">2</div>
+                            <div class="flow-step-icon">
+                                <i class="fas fa-truck-pickup"></i>
+                            </div>
                         </div>
-                        <div class="flow-step-content">
-                            <h3>Penjemputan</h3>
-                            <p>Kurir kami akan menjemput pakaian di alamat yang telah ditentukan</p>
-                        </div>
+
+                        <h3>Penjemputan</h3>
+                        <p>Kurir kami akan menjemput pakaian di alamat yang telah ditentukan</p>
                         <div class="flow-connector">
                             <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                     
                     <div class="flow-step">
-                        <div class="flow-step-number">3</div>
-                        <div class="flow-step-icon">
-                            <i class="fas fa-soap"></i>
+                        <div class="flow-step-icon-wrapper">
+                            <div class="flow-step-number">3</div>
+                            <div class="flow-step-icon">
+                                <i class="fas fa-soap"></i>
+                            </div>
                         </div>
-                        <div class="flow-step-content">
-                            <h3>Proses Laundry</h3>
-                            <p>Pakaian diproses dengan standar kebersihan tinggi menggunakan peralatan modern</p>
-                        </div>
+
+                        <h3>Proses Laundry</h3>
+                        <p>Pakaian diproses dengan standar kebersihan tinggi menggunakan peralatan modern</p>
                         <div class="flow-connector">
                             <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                     
                     <div class="flow-step">
-                        <div class="flow-step-number">4</div>
-                        <div class="flow-step-icon">
-                            <i class="fas fa-truck"></i>
+                        <div class="flow-step-icon-wrapper">
+                            <div class="flow-step-number">4</div>
+                            <div class="flow-step-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
                         </div>
-                        <div class="flow-step-content">
-                            <h3>Pengantaran</h3>
-                            <p>Pakaian bersih dan rapi diantar kembali dengan pembayaran fleksibel</p>
-                        </div>
+
+                        <h3>Pengantaran</h3>
+                        <p>Pakaian bersih dan rapi diantar kembali dengan pembayaran fleksibel</p>
                     </div>
                 </div>
                 
@@ -417,66 +421,60 @@
                     <h2 class="section-title">Hubungi <span class="highlight">Kami</span></h2>
                     <p class="section-subtitle">Butuh bantuan? Jangan ragu untuk menghubungi tim kami</p>
                 </div>
-                <div class="contact-content">
-                    <div class="contact-info-grid">
-                        <div class="contact-card-compact">
-                            <div class="contact-card-header">
-                                <div class="contact-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div>
-                                    <h4>Alamat Laundry</h4>
-                                    <p class="contact-text-compact"><?= $data['alamat'] ?? 'Jl. Mekar No.54, Kec.Kadia, Kota Kendari, Sulawesi Tenggara' ?></p>
-                                </div>
+                <div class="contact-wrapper">
+                    <div class="contact-cards-container">
+                        <div class="contact-card">
+                            <div class="contact-icon-box">
+                                <i class="fas fa-map-marker-alt"></i>
                             </div>
-                            <small>Kami melayani area sekitar Kendari dengan layanan antar jemput</small>
+                            <div class="contact-card-content">
+                                <h4 class="contact-card-title">Alamat Laundry</h4>
+                                <p class="contact-card-text"><?= $data['alamat'] ?? 'Jl. Mekar No.54, Kec.Kadia, Kota Kendari, Sulawesi Tenggara' ?></p>
+                                <p class="contact-card-note">Kami melayani area sekitar Kendari dengan layanan antar jemput</p>
+                            </div>
                         </div>
                         
-                        <div class="contact-card-compact">
-                            <div class="contact-card-header">
-                                <div class="contact-icon">
-                                    <i class="fab fa-whatsapp"></i>
-                                </div>
-                                <div>
-                                    <h4>WhatsApp</h4>
-                                    <p class="contact-text-compact"><?= $data['whatsapp'] ?? '+62 8181 871 0655' ?></p>
-                                </div>
+                        <div class="contact-card">
+                            <div class="contact-icon-box">
+                                <i class="fab fa-whatsapp"></i>
                             </div>
-                            <small>Hubungi kami via WhatsApp untuk respon cepat</small>
+                            <div class="contact-card-content">
+                                <h4 class="contact-card-title">WhatsApp</h4>
+                                <p class="contact-card-text"><?= $data['whatsapp'] ?? '+62 8181 871 0655' ?></p>
+                                <p class="contact-card-note">Hubungi kami via WhatsApp untuk respon cepat</p>
+                            </div>
                         </div>
                         
-                        <div class="contact-card-compact">
-                            <div class="contact-card-header">
-                                <div class="contact-icon">
-                                    <i class="fas fa-clock"></i>
-                                </div>
-                                <div>
-                                    <h4>Jam Operasional</h4>
-                                    <div class="schedule-compact">
-                                        <div class="schedule-item-compact">
-                                            <strong>Senin - Sabtu  : </strong>
-                                            <span class="contact-text-compact"><?= $data['jam_senin'] ?? '08.00 - 20.00 WITA' ?></span>
-                                        </div>
-                                        <div class="schedule-item-compact">
-                                            <strong>Minggu:</strong>
-                                            <span class="contact-text-compact"><?= $data['jam_minggu'] ?? '09.00 - 18.00 WITA' ?></span>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="contact-card">
+                            <div class="contact-icon-box">
+                                <i class="fas fa-clock"></i>
                             </div>
-                            <small>Penjemputan terakhir 2 jam sebelum tutup</small>
+                            <div class="contact-card-content">
+                                <h4 class="contact-card-title">Jam Operasional</h4>
+                                <div class="contact-schedule">
+                                    <p class="schedule-row">
+                                        <strong>Senin - Sabtu:</strong>
+                                        <span><?= $data['jam_senin'] ?? '08.00 - 20.00 WITA' ?></span>
+                                    </p>
+                                    <p class="schedule-row">
+                                        <strong>Minggu:</strong>
+                                        <span><?= $data['jam_minggu'] ?? '09.00 - 18.00 WITA' ?></span>
+                                    </p>
+                                </div>
+                                <p class="contact-card-note">Penjemputan terakhir 2 jam sebelum tutup</p>
+                            </div>
                         </div>
                         
-                        <div class="contact-actions-compact">
-                            <a href="https://wa.me/6281818710655" class="whatsapp-btn-compact" target="_blank">
+                        <div class="contact-cta-button">
+                            <a href="https://wa.me/6281818710655" class="whatsapp-cta-btn" target="_blank">
                                 <i class="fab fa-whatsapp"></i>
                                 <span>Chat via WhatsApp</span>
                             </a>
                         </div>
                     </div>
                     
-                    <div class="contact-map-balanced">
-                        <div class="map-container-balanced">
+                    <div class="contact-map-section">
+                        <div class="map-container">
                             <iframe 
                                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d730.7368494865218!2d122.5033663!3d-3.9825938!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d98f36fd6209aa5%3A0x6acec4dd33a3cf51!2sdeLondree!5e1!3m2!1sid!2sid!4v1762674053340!5m2!1sid!2sid" 
                                 width="100%" 

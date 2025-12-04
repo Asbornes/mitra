@@ -812,6 +812,10 @@ section {
     transition: var(--transition);
     cursor: pointer;
     border: 1px solid var(--light-3);
+    /* Make card a vertical flex container so footer stays at bottom */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .service-card:hover {
@@ -873,36 +877,32 @@ section {
 
 .service-content {
     padding: 2rem;
-}
-
-.service-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--dark);
-}
-
-.service-description {
-    color: var(--dark-3);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    padding-bottom: 2.5rem;
+    min-height: 200px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--light-3);
 }
 
 .service-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 1rem;
+    margin-top: auto; /* push footer to bottom of the card */
     padding-top: 1rem;
     border-top: 1px solid var(--light-3);
     width: 100%;
-    min-height: 40px;
+    min-height: 56px;
+    transform: translateY(18px);
+    will-change: transform;
 }
-
 .service-card .service-footer {
     min-height: 60px;
     display: flex;
     align-items: center;
 }
+
 
 .price-container {
     display: flex;
@@ -1002,40 +1002,52 @@ section {
     padding: 0 1rem;
 }
 
-.flow-step-number {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-primary);
-    color: var(--white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
+/* Lingkaran besar untuk icon */
+.flow-step-icon-wrapper {
     position: relative;
-    z-index: 2;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
+/* Icon di tengah lingkaran */
 .flow-step-icon {
-    width: 70px;
-    height: 70px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.75rem;
-    color: var(--white);
-    margin-bottom: 1.5rem;
-    transition: var(--transition);
+    color: #2eb2ff;
+}
+
+/* Lingkaran kecil untuk nomor */
+.flow-step-number {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #2eb2ff;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
 }
 
 .flow-step:hover .flow-step-icon {
     transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.2);
 }
 
 .flow-step-content h3 {
@@ -1319,55 +1331,17 @@ section {
 /* Contact Section */
 .contact-section {
     background: var(--white);
+    padding: 5rem 0;
 }
 
-.contact-content {
+.contact-wrapper {
     display: grid;
-    grid-template-columns: 1.3fr 1.7fr; 
-    gap: 2.5rem;
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: stretch;
 }
 
-.contact-info-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-}
-
-.contact-map-balanced {
-    height: 100%;
-}
-
-.map-container-balanced {
-    height: 490px; 
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-    border: 2px solid var(--light-3);
-}
-
-.contact-card-compact {
-    background: var(--light);
-    padding: 1.25rem;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--light-3);
-    transition: var(--transition);
-}
-
-.contact-card-compact:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.contact-card-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-}
-
-.contact-info {
+.contact-cards-container {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -1375,118 +1349,140 @@ section {
 
 .contact-card {
     display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    padding: 1.5rem;
-    background: var(--light);
-    border-radius: var(--radius-xl);
+    gap: 1rem;
+    /* more left padding so larger icon can overlap visually */
+    padding: 1.25rem 1.25rem 1.25rem 1.9rem;
+    background: linear-gradient(135deg, #f9fbfd 0%, #f0f7ff 100%);
+    border-radius: var(--radius-lg);
+    border: 1px solid #e0ebff;
     transition: var(--transition);
-    border: 1px solid var(--light-3);
+    box-shadow: 0 2px 12px rgba(31, 147, 255, 0.08);
 }
 
 .contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(31, 147, 255, 0.12);
+    border-color: #d0e7ff;
 }
 
-.contact-icon {
-    width: 35px;
-    height: 35px;
-    background: var(--gradient-primary);
+.contact-icon-box {
+    /* bigger icon to fill empty area and overlap card edge slightly */
+    width: 96px;
+    height: 96px;
+    min-width: 96px;
+    margin-left: -10px; /* nudge left to cover empty white space */
+    background: linear-gradient(135deg, #1f93ff 0%, #0d7ae8 100%);
     color: var(--white);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: 2.8rem;
     flex-shrink: 0;
+    box-shadow: 0 6px 24px rgba(31, 147, 255, 0.25);
 }
 
-.contact-card-header h4 {
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
-    color: var(--dark);
-}
-
-.contact-text-compact {
-    color: var(--dark-3);
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-.schedule-compact {
+.contact-card-content {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.schedule-item-compact {
+.contact-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin: 0;
+}
+
+.contact-card-text {
+    font-size: 0.9rem;
+    color: var(--dark-2);
+    line-height: 1.4;
+    margin: 0.2rem 0 0 0;
+    font-weight: 500;
+}
+
+.contact-card-note {
+    font-size: 0.8rem;
+    color: var(--dark-3);
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-style: italic;
+}
+
+.contact-schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.schedule-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--light-3);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    color: var(--dark-2);
+    margin: 0;
 }
 
-.schedule-item-compact:last-child {
-    margin-bottom: 0;
+.schedule-row strong {
+    font-weight: 600;
+    margin-right: 1rem;
 }
 
-.schedule-item-compact strong {
-    font-size: 0.9rem;
-    color: var(--dark);
-    margin-bottom: 0.25rem;
+.schedule-row span {
+    color: #1f93ff;
+    font-weight: 600;
 }
 
-.contact-card-compact small {
-    color: var(--dark-3);
-    font-size: 0.85rem;
-    display: block;
-    margin-top: 0.5rem;
+.contact-map-section {
+    height: 100%;
+    min-height: 100%;
 }
 
-.contact-actions-compact {
-    margin-top: 0.5rem;
+.map-container {
+    height: 100%;
+    min-height: 100%;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    border: 1px solid #e0ebff;
 }
 
-.whatsapp-btn-compact {
+.contact-cta-button {
+    margin-top: 1.5rem;
+}
+
+.whatsapp-cta-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
+    width: 100%;
     padding: 1rem 1.5rem;
-    background: #25D366;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     color: var(--white);
     border-radius: var(--radius-lg);
     font-weight: 600;
+    font-size: 0.95rem;
     text-decoration: none;
     transition: var(--transition);
-    width: 100%;
+    border: none;
+    cursor: pointer;
 }
 
-.whatsapp-btn-compact:hover {
-    background: #128C7E;
+.whatsapp-cta-btn:hover {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
 }
 
-.contact-map-wide {
-    height: 100%;
+.whatsapp-cta-btn i {
+    font-size: 1.2rem;
 }
 
-.map-container-wide {
-    height: 500px;
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    box-shadow: var(--shadow-lg);
-}
-
-.contact-details h4 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    color: var(--dark);
-}
 
 .contact-details p {
     color: var(--dark-3);
@@ -1631,7 +1627,7 @@ section {
 }
 
 .footer-logo img {
-    height: 50px;
+    height: 40px;
     border-radius: var(--radius-md);
 }
 
@@ -2061,6 +2057,12 @@ section {
     .map-container-wide {
         height: 400px;
     }
+
+    /* Reduce heavy spacing for service cards on tablet */
+    .service-content {
+        padding-bottom: 3rem;
+        min-height: 220px;
+    }
     
     .footer-content {
         grid-template-columns: 1fr 1fr;
@@ -2218,6 +2220,12 @@ section {
     .contact-card-compact {
         padding: 1rem;
     }
+
+    /* Mobile: reduce service content spacing to avoid very tall cards */
+    .service-content {
+        padding-bottom: 2rem;
+        min-height: 160px;
+    }
     
     .features-full-width {
         grid-template-columns: 1fr;
@@ -2276,6 +2284,11 @@ section {
     
     .service-card {
         margin: 0 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* memisahkan content & footer */
+        height: 100%;
+        min-height: 450px;
     }
     
     .gallery-grid {
@@ -2317,5 +2330,41 @@ section {
     
     .contact-card-compact {
         padding: 1.25rem;
+    }
+}
+
+/* Responsive adjustments for contact icons/cards */
+@media (max-width: 768px) {
+    .contact-icon-box {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        margin-left: 0;
+        font-size: 1.6rem;
+    }
+
+    .contact-card {
+        padding-left: 1.25rem;
+    }
+
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-map-section, .map-container {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-icon-box {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        font-size: 1.4rem;
+    }
+
+    .map-container {
+        min-height: 320px;
     }
 }
