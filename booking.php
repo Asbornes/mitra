@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="booking-container">
-        <!-- Header dengan gradient modern -->
+        <!-- Header -->
         <header class="booking-header">
             <div class="container">
                 <div class="logo-section">
@@ -29,9 +29,9 @@
             </div>
         </header>
 
+        <!-- Progress Steps -->
         <div class="booking-progress">
             <div class="container">
-                <div class="progress-background"></div>
                 <div class="progress-steps">
                     <div class="step active" data-step="1">
                         <div class="step-indicator">
@@ -71,114 +71,118 @@
                     </div>
                     
                     <form id="bookingInfoForm" class="modern-form">
-                        <div class="form-section glass-card">
-                            <div class="section-header">
-                                <div class="section-icon">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <h3>Informasi Pelanggan</h3>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group floating-label">
-                                    <input type="text" name="first_name" id="first_name" required>
-                                    <label for="first_name">Nama Depan *</label>
-                                    <div class="form-icon">
-                                        <i class="fas fa-user"></i>
+                        <div class="step1-compact-layout">
+                            <!-- Panel Kiri: Customer Info & Schedule -->
+                            <div class="customer-info-panel">
+                                <!-- Informasi Pelanggan -->
+                                <div class="glass-card">
+                                    <div class="section-header">
+                                        <div class="section-icon">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <h3>Informasi Pelanggan</h3>
+                                    </div>
+                                    
+                                    <div class="form-group floating-label">
+                                        <input type="text" name="first_name" id="first_name" required>
+                                        <label for="first_name">Nama Depan *</label>
+                                        <div class="form-icon">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group floating-label">
+                                        <input type="text" name="last_name" id="last_name" required>
+                                        <label for="last_name">Nama Belakang *</label>
+                                        <div class="form-icon">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group floating-label">
+                                            <select name="gender" id="gender" required>
+                                                <option value=""></option>
+                                                <option value="L">Laki-laki</option>
+                                                <option value="P">Perempuan</option>
+                                            </select>
+                                            <label for="gender">Jenis Kelamin *</label>
+                                            <div class="form-icon">
+                                                <i class="fas fa-venus-mars"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-group floating-label">
+                                            <input type="tel" name="phone" id="phone" required placeholder="">
+                                            <label for="phone">WhatsApp *</label>
+                                            <div class="form-icon">
+                                                <i class="fas fa-phone"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group floating-label">
-                                    <input type="text" name="last_name" id="last_name" required>
-                                    <label for="last_name">Nama Belakang *</label>
-                                    <div class="form-icon">
-                                        <i class="fas fa-user"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group floating-label">
-                                    <select name="gender" id="gender" required>
-                                        <option value=""></option>
-                                        <option value="L">Laki-laki</option>
-                                        <option value="P">Perempuan</option>
-                                    </select>
-                                    <label for="gender">Jenis Kelamin *</label>
-                                    <div class="form-icon">
-                                        <i class="fas fa-venus-mars"></i>
-                                    </div>
-                                </div>
-                                <div class="form-group floating-label">
-                                    <input type="tel" name="phone" id="phone" required>
-                                    <label for="phone">Nomor WhatsApp *</label>
-                                    <div class="form-icon">
-                                        <i class="fas fa-phone"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="form-section glass-card">
-                            <div class="section-header">
-                                <div class="section-icon">
-                                    <i class="fas fa-home"></i>
-                                </div>
-                                <h3>Alamat Penjemputan</h3>
-                            </div>
-                            <div class="form-group floating-label">
-                                <textarea name="full_address" id="full_address" rows="3" required></textarea>
-                                <label for="full_address">Alamat Lengkap *</label>
-                                <div class="form-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group floating-label">
-                                <input type="text" name="address_notes" id="address_notes">
-                                <label for="address_notes">Keterangan Alamat</label>
-                                <div class="form-icon">
-                                    <i class="fas fa-info-circle"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="map-section">
-                                <label>Pin Lokasi di Google Maps</label>
-                                <div class="map-container">
-                                    <iframe 
-                                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d730.7368494865218!2d122.5033663!3d-3.9825938!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d98f36fd6209aa5%3A0x6acec4dd33a3cf51!2sdeLondree!5e1!3m2!1sid!2sid!4v1762674053340!5m2!1sid!2sid" 
-                                        width="100%" 
-                                        height="100%" 
-                                        style="border:0;" 
-                                        allowfullscreen="" 
-                                        loading="lazy" 
-                                        referrerpolicy="no-referrer-when-downgrade">
-                                    </iframe>
+                                <!-- Jadwal Penjemputan -->
+                                <div class="glass-card">
+                                    <div class="section-header">
+                                        <div class="section-icon">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                        <h3>Jadwal Penjemputan</h3>
+                                    </div>
+                                    
+                                    <div class="schedule-compact">
+                                        <div class="form-group floating-label">
+                                            <input type="date" name="pickup_date" id="pickupDate" required>
+                                            <label for="pickupDate">Tanggal *</label>
+                                        </div>
+                                        
+                                        <div class="form-group floating-label">
+                                            <select name="pickup_time" id="pickupTime" required>
+                                                <option value=""></option>
+                                            </select>
+                                            <label for="pickupTime">Waktu *</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-section glass-card">
-                            <div class="section-header">
-                                <div class="section-icon">
-                                    <i class="fas fa-calendar-alt"></i>
+                            <!-- Panel Kanan: Alamat Penjemputan -->
+                            <div class="glass-card address-panel">
+                                <div class="section-header">
+                                    <div class="section-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <h3>Alamat Penjemputan</h3>
                                 </div>
-                                <h3>Jadwal Penjemputan</h3>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group floating-label">
-                                    <input type="date" name="pickup_date" id="pickupDate" required>
-                                    <label for="pickupDate">Tanggal Penjemputan *</label>
+                                
+                                <div class="form-group floating-label address-group">
+                                    <textarea name="full_address" id="full_address" rows="3" required placeholder=""></textarea>
+                                    <label for="full_address">Alamat Lengkap *</label>
                                     <div class="form-icon">
-                                        <i class="fas fa-calendar"></i>
+                                        <i class="fas fa-map-marker-alt"></i>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group floating-label">
-                                    <select name="pickup_time" id="pickupTime" required>
-                                        <option value=""></option>
-                                    </select>
-                                    <label for="pickupTime">Waktu Penjemputan *</label>
+                                    <input type="text" name="address_notes" id="address_notes" placeholder="">
+                                    <label for="address_notes">Keterangan Alamat (Opsional)</label>
                                     <div class="form-icon">
-                                        <i class="fas fa-clock"></i>
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="map-section">
+                                    <label><i class="fas fa-map-pin"></i> Lokasi Google Maps</label>
+                                    <div class="map-container">
+                                        <iframe 
+                                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d730.7368494865218!2d122.5033663!3d-3.9825938!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d98f36fd6209aa5%3A0x6acec4dd33a3cf51!2sdeLondree!5e1!3m2!1sid!2sid!4v1762674053340!5m2!1sid!2sid" 
+                                            width="100%" 
+                                            height="100%" 
+                                            style="border:0;" 
+                                            allowfullscreen="" 
+                                            loading="lazy" 
+                                            referrerpolicy="no-referrer-when-downgrade">
+                                        </iframe>
                                     </div>
                                 </div>
                             </div>
@@ -202,82 +206,295 @@
                         <p>Pilih layanan laundry yang Anda butuhkan</p>
                     </div>
                     
-                    <div class="services-categories">
-                        <?php
-                        $categories = $conn->query("
-                            SELECT DISTINCT jenis_layanan 
-                            FROM harga 
-                            WHERE service_id IS NOT NULL 
-                            ORDER BY jenis_layanan
-                        ");
-                        
-                        while ($category = $categories->fetch_assoc()) {
-                            $jenisLayanan = $category['jenis_layanan'];
-                            
-                            echo '
+                    <div class="step2-two-panel-layout">
+                        <!-- Panel Kiri: Cuci Kering dan Setrika -->
+                        <div class="services-left-panel">
+                            <!-- Cuci Kering -->
                             <div class="category-section glass-card">
                                 <div class="category-header">
-                                    <h3 class="category-title">'.$jenisLayanan.'</h3>
+                                    <h3 class="category-title">
+                                        <i class="fas fa-tshirt"></i> Cuci Kering
+                                    </h3>
                                     <div class="category-badge">
-                                        <i class="fas fa-tag"></i> Promo
+                                        <i class="fas fa-bolt"></i> Promo
                                     </div>
                                 </div>
                                 
-                                <div class="services-grid">';
-                            
-                            $services = $conn->query("
-                                SELECT * FROM harga 
-                                WHERE jenis_layanan = '".$jenisLayanan."' 
-                                ORDER BY harga
-                            ");
-                            
-                            while ($service = $services->fetch_assoc()) {
-                                echo '
-                                <div class="service-card" data-service-id="'.$service['id'].'">
-                                    <div class="service-content">
-                                        <div class="service-header">
-                                            <h4>'.$service['kategori'].'</h4>
-                                            <div class="service-badge">
-                                                <i class="fas fa-star"></i> Terlaris
+                                <div class="services-panel-grid">
+                                    <!-- Pakaian Reguler -->
+                                    <div class="service-card" data-service-id="1">
+                                        <div class="service-content">
+                                            <div class="service-header">
+                                                <h4>Pakaian Reguler</h4>
+                                                <div class="service-badge">
+                                                    <i class="fas fa-star"></i> Terlaris
+                                                </div>
+                                            </div>
+                                            <p class="service-description">Cuci dan kering untuk pakaian sehari-hari</p>
+                                            <div class="service-footer">
+                                                <span class="service-unit">
+                                                    <i class="fas fa-weight-hanging"></i> Per kg
+                                                </span>
+                                                <span class="service-price">Rp 4.000</span>
                                             </div>
                                         </div>
-                                        <p class="service-description">'.($service['description'] ?? 'Layanan berkualitas dengan hasil terbaik').'</p>
-                                        <div class="service-meta">
-                                            <span class="service-unit">
-                                                <i class="fas fa-weight-hanging"></i> Per '.$service['unit'].'
-                                            </span>
-                                            <span class="service-price">Rp '.number_format($service['harga']).'</span>
+                                        <div class="service-controls">
+                                            <button type="button" class="btn-quantity minus" onclick="updateQuantity(1, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="qty_1" value="0" min="0" readonly>
+                                            <button type="button" class="btn-quantity plus" onclick="updateQuantity(1, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="service-controls">
-                                        <button type="button" class="btn-quantity minus" onclick="updateQuantity('.$service['id'].', -1)">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="number" id="qty_'.$service['id'].'" value="0" min="0" readonly>
-                                        <button type="button" class="btn-quantity plus" onclick="updateQuantity('.$service['id'].', 1)">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
+                                    
+                                    <!-- Jeans & Jaket -->
+                                    <div class="service-card" data-service-id="2">
+                                        <div class="service-content">
+                                            <div class="service-header">
+                                                <h4>Jeans & Jaket</h4>
+                                                <div class="service-badge">
+                                                    <i class="fas fa-star"></i> Terlaris
+                                                </div>
+                                            </div>
+                                            <p class="service-description">Khusus untuk jeans dan jaket berbahan tebal</p>
+                                            <div class="service-footer">
+                                                <span class="service-unit">
+                                                    <i class="fas fa-weight-hanging"></i> Per kg
+                                                </span>
+                                                <span class="service-price">Rp 6.000</span>
+                                            </div>
+                                        </div>
+                                        <div class="service-controls">
+                                            <button type="button" class="btn-quantity minus" onclick="updateQuantity(2, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="qty_2" value="0" min="0" readonly>
+                                            <button type="button" class="btn-quantity plus" onclick="updateQuantity(2, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>';
-                            }
+                                </div>
+                            </div>
+
+                            <!-- Setrika -->
+                            <div class="category-section glass-card">
+                                <div class="category-header">
+                                    <h3 class="category-title">
+                                        <i class="fas fa-iron"></i> Setrika
+                                    </h3>
+                                    <div class="category-badge">
+                                        <i class="fas fa-bolt"></i> Promo
+                                    </div>
+                                </div>
+                                
+                                <div class="services-panel-grid">
+                                    <!-- Pakaian Reguler -->
+                                    <div class="service-card" data-service-id="3">
+                                        <div class="service-content">
+                                            <div class="service-header">
+                                                <h4>Pakaian Reguler</h4>
+                                                <div class="service-badge">
+                                                    <i class="fas fa-star"></i> Terlaris
+                                                </div>
+                                            </div>
+                                            <p class="service-description">Setrika pakaian sehari-hari</p>
+                                            <div class="service-footer">
+                                                <span class="service-unit">
+                                                    <i class="fas fa-weight-hanging"></i> Per kg
+                                                </span>
+                                                <span class="service-price">Rp 3.000</span>
+                                            </div>
+                                        </div>
+                                        <div class="service-controls">
+                                            <button type="button" class="btn-quantity minus" onclick="updateQuantity(3, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="qty_3" value="0" min="0" readonly>
+                                            <button type="button" class="btn-quantity plus" onclick="updateQuantity(3, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Kemeja -->
+                                    <div class="service-card" data-service-id="4">
+                                        <div class="service-content">
+                                            <div class="service-header">
+                                                <h4>Kemeja</h4>
+                                                <div class="service-badge">
+                                                    <i class="fas fa-star"></i> Terlaris
+                                                </div>
+                                            </div>
+                                            <p class="service-description">Setrika khusus untuk kemeja</p>
+                                            <div class="service-footer">
+                                                <span class="service-unit">
+                                                    <i class="fas fa-weight-hanging"></i> Per potong
+                                                </span>
+                                                <span class="service-price">Rp 5.000</span>
+                                            </div>
+                                        </div>
+                                        <div class="service-controls">
+                                            <button type="button" class="btn-quantity minus" onclick="updateQuantity(4, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="qty_4" value="0" min="0" readonly>
+                                            <button type="button" class="btn-quantity plus" onclick="updateQuantity(4, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel Kanan: Cuci Kering Setrika dan Layanan Dipilih -->
+                        <div class="services-right-panel">
+                            <!-- Cuci Kering Setrika -->
+                            <div class="category-section glass-card">
+                                <div class="category-header">
+                                    <h3 class="category-title">
+                                        <i class="fas fa-tshirt"></i><i class="fas fa-iron ml-1"></i> Cuci Kering Setrika
+                                    </h3>
+                                    <div class="category-badge">
+                                        <i class="fas fa-bolt"></i> Promo
+                                    </div>
+                                </div>
+                                
+                                <div class="services-panel-grid">
+                                    <!-- Pakaian Reguler -->
+                                    <div class="service-card" data-service-id="5">
+                                        <div class="service-content">
+                                            <div class="service-header">
+                                                <h4>Pakaian Reguler</h4>
+                                                <div class="service-badge">
+                                                    <i class="fas fa-star"></i> Terlaris
+                                                </div>
+                                            </div>
+                                            <p class="service-description">Cuci, kering, dan setrika pakaian sehari-hari</p>
+                                            <div class="service-footer">
+                                                <span class="service-unit">
+                                                    <i class="fas fa-weight-hanging"></i> Per kg
+                                                </span>
+                                                <span class="service-price">Rp 5.000</span>
+                                            </div>
+                                        </div>
+                                        <div class="service-controls">
+                                            <button type="button" class="btn-quantity minus" onclick="updateQuantity(5, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="qty_5" value="0" min="0" readonly>
+                                            <button type="button" class="btn-quantity plus" onclick="updateQuantity(5, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Bed Cover Single -->
+                                    <div class="service-card" data-service-id="6">
+                                        <div class="service-content">
+                                            <div class="service-header">
+                                                <h4>Bed Cover Single</h4>
+                                                <div class="service-badge">
+                                                    <i class="fas fa-star"></i> Terlaris
+                                                </div>
+                                            </div>
+                                            <p class="service-description">Cuci, kering, dan setrika bed cover single</p>
+                                            <div class="service-footer">
+                                                <span class="service-unit">
+                                                    <i class="fas fa-weight-hanging"></i> Per potong
+                                                </span>
+                                                <span class="service-price">Rp 15.000</span>
+                                            </div>
+                                        </div>
+                                        <div class="service-controls">
+                                            <button type="button" class="btn-quantity minus" onclick="updateQuantity(6, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="qty_6" value="0" min="0" readonly>
+                                            <button type="button" class="btn-quantity plus" onclick="updateQuantity(6, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Selimut -->
+                                    <div class="service-card" data-service-id="7">
+                                        <div class="service-content">
+                                            <div class="service-header">
+                                                <h4>Selimut</h4>
+                                                <div class="service-badge">
+                                                    <i class="fas fa-star"></i> Terlaris
+                                                </div>
+                                            </div>
+                                            <p class="service-description">Cuci, kering, dan setrika selimut</p>
+                                            <div class="service-footer">
+                                                <span class="service-unit">
+                                                    <i class="fas fa-weight-hanging"></i> Per potong
+                                                </span>
+                                                <span class="service-price">Rp 20.000</span>
+                                            </div>
+                                        </div>
+                                        <div class="service-controls">
+                                            <button type="button" class="btn-quantity minus" onclick="updateQuantity(7, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="qty_7" value="0" min="0" readonly>
+                                            <button type="button" class="btn-quantity plus" onclick="updateQuantity(7, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Bed Cover Double -->
+                                    <div class="service-card" data-service-id="8">
+                                        <div class="service-content">
+                                            <div class="service-header">
+                                                <h4>Bed Cover Double</h4>
+                                                <div class="service-badge">
+                                                    <i class="fas fa-star"></i> Terlaris
+                                                </div>
+                                            </div>
+                                            <p class="service-description">Cuci, kering, dan setrika bed cover double</p>
+                                            <div class="service-footer">
+                                                <span class="service-unit">
+                                                    <i class="fas fa-weight-hanging"></i> Per potong
+                                                </span>
+                                                <span class="service-price">Rp 25.000</span>
+                                            </div>
+                                        </div>
+                                        <div class="service-controls">
+                                            <button type="button" class="btn-quantity minus" onclick="updateQuantity(8, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" id="qty_8" value="0" min="0" readonly>
+                                            <button type="button" class="btn-quantity plus" onclick="updateQuantity(8, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             
-                            echo '</div></div>';
-                        }
-                        ?>
+                            <!-- Layanan yang Dipilih -->
+                            <div class="selected-services-panel glass-card">
+                                <div class="preview-header">
+                                    <h4><i class="fas fa-shopping-cart"></i> Layanan yang Dipilih</h4>
+                                    <span class="preview-count" id="selectedCount">0 item</span>
+                                </div>
+                                <div id="selectedServicesList" class="selected-services-container">
+                                    <div class="empty-state">
+                                        <i class="fas fa-cart-plus"></i>
+                                        <p>Belum ada layanan dipilih</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="selected-services-preview glass-card" id="selectedServicesPreview">
-                        <div class="preview-header">
-                            <h4><i class="fas fa-shopping-cart"></i> Layanan yang Dipilih</h4>
-                            <span class="preview-count" id="selectedCount">0 item</span>
-                        </div>
-                        <div id="selectedServicesList" class="empty-state">
-                            <i class="fas fa-cart-plus"></i>
-                            <p>Belum ada layanan dipilih</p>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
+                    <div class="form-actions step2-form-actions">
                         <button type="button" class="btn btn-outline" onclick="backToStep1()">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </button>
@@ -294,54 +511,79 @@
                         <p>Periksa kembali detail pesanan Anda sebelum konfirmasi</p>
                     </div>
                     
-                    <div class="order-summary-grid">
+                    <div class="order-summary-compact">
+                        <!-- Left Column: Order Details -->
                         <div class="order-details">
-                            <div class="summary-section glass-card">
+                            <!-- Layanan Dipilih -->
+                            <div class="glass-card">
                                 <div class="section-header">
-                                    <h3><i class="fas fa-concierge-bell"></i> Layanan Dipilih</h3>
+                                    <div class="section-icon">
+                                        <i class="fas fa-concierge-bell"></i>
+                                    </div>
+                                    <h3>Layanan Dipilih</h3>
                                 </div>
-                                <div id="orderServicesList" class="empty-state">
-                                    <i class="fas fa-list"></i>
-                                    <p>Belum ada layanan dipilih</p>
+                                <div id="orderServicesList" class="order-services-list">
+                                    <div class="empty-state">
+                                        <i class="fas fa-list"></i>
+                                        <p>Belum ada layanan dipilih</p>
+                                    </div>
                                 </div>
                                 <div class="section-actions">
                                     <button type="button" class="btn btn-outline" onclick="backToStep2()">
-                                        <i class="fas fa-plus"></i> Tambah/Ubah Layanan
+                                        <i class="fas fa-edit"></i> Ubah Layanan
                                     </button>
                                 </div>
                             </div>
                             
-                            <div class="summary-section glass-card">
+                            <!-- Rincian Biaya -->
+                            <div class="glass-card">
                                 <div class="section-header">
-                                    <h3><i class="fas fa-receipt"></i> Rincian Biaya</h3>
+                                    <div class="section-icon">
+                                        <i class="fas fa-receipt"></i>
+                                    </div>
+                                    <h3>Rincian Biaya</h3>
                                 </div>
-                                <div id="priceBreakdown" class="empty-state">
-                                    <i class="fas fa-calculator"></i>
-                                    <p>Menunggu data pesanan...</p>
+                                <div id="priceBreakdown" class="price-breakdown">
+                                    <div class="empty-state">
+                                        <i class="fas fa-calculator"></i>
+                                        <p>Menunggu data pesanan...</p>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-actions">
+                            
+                            <!-- TOMBOL KEMBALI DI KIRI -->
+                            <div class="step3-form-actions left">
                                 <button type="button" class="btn btn-outline" onclick="backToStep2()">
-                                    <i class="fas fa-arrow-left"></i> Kembali
+                                    <i class="fas fa-arrow-left"></i> Kembali ke Layanan
                                 </button>
                             </div>
                         </div>
                         
+                        <!-- Right Column: Sidebar -->
                         <div class="order-sidebar">
-                            <div class="customer-info-card glass-card">
-                                <div class="card-header">
-                                    <h4><i class="fas fa-user-circle"></i> Informasi Pelanggan</h4>
+                            <!-- Informasi Pelanggan -->
+                            <div class="glass-card">
+                                <div class="section-header">
+                                    <div class="section-icon">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <h3>Informasi Pelanggan</h3>
                                 </div>
-                                <div id="customerInfo" class="empty-state">
-                                    <i class="fas fa-user"></i>
-                                    <p>Data pelanggan akan muncul di sini</p>
+                                <div id="customerInfo" class="customer-info-list">
+                                    <div class="empty-state">
+                                        <i class="fas fa-user"></i>
+                                        <p>Data pelanggan akan muncul di sini</p>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="payment-section glass-card">
+                            <!-- Metode Pembayaran -->
+                            <div class="glass-card">
                                 <div class="section-header">
-                                    <h3><i class="fas fa-credit-card"></i> Metode Pembayaran</h3>
+                                    <div class="section-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <h3>Metode Pembayaran</h3>
                                 </div>
                                 <div class="payment-methods">
                                     <label class="payment-option">
@@ -371,17 +613,21 @@
                                 </div>
                             </div>
                             
-                            <div class="order-total-card glass-card">
-                                <div class="card-header">
-                                    <h4>Total Pembayaran</h4>
+                            <!-- Total & Konfirmasi -->
+                            <div class="glass-card order-total">
+                                <div class="section-header">
+                                    <div class="section-icon">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                    </div>
+                                    <h3>Total Pembayaran</h3>
                                 </div>
                                 <div class="total-amount" id="totalAmount">Rp 0</div>
                                 <button type="button" class="btn btn-primary large" id="submitOrderBtn" onclick="submitOrder()">
-                                    <i class="fas fa-check"></i> Konfirmasi Pesanan
+                                    <i class="fas fa-check-circle"></i> Konfirmasi Pesanan
                                 </button>
                                 <div class="delivery-note">
                                     <i class="fas fa-info-circle"></i>
-                                    <span>Biaya antar jemput akan dihitung oleh admin</span>
+                                    <span>Biaya antar jemput akan dikonfirmasi via WhatsApp</span>
                                 </div>
                             </div>
                         </div>

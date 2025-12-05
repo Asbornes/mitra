@@ -16,21 +16,18 @@ class BookingSystem {
             this.setupTimeSlots();
             this.setupEventListeners();
             this.updateSelectedServicesList();
+            this.updateProgressSteps();
             
             console.log('Booking system initialized');
         });
     }
 
     setupEventListeners() {
-        // Form submission prevention
         document.getElementById('bookingInfoForm').addEventListener('submit', (e) => {
             e.preventDefault();
         });
 
-        // Floating label functionality
         this.setupFloatingLabels();
-        
-        // Input validation
         this.setupInputValidation();
     }
 
@@ -38,7 +35,6 @@ class BookingSystem {
         const inputs = document.querySelectorAll('.floating-label input, .floating-label textarea, .floating-label select');
         
         inputs.forEach(input => {
-            // Check initial value
             if (input.value) {
                 input.parentElement.classList.add('has-value');
             }
@@ -85,7 +81,6 @@ class BookingSystem {
             this.deliveryRates = await response.json();
         } catch (error) {
             console.error('Error loading delivery rates:', error);
-            // Default rates
             this.deliveryRates = [
                 { range_min: 0, range_max: 2, rate: 0, description: 'Gratis Ongkir' },
                 { range_min: 3, range_max: 6, rate: 5000, description: 'Area Dalam Kota' },
@@ -102,7 +97,6 @@ class BookingSystem {
             this.updateTimeSlots(pickupDate.value);
         });
         
-        // Set default date (tomorrow)
         const today = new Date();
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
@@ -139,7 +133,6 @@ class BookingSystem {
             pickupTime.appendChild(option);
         });
 
-        // Trigger floating label update
         if (pickupTime.parentElement.classList.contains('floating-label')) {
             pickupTime.dispatchEvent(new Event('change'));
         }
@@ -163,7 +156,6 @@ class BookingSystem {
         
         if (newValue < 0) newValue = 0;
         
-        // Enhanced animation
         input.classList.add('quantity-changing');
         setTimeout(() => {
             input.classList.remove('quantity-changing');
@@ -182,7 +174,7 @@ class BookingSystem {
         
         if (newValue === 0 && existingIndex !== -1) {
             this.selectedServices.splice(existingIndex, 1);
-            this.showNotification(`Layanan ${serviceName} dihapus`, 'info');
+            this.showNotification(`Layanan "${serviceName}" dihapus`, 'info');
         } else if (newValue > 0) {
             if (existingIndex !== -1) {
                 this.selectedServices[existingIndex].quantity = newValue;
@@ -194,7 +186,7 @@ class BookingSystem {
                     quantity: newValue,
                     unit: serviceUnit
                 });
-                this.showNotification(`Layanan ${serviceName} ditambahkan`, 'success');
+                this.showNotification(`Layanan "${serviceName}" ditambahkan`, 'success');
             }
         }
         
@@ -207,7 +199,6 @@ class BookingSystem {
 
     updateSelectedServicesList() {
         const selectedServicesList = document.getElementById('selectedServicesList');
-        const selectedServicesPreview = document.getElementById('selectedServicesPreview');
         const selectedCount = document.getElementById('selectedCount');
         const nextToStep3Btn = document.getElementById('nextToStep3Btn');
         
@@ -240,11 +231,11 @@ class BookingSystem {
                     <h5>${service.name}</h5>
                     <div class="service-preview-meta">
                         <span>${service.quantity} ${service.unit}</span>
-                        <span class="service-preview-price">Rp ${service.price.toLocaleString('id-ID')}/${service.unit}</span>
+                        <span>Rp ${service.price.toLocaleString('id-ID')}/${service.unit}</span>
                     </div>
                 </div>
-                <div class="service-preview-total">
-                    <strong>Rp ${(service.price * service.quantity).toLocaleString('id-ID')}</strong>
+                <div class="service-preview-price">
+                    Rp ${(service.price * service.quantity).toLocaleString('id-ID')}
                 </div>
             `;
             selectedServicesList.appendChild(serviceElement);
@@ -261,7 +252,6 @@ class BookingSystem {
                 isValid = false;
                 field.style.borderColor = 'var(--danger)';
                 
-                // Add shake animation
                 field.style.animation = 'shake 0.5s ease';
                 setTimeout(() => {
                     field.style.animation = '';
@@ -271,7 +261,6 @@ class BookingSystem {
             }
         });
 
-        // Validate phone number
         const phoneField = document.getElementById('phone');
         if (phoneField.value && !/^62\d{9,12}$/.test(phoneField.value)) {
             isValid = false;
@@ -325,18 +314,15 @@ class BookingSystem {
     }
 
     changeStep(step) {
-        // Hide all steps
         document.querySelectorAll('.form-step').forEach(stepElement => {
             stepElement.classList.remove('active');
         });
         
-        // Show target step
         document.getElementById('step' + step).classList.add('active');
         
         this.currentStep = step;
         this.updateProgressSteps();
         
-        // Scroll to top dengan smooth animation
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -355,7 +341,6 @@ class BookingSystem {
             }
         });
         
-        // Update connectors
         document.querySelectorAll('.step-connector').forEach((connector, index) => {
             if (index + 1 < this.currentStep) {
                 connector.classList.add('completed');
@@ -388,7 +373,6 @@ class BookingSystem {
             return;
         }
         
-        // Update services list
         let subtotal = 0;
         orderServicesList.innerHTML = '';
         
@@ -412,19 +396,16 @@ class BookingSystem {
             orderServicesList.appendChild(serviceElement);
         });
         
-        // Update price breakdown
         priceBreakdown.innerHTML = '';
         
-        // Subtotal
         const subtotalElement = document.createElement('div');
         subtotalElement.className = 'price-item';
         subtotalElement.innerHTML = `
-            <span>Subtotal Layanan</span>
-            <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+            <span class="price-label">Subtotal Layanan</span>
+            <span class="price-value">Rp ${subtotal.toLocaleString('id-ID')}</span>
         `;
         priceBreakdown.appendChild(subtotalElement);
         
-        // Delivery note
         const deliveryNote = document.createElement('div');
         deliveryNote.className = 'delivery-note';
         deliveryNote.innerHTML = `
@@ -433,42 +414,40 @@ class BookingSystem {
         `;
         priceBreakdown.appendChild(deliveryNote);
         
-        // Total
         const totalElement = document.createElement('div');
         totalElement.className = 'price-item total';
         totalElement.innerHTML = `
-            <span>Total Pembayaran</span>
-            <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+            <span class="price-label">Total Pembayaran</span>
+            <span class="price-value total">Rp ${subtotal.toLocaleString('id-ID')}</span>
         `;
         priceBreakdown.appendChild(totalElement);
         
-        // Update total amount
         totalAmount.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
         
-        // Update customer info
-        customerInfo.innerHTML = `
-            <div class="customer-info-item">
-                <span class="customer-info-label">Nama</span>
-                <span class="customer-info-value">${this.bookingData.first_name} ${this.bookingData.last_name}</span>
-            </div>
-            <div class="customer-info-item">
-                <span class="customer-info-label">WhatsApp</span>
-                <span class="customer-info-value">${this.bookingData.phone}</span>
-            </div>
-            <div class="customer-info-item">
-                <span class="customer-info-label">Alamat</span>
-                <span class="customer-info-value">${this.bookingData.full_address}</span>
-            </div>
-            <div class="customer-info-item">
-                <span class="customer-info-label">Tanggal Jemput</span>
-                <span class="customer-info-value">${this.formatDate(this.bookingData.pickup_date)} ${this.bookingData.pickup_time}</span>
-            </div>
-        `;
+        customerInfo.innerHTML = '';
+        
+        const infoItems = [
+            { label: 'Nama', value: `${this.bookingData.first_name} ${this.bookingData.last_name}` },
+            { label: 'WhatsApp', value: this.bookingData.phone },
+            { label: 'Alamat', value: this.bookingData.full_address },
+            { label: 'Keterangan', value: this.bookingData.address_notes || '-' },
+            { label: 'Tanggal Jemput', value: `${this.formatDate(this.bookingData.pickup_date)} ${this.bookingData.pickup_time}` }
+        ];
+        
+        infoItems.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'customer-info-item';
+            itemElement.innerHTML = `
+                <span class="customer-info-label">${item.label}</span>
+                <span class="customer-info-value">${item.value}</span>
+            `;
+            customerInfo.appendChild(itemElement);
+        });
     }
 
     formatDate(dateString) {
         const date = new Date(dateString);
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
         return date.toLocaleDateString('id-ID', options);
     }
 
@@ -505,7 +484,6 @@ class BookingSystem {
         
         console.log('Submitting order:', orderData);
         
-        // Show loading
         this.showLoading(true);
         this.isSubmitting = true;
         
@@ -654,11 +632,7 @@ class BookingSystem {
         
         document.body.appendChild(modal);
         
-        // Add confetti effect
         this.createConfetti();
-        
-        // Prevent background scroll
-        document.body.style.overflow = 'hidden';
         
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
@@ -668,26 +642,26 @@ class BookingSystem {
     }
 
     createConfetti() {
-        const colors = ['#6366f1', '#8b5cf6', '#f59e0b', '#10b981', '#ef4444'];
+        const colors = ['#3B82F6', '#60A5FA', '#14B8A6', '#10B981', '#F59E0B', '#EF4444'];
         const container = document.querySelector('.modal');
         
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 30; i++) {
             const confetti = document.createElement('div');
             confetti.className = 'confetti';
             confetti.style.left = Math.random() * 100 + '%';
-            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             confetti.style.animationDelay = Math.random() * 2 + 's';
-            confetti.style.width = Math.random() * 10 + 5 + 'px';
-            confetti.style.height = Math.random() * 10 + 5 + 'px';
+            confetti.style.width = Math.random() * 8 + 4 + 'px';
+            confetti.style.height = Math.random() * 8 + 4 + 'px';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
             
             container.appendChild(confetti);
             
-            // Remove confetti after animation
             setTimeout(() => {
                 if (confetti.parentElement) {
                     confetti.remove();
                 }
-            }, 3000);
+            }, 2000);
         }
     }
 
@@ -701,7 +675,6 @@ class BookingSystem {
             }, 300);
         }
         
-        // Redirect to home page after a delay
         setTimeout(() => {
             window.location.href = 'index.php';
         }, 500);
@@ -771,6 +744,11 @@ style.textContent = `
         0%, 100% { transform: translateX(0); }
         25% { transform: translateX(-5px); }
         75% { transform: translateX(5px); }
+    }
+    
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
     }
 `;
 document.head.appendChild(style);
