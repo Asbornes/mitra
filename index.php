@@ -47,7 +47,7 @@ $about_data = $profil_data; // Untuk about section
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>deLondree - Layanan Laundry Profesional</title>
+    <title><?= htmlspecialchars($profil_data['nama_laundry']) ?> - Layanan Laundry Profesional</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,7 +62,7 @@ $about_data = $profil_data; // Untuk about section
             <div class="header-container">
                 <div class="logo-section">
                     <img src="hero.jpg" alt="deLondree Logo" class="logo">
-                    <span class="logo-text">deLondree</span>
+                    <span class="logo-text"><?= htmlspecialchars($profil_data['nama_laundry']) ?></span>
                 </div>
                 
                 <nav class="desktop-nav">
@@ -149,7 +149,7 @@ $about_data = $profil_data; // Untuk about section
         <section id="about" class="about-section">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Tentang <span class="highlight">deLondree</span></h2>
+                <h2 class="section-title">Tentang <span class="highlight"><?= htmlspecialchars($profil_data['nama_laundry']) ?></span></h2>
                     <p class="section-subtitle">Solusi laundry profesional untuk kebutuhan harian Anda</p>
                 </div>
                 
@@ -537,7 +537,7 @@ $about_data = $profil_data; // Untuk about section
                         <div class="footer-logo">
                             <img src="hero.jpg" alt="deLondree Logo">
                             <div>
-                                <span class="footer-logo-text">deLondree</span>
+                                <span class="footer-logo-text"><?= htmlspecialchars($profil_data['nama_laundry']) ?></span>
                                 <p class="footer-tagline">Laundry Profesional & Terpercaya</p>
                             </div>
                         </div>
@@ -607,7 +607,7 @@ $about_data = $profil_data; // Untuk about section
                 
                 <div class="footer-bottom">
                     <div class="footer-copyright">
-                        <p>&copy; 2025 deLondree. All rights reserved.</p>
+                        <p>© <?= date('Y') ?> <?= htmlspecialchars($profil_data['nama_laundry']) ?>. All rights reserved.</p>
                     </div>
                 </div>
             </div>
