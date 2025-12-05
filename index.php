@@ -1,9 +1,46 @@
-<?php include 'koneksi.php'; ?>
 <?php 
-// Di bagian atas index.php setelah include koneksi.php
-// Ambil data profil untuk hero dan features
-$profil_data = $conn->query("SELECT * FROM profil WHERE id = 1");
-$profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
+// HANYA SATU KALI include
+include 'koneksi.php';
+
+// HANYA SATU QUERY untuk ambil semua data profil
+$profil_query = $conn->query("SELECT * FROM profil WHERE id = 1");
+
+// Periksa apakah data ada
+if ($profil_query && $profil_query->num_rows > 0) {
+    $profil_data = $profil_query->fetch_assoc();
+} else {
+    // Data default jika tidak ada
+    $profil_data = [
+        'hero_title' => 'Layanan Laundry Profesional',
+        'hero_subtitle' => 'Bersih, Rapi, dan Wangi - Kepercayaan Anda adalah Prioritas Kami',
+        'nama_laundry' => 'deLondree',
+        'alamat' => 'Kota Kendari, Sulawesi Tenggara',
+        'whatsapp' => '+62 8181 871 0655',
+        'email' => 'info@delondree.com',
+        'jam_senin' => '08.00 - 20.00',
+        'jam_minggu' => '09.00 - 18.00',
+        'about_title' => 'deLondree - Laundry & Dry Cleaning Specialist',
+        'about_paragraph1' => 'deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.',
+        'about_paragraph2' => 'Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani dengan penuh perhatian oleh tim profesional yang terlatih.',
+        'feature1_icon' => 'fa-tools',
+        'feature1_title' => 'Peralatan Modern',
+        'feature1_desc' => 'Menggunakan mesin laundry terbaru dan teknologi canggih',
+        'feature2_icon' => 'fa-leaf',
+        'feature2_title' => 'Ramah Lingkungan',
+        'feature2_desc' => 'Detergen biodegradable yang aman untuk kulit dan lingkungan',
+        'feature3_icon' => 'fa-user-tie',
+        'feature3_title' => 'Tim Profesional',
+        'feature3_desc' => 'Staff berpengalaman dan terlatih dalam menangani berbagai jenis pakaian',
+        'feature4_icon' => 'fa-truck-fast',
+        'feature4_title' => 'Layanan Cepat',
+        'feature4_desc' => 'Proses cepat dengan hasil maksimal dan pengantaran tepat waktu'
+    ];
+}
+
+// Buat variabel untuk kemudahan penggunaan
+$profile = $profil_data; // Untuk hero section
+$data = $profil_data;    // Untuk contact section (backward compatibility)
+$about_data = $profil_data; // Untuk about section
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -125,22 +162,12 @@ $profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
                         </div>
                         
                         <div class="about-text">
-                            <?php
-                            // Ambil data profil untuk about section
-                            $profil_about = $conn->query("SELECT about_title, about_paragraph1, about_paragraph2 FROM profil WHERE id = 1");
-                            $about_data = $profil_about->num_rows > 0 ? $profil_about->fetch_assoc() : [];
-                            
-                            $about_title = $about_data['about_title'] ?? 'deLondree - Laundry & Dry Cleaning Specialist';
-                            $about_para1 = $about_data['about_paragraph1'] ?? 'deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.';
-                            $about_para2 = $about_data['about_paragraph2'] ?? 'Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani dengan penuh perhatian oleh tim profesional yang terlatih.';
-                            ?>
-                            
-                            <h3><?= htmlspecialchars($about_title) ?></h3>
+                            <h3><?= htmlspecialchars($about_data['about_title'] ?? 'deLondree - Laundry & Dry Cleaning Specialist') ?></h3>
                             <p class="about-paragraph">
-                                <?= nl2br(htmlspecialchars($about_para1)) ?>
+                                <?= nl2br(htmlspecialchars($about_data['about_paragraph1'] ?? 'deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.')) ?>
                             </p>
                             <p class="about-paragraph">
-                                <?= nl2br(htmlspecialchars($about_para2)) ?>
+                                <?= nl2br(htmlspecialchars($about_data['about_paragraph2'] ?? 'Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani dengan penuh perhatian oleh tim profesional yang terlatih.')) ?>
                             </p>
                         </div>
                     </div>
@@ -149,34 +176,34 @@ $profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
                     <div class="features-full-width">
                         <div class="feature-full-item">
                             <div class="feature-full-icon">
-                                <i class="fas fa-tools"></i>
+                                <i class="fas <?= htmlspecialchars($profil_data['feature1_icon'] ?? 'fa-tools') ?>"></i>
                             </div>
-                            <h4>Peralatan Modern</h4>
-                            <p>Menggunakan mesin laundry terbaru dan teknologi canggih</p>
+                            <h4><?= htmlspecialchars($profil_data['feature1_title'] ?? 'Peralatan Modern') ?></h4>
+                            <p><?= htmlspecialchars($profil_data['feature1_desc'] ?? 'Menggunakan mesin laundry terbaru dan teknologi canggih') ?></p>
                         </div>
                         
                         <div class="feature-full-item">
                             <div class="feature-full-icon">
-                                <i class="fas fa-leaf"></i>
+                                <i class="fas <?= htmlspecialchars($profil_data['feature2_icon'] ?? 'fa-leaf') ?>"></i>
                             </div>
-                            <h4>Ramah Lingkungan</h4>
-                            <p>Detergen biodegradable yang aman untuk kulit dan lingkungan</p>
+                            <h4><?= htmlspecialchars($profil_data['feature2_title'] ?? 'Ramah Lingkungan') ?></h4>
+                            <p><?= htmlspecialchars($profil_data['feature2_desc'] ?? 'Detergen biodegradable yang aman untuk kulit dan lingkungan') ?></p>
                         </div>
                         
                         <div class="feature-full-item">
                             <div class="feature-full-icon">
-                                <i class="fas fa-user-tie"></i>
+                                <i class="fas <?= htmlspecialchars($profil_data['feature3_icon'] ?? 'fa-user-tie') ?>"></i>
                             </div>
-                            <h4>Tim Profesional</h4>
-                            <p>Staff berpengalaman dan terlatih dalam menangani berbagai jenis pakaian</p>
+                            <h4><?= htmlspecialchars($profil_data['feature3_title'] ?? 'Tim Profesional') ?></h4>
+                            <p><?= htmlspecialchars($profil_data['feature3_desc'] ?? 'Staff berpengalaman dan terlatih dalam menangani berbagai jenis pakaian') ?></p>
                         </div>
                         
                         <div class="feature-full-item">
                             <div class="feature-full-icon">
-                                <i class="fas fa-truck-fast"></i>
+                                <i class="fas <?= htmlspecialchars($profil_data['feature4_icon'] ?? 'fa-truck-fast') ?>"></i>
                             </div>
-                            <h4>Layanan Cepat</h4>
-                            <p>Proses cepat dengan hasil maksimal dan pengantaran tepat waktu</p>
+                            <h4><?= htmlspecialchars($profil_data['feature4_title'] ?? 'Layanan Cepat') ?></h4>
+                            <p><?= htmlspecialchars($profil_data['feature4_desc'] ?? 'Proses cepat dengan hasil maksimal dan pengantaran tepat waktu') ?></p>
                         </div>
                     </div>
                 </div>
@@ -441,7 +468,7 @@ $profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
                             </div>
                             <div class="contact-card-content">
                                 <h4 class="contact-card-title">Alamat Laundry</h4>
-                                <p class="contact-card-text"><?= $data['alamat'] ?? 'Jl. Mekar No.54, Kec.Kadia, Kota Kendari, Sulawesi Tenggara' ?></p>
+                                <p class="contact-card-text"><?= htmlspecialchars($profil_data['alamat'] ?? 'Jl. Mekar No.54, Kec.Kadia, Kota Kendari, Sulawesi Tenggara') ?></p>
                                 <p class="contact-card-note">Kami melayani area sekitar Kendari dengan layanan antar jemput</p>
                             </div>
                         </div>
@@ -452,7 +479,7 @@ $profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
                             </div>
                             <div class="contact-card-content">
                                 <h4 class="contact-card-title">WhatsApp</h4>
-                                <p class="contact-card-text"><?= $data['whatsapp'] ?? '+62 8181 871 0655' ?></p>
+                                <p class="contact-card-text"><?= htmlspecialchars($profil_data['whatsapp'] ?? '+62 8181 871 0655') ?></p>
                                 <p class="contact-card-note">Hubungi kami via WhatsApp untuk respon cepat</p>
                             </div>
                         </div>
@@ -466,11 +493,11 @@ $profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
                                 <div class="contact-schedule">
                                     <p class="schedule-row">
                                         <strong>Senin - Sabtu:</strong>
-                                        <span><?= $data['jam_senin'] ?? '08.00 - 20.00 WITA' ?></span>
+                                        <span><?= htmlspecialchars($profil_data['jam_senin'] ?? '08.00 - 20.00 WITA') ?></span>
                                     </p>
                                     <p class="schedule-row">
                                         <strong>Minggu:</strong>
-                                        <span><?= $data['jam_minggu'] ?? '09.00 - 18.00 WITA' ?></span>
+                                        <span><?= htmlspecialchars($profil_data['jam_minggu'] ?? '09.00 - 18.00 WITA') ?></span>
                                     </p>
                                 </div>
                                 <p class="contact-card-note">Penjemputan terakhir 2 jam sebelum tutup</p>
@@ -537,7 +564,7 @@ $profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
                             <?php
                             $services = $conn->query("SELECT nama_layanan FROM layanan LIMIT 5");
                             while ($service = $services->fetch_assoc()) {
-                                echo '<li><a href="#services">' . $service['nama_layanan'] . '</a></li>';
+                                echo '<li><a href="#services">' . htmlspecialchars($service['nama_layanan']) . '</a></li>';
                             }
                             ?>
                         </ul>
@@ -560,19 +587,19 @@ $profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
                         <ul class="footer-links contact-links">
                             <li>
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span><?= $data['alamat'] ?? 'Kota Kendari, Sulawesi Tenggara' ?></span>
+                                <span><?= htmlspecialchars($profil_data['alamat'] ?? 'Kota Kendari, Sulawesi Tenggara') ?></span>
                             </li>
                             <li>
                                 <i class="fas fa-phone"></i>
-                                <span><?= $data['whatsapp'] ?? '+62 8181 871 0655' ?></span>
+                                <span><?= htmlspecialchars($profil_data['whatsapp'] ?? '+62 8181 871 0655') ?></span>
                             </li>
                             <li>
                                 <i class="fas fa-envelope"></i>
-                                <span><?= $data['email'] ?? 'info@delondree.com' ?></span>
+                                <span><?= htmlspecialchars($profil_data['email'] ?? 'info@delondree.com') ?></span>
                             </li>
                             <li>
                                 <i class="fas fa-clock"></i>
-                                <span><?= $data['jam_senin'] ?? 'Senin - Sabtu: 08.00-20.00' ?></span>
+                                <span><?= htmlspecialchars($profil_data['jam_senin'] ?? 'Senin - Sabtu: 08.00-20.00') ?></span>
                             </li>
                         </ul>
                     </div>
@@ -582,11 +609,6 @@ $profile = $profil_data->num_rows > 0 ? $profil_data->fetch_assoc() : [];
                     <div class="footer-copyright">
                         <p>&copy; 2025 deLondree. All rights reserved.</p>
                     </div>
-                    <!-- <div class="footer-admin">
-                        <a href="login.php" class="admin-link">
-                            <i class="fas fa-cog"></i> Admin Panel
-                        </a>
-                    </div> -->
                 </div>
             </div>
         </footer>

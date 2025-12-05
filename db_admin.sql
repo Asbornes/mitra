@@ -250,3 +250,52 @@ FROM orders o
 LEFT JOIN order_items oi ON o.order_id = oi.order_id
 GROUP BY o.order_id
 ORDER BY o.created_at DESC;
+
+-- ==========================================================
+-- TABLE: profil (UPDATED)
+-- ==========================================================
+CREATE TABLE IF NOT EXISTS profil (
+    id INT PRIMARY KEY DEFAULT 1,
+    nama_laundry VARCHAR(255) DEFAULT NULL,
+    alamat TEXT,
+    whatsapp VARCHAR(20) DEFAULT NULL,
+    email VARCHAR(255) DEFAULT NULL,
+    jam_senin VARCHAR(100) DEFAULT NULL,
+    jam_minggu VARCHAR(100) DEFAULT NULL,
+
+    -- ABOUT SECTION
+    about_title VARCHAR(255) DEFAULT 'deLondree - Laundry & Dry Cleaning Specialist',
+    about_paragraph1 TEXT NULL,
+    about_paragraph2 TEXT NULL,
+
+    -- HERO SECTION
+    hero_title VARCHAR(255) DEFAULT 'Layanan Laundry Profesional',
+    hero_subtitle TEXT NULL,
+
+    -- FEATURES
+    feature1_title VARCHAR(100) DEFAULT 'Peralatan Modern',
+    feature1_desc TEXT NULL,
+    feature1_icon VARCHAR(50) DEFAULT 'fa-tools',
+
+    feature2_title VARCHAR(100) DEFAULT 'Ramah Lingkungan',
+    feature2_desc TEXT NULL,
+    feature2_icon VARCHAR(50) DEFAULT 'fa-leaf',
+
+    feature3_title VARCHAR(100) DEFAULT 'Tim Profesional',
+    feature3_desc TEXT NULL,
+    feature3_icon VARCHAR(50) DEFAULT 'fa-user-tie',
+
+    feature4_title VARCHAR(100) DEFAULT 'Layanan Cepat',
+    feature4_desc TEXT NULL,
+    feature4_icon VARCHAR(50) DEFAULT 'fa-truck-fast',
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insert default data
+INSERT INTO profil (id, nama_laundry, alamat, whatsapp, email, jam_senin, jam_minggu)
+VALUES (1, 'deLondree', 'Kota Kendari, Sulawesi Tenggara', '+62 8181 871 0655', 'info@delondree.com', '08.00 - 20.00', '09.00 - 18.00')
+ON DUPLICATE KEY UPDATE id=1;
+SHOW TABLES LIKE 'profil';
+DESCRIBE profil;
+SELECT * FROM profil WHERE id = 1;

@@ -1,10 +1,138 @@
 <?php 
 session_start();
+
+// Cek login
 if (!isset($_SESSION['adminLoggedIn'])) {
     header('Location: login.php');
     exit;
 }
-include 'koneksi.php'; 
+
+include 'koneksi.php';
+
+// =====================================================
+// HANDLE PROFIL SIMPAN (dari profil_simpan.php)
+// =====================================================
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_profil'])) {
+    // Ambil data POST
+    $hero_title = $_POST['hero_title'] ?? '';
+    $hero_subtitle = $_POST['hero_subtitle'] ?? '';
+    $nama_laundry = $_POST['nama_laundry'] ?? '';
+    $alamat = $_POST['alamat'] ?? '';
+    $whatsapp = $_POST['whatsapp'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $jam_senin = $_POST['jam_senin'] ?? '';
+    $jam_minggu = $_POST['jam_minggu'] ?? '';
+
+    $about_title = $_POST['about_title'] ?? '';
+    $about_paragraph1 = $_POST['about_paragraph1'] ?? '';
+    $about_paragraph2 = $_POST['about_paragraph2'] ?? '';
+
+    $feature1_icon = $_POST['feature1_icon'] ?? '';
+    $feature1_title = $_POST['feature1_title'] ?? '';
+    $feature1_desc = $_POST['feature1_desc'] ?? '';
+
+    $feature2_icon = $_POST['feature2_icon'] ?? '';
+    $feature2_title = $_POST['feature2_title'] ?? '';
+    $feature2_desc = $_POST['feature2_desc'] ?? '';
+
+    $feature3_icon = $_POST['feature3_icon'] ?? '';
+    $feature3_title = $_POST['feature3_title'] ?? '';
+    $feature3_desc = $_POST['feature3_desc'] ?? '';
+
+    $feature4_icon = $_POST['feature4_icon'] ?? '';
+    $feature4_title = $_POST['feature4_title'] ?? '';
+    $feature4_desc = $_POST['feature4_desc'] ?? '';
+
+    // Escape string untuk keamanan
+    $hero_title = $conn->real_escape_string($hero_title);
+    $hero_subtitle = $conn->real_escape_string($hero_subtitle);
+    $nama_laundry = $conn->real_escape_string($nama_laundry);
+    $alamat = $conn->real_escape_string($alamat);
+    $whatsapp = $conn->real_escape_string($whatsapp);
+    $email = $conn->real_escape_string($email);
+    $jam_senin = $conn->real_escape_string($jam_senin);
+    $jam_minggu = $conn->real_escape_string($jam_minggu);
+
+    $about_title = $conn->real_escape_string($about_title);
+    $about_paragraph1 = $conn->real_escape_string($about_paragraph1);
+    $about_paragraph2 = $conn->real_escape_string($about_paragraph2);
+
+    $feature1_icon = $conn->real_escape_string($feature1_icon);
+    $feature1_title = $conn->real_escape_string($feature1_title);
+    $feature1_desc = $conn->real_escape_string($feature1_desc);
+
+    $feature2_icon = $conn->real_escape_string($feature2_icon);
+    $feature2_title = $conn->real_escape_string($feature2_title);
+    $feature2_desc = $conn->real_escape_string($feature2_desc);
+
+    $feature3_icon = $conn->real_escape_string($feature3_icon);
+    $feature3_title = $conn->real_escape_string($feature3_title);
+    $feature3_desc = $conn->real_escape_string($feature3_desc);
+
+    $feature4_icon = $conn->real_escape_string($feature4_icon);
+    $feature4_title = $conn->real_escape_string($feature4_title);
+    $feature4_desc = $conn->real_escape_string($feature4_desc);
+
+    // Cek apakah data profil sudah ada (id=1)
+    $check = $conn->query("SELECT id FROM profil WHERE id = 1");
+    if ($check->num_rows > 0) {
+        // UPDATE data yang sudah ada
+        $sql = "UPDATE profil SET
+            hero_title = '$hero_title',
+            hero_subtitle = '$hero_subtitle',
+            nama_laundry = '$nama_laundry',
+            alamat = '$alamat',
+            whatsapp = '$whatsapp',
+            email = '$email',
+            jam_senin = '$jam_senin',
+            jam_minggu = '$jam_minggu',
+            about_title = '$about_title',
+            about_paragraph1 = '$about_paragraph1',
+            about_paragraph2 = '$about_paragraph2',
+            feature1_icon = '$feature1_icon',
+            feature1_title = '$feature1_title',
+            feature1_desc = '$feature1_desc',
+            feature2_icon = '$feature2_icon',
+            feature2_title = '$feature2_title',
+            feature2_desc = '$feature2_desc',
+            feature3_icon = '$feature3_icon',
+            feature3_title = '$feature3_title',
+            feature3_desc = '$feature3_desc',
+            feature4_icon = '$feature4_icon',
+            feature4_title = '$feature4_title',
+            feature4_desc = '$feature4_desc',
+            updated_at = NOW()
+        WHERE id = 1";
+    } else {
+        // INSERT data baru jika belum ada
+        $sql = "INSERT INTO profil (
+            id, hero_title, hero_subtitle, nama_laundry, alamat, whatsapp, email, 
+            jam_senin, jam_minggu, about_title, about_paragraph1, about_paragraph2,
+            feature1_icon, feature1_title, feature1_desc,
+            feature2_icon, feature2_title, feature2_desc,
+            feature3_icon, feature3_title, feature3_desc,
+            feature4_icon, feature4_title, feature4_desc
+        ) VALUES (
+            1, '$hero_title', '$hero_subtitle', '$nama_laundry', '$alamat', '$whatsapp', '$email',
+            '$jam_senin', '$jam_minggu', '$about_title', '$about_paragraph1', '$about_paragraph2',
+            '$feature1_icon', '$feature1_title', '$feature1_desc',
+            '$feature2_icon', '$feature2_title', '$feature2_desc',
+            '$feature3_icon', '$feature3_title', '$feature3_desc',
+            '$feature4_icon', '$feature4_title', '$feature4_desc'
+        )";
+    }
+
+    // Eksekusi query dan set session message
+    if ($conn->query($sql)) {
+        $_SESSION['success_message'] = 'Profil berhasil disimpan! Perubahan telah diterapkan.';
+    } else {
+        $_SESSION['error_message'] = 'Gagal menyimpan profil: ' . $conn->error;
+    }
+
+    // Redirect ke halaman profil
+    header("Location: admin.php#profil");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -17,6 +145,24 @@ include 'koneksi.php';
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
+  <!-- Tampilkan pesan sukses/error jika ada -->
+  <?php if (isset($_SESSION['success_message'])): ?>
+    <div class="alert alert-success" style="position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 15px 25px; background: #10b981; color: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+      <i class="fas fa-check-circle"></i> <?= $_SESSION['success_message'] ?>
+    </div>
+    <script>setTimeout(() => document.querySelector('.alert-success').remove(), 5000);</script>
+    <?php unset($_SESSION['success_message']); ?>
+  <?php endif; ?>
+
+  <?php if (isset($_SESSION['error_message'])): ?>
+    <div class="alert alert-error" style="position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 15px 25px; background: #ef4444; color: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+      <i class="fas fa-exclamation-circle"></i> <?= $_SESSION['error_message'] ?>
+    </div>
+    <script>setTimeout(() => document.querySelector('.alert-error').remove(), 5000);</script>
+    <?php unset($_SESSION['error_message']); ?>
+  <?php endif; ?>
+
   <div class="admin-container">
 
     <!-- Sidebar -->
@@ -462,40 +608,30 @@ include 'koneksi.php';
         </div>
       </section>
 
-      <!-- PESANAN -->
+      <!-- ORDERS -->
       <section id="section-orders" class="content-section">
           <div class="section-header">
               <h3></h3>
               <div class="section-actions">
-                  <div class="filter-controls">
-                      <select id="statusFilter" onchange="adminUI.filterOrders()">
-                          <option value="">Semua Status</option>
-                          <option value="pending">Pending</option>
-                          <option value="process">Process</option>
-                          <option value="completed">Completed</option>
-                          <option value="cancelled">Cancelled</option>
-                      </select>
-                      <input type="date" id="dateFilter" onchange="adminUI.filterOrders()">
-                      <button class="btn-primary" onclick="adminUI.openOrderModal()">
-                          <i class="fas fa-plus"></i>
-                          Tambah Pesanan Manual
-                      </button>
-                  </div>
+                  <button class="btn-primary" onclick="adminUI.openOrderModal()">
+                      <i class="fas fa-plus"></i>
+                      Tambah Pesanan Manual
+                  </button>
               </div>
           </div>
 
           <?php
-          // PAGINATION --------------------------
-          $limitOrders = 7;
+          // PAGINATION ORDERS
+          $limitOrders = 10;
           $pageOrders = isset($_GET['page_orders']) ? (int)$_GET['page_orders'] : 1;
           $offsetOrders = ($pageOrders - 1) * $limitOrders;
 
-          $totalOrders = $conn->query("SELECT COUNT(*) AS total FROM orders")->fetch_assoc()['total'];
-          $totalOrdersPages = ceil($totalOrders / $limitOrders);
+          $totalOrdersData = $conn->query("SELECT COUNT(*) AS total FROM orders")->fetch_assoc()['total'];
+          $totalOrdersPages = ceil($totalOrdersData / $limitOrders);
 
           $orders = $conn->query("
               SELECT * FROM orders 
-              ORDER BY created_at DESC 
+              ORDER BY created_at DESC
               LIMIT $offsetOrders, $limitOrders
           ");
           ?>
@@ -582,8 +718,6 @@ include 'koneksi.php';
 
           </div>
       </section>
-
-
 
       <!-- LAPORAN KEUANGAN -->
       <section id="section-reports" class="content-section">
@@ -700,9 +834,10 @@ include 'koneksi.php';
           </div>
       </section>
 
-      <!-- PROFIL -->
+      <!-- PROFIL (FORM DIUBAH - action ke admin.php) -->
       <section id="section-profil" class="content-section">
-        <form action="php/profil_simpan.php" method="POST" class="profile-form">
+        <form action="admin.php" method="POST" class="profile-form">
+          <input type="hidden" name="simpan_profil" value="1">
           <?php
           $profil = $conn->query("SELECT * FROM profil LIMIT 1");
           $data = $profil->num_rows > 0 ? $profil->fetch_assoc() : [];
