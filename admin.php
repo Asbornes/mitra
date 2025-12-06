@@ -9,9 +9,6 @@ if (!isset($_SESSION['adminLoggedIn'])) {
 
 include 'koneksi.php';
 
-// =====================================================
-// HANDLE PROFIL SIMPAN (dari profil_simpan.php)
-// =====================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_profil'])) {
     // Ambil data POST
     $hero_title = $_POST['hero_title'] ?? '';
@@ -212,10 +209,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_profil'])) {
         </nav>
 
         <div class="sidebar-footer">
-            <div class="admin-user-info">
-                <i class="fas fa-user-circle"></i>
-                <span><?= $_SESSION['admin_username'] ?></span>
-            </div>
             <button onclick="adminUI.logout()" class="btn-logout">
                 <i class="fas fa-sign-out-alt"></i>
                 Logout
@@ -920,7 +913,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_profil'])) {
                     value="<?= $data['about_title'] ?? 'deLondree - Laundry & Dry Cleaning Specialist' ?>" 
                     required
                     placeholder="Contoh: deLondree - Laundry & Dry Cleaning Specialist">
-              <small>Judul utama yang akan ditampilkan di bagian "Tentang Kami"</small>
             </div>
             
             <div class="form-group">
@@ -929,7 +921,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_profil'])) {
                         rows="4" 
                         required
                         placeholder="Tulis deskripsi paragraf pertama tentang laundry Anda..."><?= $data['about_paragraph1'] ?? 'deLondree hadir sebagai penyedia jasa laundry profesional yang mengutamakan kualitas, kecepatan, dan kepuasan pelanggan. Dengan pengalaman bertahun-tahun dalam industri laundry, kami memahami betul kebutuhan akan pakaian bersih, rapi, dan wangi.' ?></textarea>
-              <small>Paragraf pertama yang menjelaskan tentang layanan dan pengalaman</small>
             </div>
             
             <div class="form-group">
@@ -938,7 +929,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_profil'])) {
                         rows="4" 
                         required
                         placeholder="Tulis deskripsi paragraf kedua tentang keunggulan laundry Anda..."><?= $data['about_paragraph2'] ?? 'Kami menggunakan peralatan modern dan detergen berkualitas tinggi yang ramah lingkungan untuk memastikan pakaian Anda mendapatkan perawatan terbaik. Setiap pakaian ditangani dengan penuh perhatian oleh tim profesional yang terlatih.' ?></textarea>
-              <small>Paragraf kedua yang menjelaskan tentang peralatan dan tim</small>
             </div>
           </div>
 
