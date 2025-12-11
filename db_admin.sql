@@ -299,3 +299,5 @@ ON DUPLICATE KEY UPDATE id=1;
 SHOW TABLES LIKE 'profil';
 DESCRIBE profil;
 SELECT * FROM profil WHERE id = 1;
+
+ALTER TABLE orders MODIFY service_name TEXT;
