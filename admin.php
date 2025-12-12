@@ -8,6 +8,44 @@ if (!isset($_SESSION['adminLoggedIn'])) {
 }
 
 include 'koneksi.php';
+// =====================================================
+// PROSES GANTI PASSWORD LANGSUNG DI admin.php
+// =====================================================
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ganti_password'])) {
+
+    $old = $_POST['old_password'];
+    $new = $_POST['new_password'];
+    $confirm = $_POST['confirm_password'];
+
+    // Ambil password admin ID 1
+    $query = $conn->query("SELECT password FROM admin WHERE id = 1");
+    $data = $query->fetch_assoc();
+
+    $oldHashed = md5($old);
+
+    // Cek password lama
+    if ($oldHashed !== $data['password']) {
+        $_SESSION['error_message'] = "Password lama salah!";
+        header("Location: admin.php#password");
+        exit;
+    }
+
+    // Cek konfirmasi password
+    if ($new !== $confirm) {
+        $_SESSION['error_message'] = "Konfirmasi password tidak cocok!";
+        header("Location: admin.php#password");
+        exit;
+    }
+
+    // Update password baru
+    $newHash = md5($new);
+    $conn->query("UPDATE admin SET password = '$newHash' WHERE id = 1");
+
+    $_SESSION['success_message'] = "Password berhasil diubah!";
+    header("Location: admin.php#password");
+    exit;
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_profil'])) {
     // Ambil data POST
@@ -1055,7 +1093,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_profil'])) {
 
       <!-- PASSWORD -->
       <section id="section-password" class="content-section active">
-        <form action="php/ganti_password.php" method="POST" class="password-form">
+        <form method="POST" class="password-form">
+            <input type="hidden" name="ganti_password" value="1">
           <div class="form-group">
             <label>Password Lama</label>
             <input type="password" name="old_password" required>

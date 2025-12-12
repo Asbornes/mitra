@@ -1872,3 +1872,33 @@ body {
         top: 15px;
     }
 }
+
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.alert-success {
+    background: #10b981;
+}
+
+.alert-error {
+    background: #ef4444;
+}
+
+.alert i {
+    font-size: 18px;
+}
+
+.alert .close-btn {
+    cursor: pointer;
+}
